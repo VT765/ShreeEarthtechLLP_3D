@@ -15,7 +15,7 @@ footer{margin-top:32px;font-size:13px;color:#4F5562;border-top:2px solid #BF8311
 <table>${rows}</table>
 <p><strong>Packaging:</strong> 25 kg / 50 kg paper bags, Jumbo bags (FIBC), bulk.</p>
 <p><strong>Storage:</strong> Store in a cool, dry place away from moisture. Shelf life 24 months in original packing.</p>
-<footer>${company.name} · ${company.address}<br>${company.phones.join(' / ')} · ${company.emails.join(' · ')}<br>
+<footer>${company.name} · ${company.addressLabel}: ${company.address}<br>${company.phones.join(' / ')} · ${company.emails.join(' · ')}<br>
 Typical values for guidance only; refer to batch Certificate of Analysis.</footer></body></html>`
   const url = URL.createObjectURL(new Blob([html], { type: 'text/html' }))
   const a = document.createElement('a')

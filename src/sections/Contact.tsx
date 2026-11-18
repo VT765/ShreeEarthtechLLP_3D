@@ -108,7 +108,7 @@ export default function Contact() {
           <h2 className="h2 mt-4" data-reveal="0.05">{contact.title}</h2>
           <p className="mt-5 text-lg" data-reveal="0.1">{contact.body}</p>
           <ul className="mt-8 space-y-4 text-[15px]" data-reveal="0.15">
-            <li className="flex gap-3"><MapPin className="mt-0.5 h-5 w-5 shrink-0 text-brand-blue" strokeWidth={1.75} />{company.address}</li>
+            <li className="flex gap-3"><MapPin className="mt-0.5 h-5 w-5 shrink-0 text-brand-blue" strokeWidth={1.75} /><span><strong className="block font-semibold text-ink">{company.addressLabel}</strong>{company.address}</span></li>
             <li className="flex gap-3"><Phone className="mt-0.5 h-5 w-5 shrink-0 text-brand-blue" strokeWidth={1.75} />
               <span>{company.phones.map((p, i) => <a key={p} href={`tel:${p.replace(/\s/g, '')}`} className="hover:text-brand-blue">{p}{i < company.phones.length - 1 ? ' / ' : ''}</a>)}</span>
             </li>
@@ -155,7 +155,7 @@ export default function Contact() {
             </div>
           </form>
           <div className="card mt-6 overflow-hidden">
-            <iframe title="Shree Earthtech location map" src={company.mapEmbed} className="h-64 w-full grayscale-[30%]" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+            <iframe title="Shree Earthtech LLP office location — Shah Commercial Centre, Bhuj" src={company.mapEmbed} className="h-64 w-full grayscale-[30%]" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
           </div>
         </div>
       </div>

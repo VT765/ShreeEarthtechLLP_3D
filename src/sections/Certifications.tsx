@@ -73,7 +73,7 @@ export default function Certifications() {
               <p className="mt-6 text-xs uppercase tracking-[0.3em] text-gold-dark">Certificate of Registration</p>
               <h3 className="mt-3 text-3xl">{open.title}</h3>
               <p className="mt-1 text-stone">{open.caption}</p>
-              <p className="mx-auto mt-6 max-w-xs text-sm">This is to certify that the management system of <strong>Shree Earthtech LLP</strong>, Bhavnagar, Gujarat, India has been assessed and found to conform to the requirements of the above standard.</p>
+              <p className="mx-auto mt-6 max-w-xs text-sm">This is to certify that the management system of <strong>Shree Earthtech LLP</strong>, Bhuj, Kachchh, Gujarat, India has been assessed and found to conform to the requirements of the above standard.</p>
               <div className="mt-8 flex justify-center">
                 <Seal title={open.title} />
               </div>

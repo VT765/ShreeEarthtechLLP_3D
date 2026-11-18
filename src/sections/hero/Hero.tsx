@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { hero } from '../../content'
@@ -9,8 +9,6 @@ import { scrollToId } from '../../components/SmoothScroll'
 import { ForegroundLayer, HillsLayer, PlantLayer, SkyLayer, VB_H, VB_W } from './PlantLayers'
 import DustParticles from './DustParticles'
 
-const SELogo3D = lazy(() => import('../../scenes/SELogo3D'))
-const Canvas = lazy(() => import('../../components/Canvas3D'))
 
 const ORIGIN = { x: 0.62, y: 0.68 } // rotary dryer / activation tanks
 const LAYER_FILES = ['layer-0-sky', 'layer-1-hills', 'layer-2-plant', 'layer-3-foreground']
@@ -89,7 +87,7 @@ export default function Hero() {
         },
       })
       tl.to(q('[data-copy]'), { y: -60, opacity: 0, duration: 0.3, ease: 'power1.in' }, 0)
-        .to(q('[data-cue], [data-logo3d]'), { opacity: 0, duration: 0.15 }, 0)
+        .to(q('[data-cue]'), { opacity: 0, duration: 0.15 }, 0)
         .to(q('[data-layer="0"]'), { scale: scales[0], duration: 1 }, 0)
         .to(q('[data-layer="1"]'), { scale: scales[1], duration: 1 }, 0)
         .to(q('[data-layer="2"]'), { scale: scales[2], duration: 1 }, 0)
@@ -209,17 +207,6 @@ export default function Hero() {
           </Magnetic>
         </div>
       </div>
-
-      {/* Floating metallic SE monogram */}
-      {!isMobile && (
-        <div data-logo3d className="absolute right-[4vw] top-[16vh] z-10 hidden h-56 w-56 lg:block" aria-hidden>
-          <Suspense fallback={null}>
-            <Canvas dpr={[1, 1.75]} camera={{ position: [0, 0, 4], fov: 35 }} gl={{ alpha: true, antialias: true }}>
-              <SELogo3D />
-            </Canvas>
-          </Suspense>
-        </div>
-      )}
 
       {/* Scroll cue */}
       <button

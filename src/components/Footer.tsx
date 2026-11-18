@@ -42,7 +42,7 @@ export default function Footer() {
           <li><Link to="/contact" className="hover:text-gold-light">Request a quote</Link></li>
         </FooterCol>
         <FooterCol title="Contact" className="lg:col-span-4">
-          <li className="flex gap-3"><MapPin className="mt-1 h-4 w-4 shrink-0 text-gold-light" strokeWidth={1.75} />{company.address}</li>
+          <li className="flex gap-3"><MapPin className="mt-1 h-4 w-4 shrink-0 text-gold-light" strokeWidth={1.75} /><span><strong className="block font-semibold text-white">{company.addressLabel}</strong>{company.address}</span></li>
           <li className="flex gap-3"><Phone className="mt-1 h-4 w-4 shrink-0 text-gold-light" strokeWidth={1.75} />{company.phones.join(' / ')}</li>
           <li className="flex gap-3"><Mail className="mt-1 h-4 w-4 shrink-0 text-gold-light" strokeWidth={1.75} />{company.emails.join(' · ')}</li>
         </FooterCol>

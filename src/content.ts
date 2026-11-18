@@ -3,14 +3,15 @@
 export const company = {
   name: 'Shree Earthtech LLP',
   tagline: 'Purity, Engineered from the Earth.',
-  address: 'Plot No. 12, GIDC Industrial Estate, Bhavnagar, Gujarat 364001, India',
+  addressLabel: 'Office Address',
+  address: 'Office No. 5, Ground Floor, Shah Commercial Centre, Bhuj, Kachchh, Gujarat 370001, India',
   phones: ['+91 98765 43210', '+91 91234 56789'],
   emails: ['info@shreeearthtech.com', 'sales@shreeearthtech.com'],
   website: 'www.shreeearthtech.com',
   hours: 'Mon–Sat, 9:30 AM – 6:30 PM IST',
   whatsapp: '919876543210',
   mapEmbed:
-    'https://www.google.com/maps?q=GIDC+Industrial+Estate+Bhavnagar+Gujarat&output=embed',
+    'https://www.google.com/maps?q=Shah+Commercial+Centre,+Bhuj,+Kachchh,+Gujarat+370001&output=embed',
   social: [
     { name: 'LinkedIn', href: '#' },
     { name: 'Instagram', href: '#' },
