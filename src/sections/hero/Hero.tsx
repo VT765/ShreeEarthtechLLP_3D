@@ -8,6 +8,7 @@ import Magnetic from '../../components/Magnetic'
 import { scrollToId } from '../../components/SmoothScroll'
 import { ForegroundLayer, HillsLayer, PlantLayer, SkyLayer, VB_H, VB_W } from './PlantLayers'
 import DustParticles from './DustParticles'
+import { asset } from '../../lib/asset'
 
 
 const ORIGIN = { x: 0.62, y: 0.68 } // rotary dryer / activation tanks
@@ -19,7 +20,7 @@ function useHeroAssets() {
   useEffect(() => {
     const img = new Image()
     img.onload = () => setOk(true)
-    img.src = '/hero/layer-2-plant.webp'
+    img.src = asset('hero/layer-2-plant.webp')
   }, [])
   return ok
 }
@@ -123,7 +124,7 @@ export default function Hero() {
 
   const layers: ReactNode[] = hasAssets
     ? LAYER_FILES.map((f) => (
-        <img key={f} src={`/hero/${f}.webp`} alt="" className="absolute inset-0 h-full w-full object-cover object-[62%_100%]" fetchPriority="high" />
+        <img key={f} src={asset(`hero/${f}.webp`)} alt="" className="absolute inset-0 h-full w-full object-cover object-[62%_100%]" fetchPriority="high" />
       ))
     : [<SkyLayer key="0" />, <HillsLayer key="1" />, <PlantLayer key="2" />, <ForegroundLayer key="3" />]
 

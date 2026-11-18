@@ -3,6 +3,7 @@ import { useFrame } from '@react-three/fiber'
 import { Float, RoundedBox, ContactShadows } from '@react-three/drei'
 import * as THREE from 'three'
 import Lights, { StudioEnv } from './Lights'
+import { asset } from '../lib/asset'
 
 /** Paper-bag label drawn to a canvas: logo, grade name and a grade-colour band. */
 function useLabel(name: string, color: string) {
@@ -55,7 +56,7 @@ function useLabel(name: string, color: string) {
     draw()
     const img = new Image()
     img.onload = () => document.fonts.ready.then(() => draw(img))
-    img.src = '/logo-transparent.png'
+    img.src = asset('logo-transparent.png')
   }, [tex, name, color])
   return tex
 }

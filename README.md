@@ -48,6 +48,12 @@ Requires Node 20+.
 - `prefers-reduced-motion`: no loader, no smooth scroll, no pinning; static panorama.
 - Semantic landmarks, skip link, labelled controls, keyboard-operable before/after slider and lightbox (Esc to close).
 
+## Preview on GitHub Pages
+
+`.github/workflows/deploy-pages.yml` builds and publishes the site on every push to `main`.
+One-time setup: repo **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+The site is then served at `https://vt765.github.io/ShreeEarthtechLLP_3D/`.
+
 ## Deploy to Vercel
 
 1. Push this folder to a GitHub repository.

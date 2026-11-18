@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { asset } from '../lib/asset'
 
 /** Intro: clay particles assemble into the SE monogram (≤ 2s, skippable). */
 export default function Loader() {
@@ -24,7 +25,7 @@ export default function Loader() {
     let raf = 0
     let start = 0
     const img = new Image()
-    img.src = '/logo-icon.png'
+    img.src = asset('logo-icon.png')
     img.onload = () => {
       const off = document.createElement('canvas')
       const h = 170
