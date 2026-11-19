@@ -5,7 +5,6 @@ import { company } from '../../data/company'
 import { sections } from '../../data/nav'
 import { asset } from '../../lib/asset'
 import { scrollToId } from '../../components/SmoothScroll'
-import CardStack from './CardStack'
 
 type Props = {
   ref?: Ref<HTMLDivElement>
@@ -41,7 +40,6 @@ export default function Slide1({ ref, overlay, inactive, art }: Props) {
               <Download className="h-4 w-4" aria-hidden /> {s.secondaryCta}
             </a>
           </div>
-          <CardStack className="mt-8 sm:mt-10 [@media(max-height:680px)]:hidden" />
         </div>
         {art && <div className="lg:col-span-5 xl:col-start-8">{art}</div>}
       </div>
