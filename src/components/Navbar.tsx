@@ -27,6 +27,8 @@ export default function Navbar() {
   const [pastHero, setPastHero] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [menuOpen, setMenuOpen] = useState<string | null>(null)
+  // Separate from the desktop dropdowns: their outside-click handler must not collapse the accordion.
+  const [mobileGroup, setMobileGroup] = useState<string | null>(null)
   const [homeSection, setHomeSection] = useState<string>(sections.home)
   const { pathname } = useLocation()
   const isHome = pathname === routes.home
@@ -52,6 +54,7 @@ export default function Navbar() {
     setMenusFor(pathname)
     setMobileOpen(false)
     setMenuOpen(null)
+    setMobileGroup(null)
   }
 
   // Home only: track the section in view so "Certificates" lights up over its block.
@@ -123,8 +126,8 @@ export default function Navbar() {
               <MobileGroup
                 key={item.id}
                 menu={item}
-                open={menuOpen === item.id}
-                onToggle={() => setMenuOpen((c) => (c === item.id ? null : item.id))}
+                open={mobileGroup === item.id}
+                onToggle={() => setMobileGroup((c) => (c === item.id ? null : item.id))}
                 onNavigate={() => setMobileOpen(false)}
               />
             ) : (

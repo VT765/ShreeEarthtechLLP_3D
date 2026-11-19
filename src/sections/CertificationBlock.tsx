@@ -53,7 +53,8 @@ export default function CertificationBlock() {
                   aria-expanded={isOpen}
                   aria-controls={previewId}
                   onPointerDown={(e) => (lastPointer.current = e.pointerType)}
-                  onFocus={() => setOpen(c.id)}
+                  // Keyboard focus opens the preview; tap/click focus is handled by onClick.
+                  onFocus={(e) => e.currentTarget.matches(':focus-visible') && setOpen(c.id)}
                   onBlur={() => setOpen((o) => (o === c.id ? null : o))}
                   onClick={() => {
                     // Mouse already opened it on hover; touch (and keyboard Enter) toggles.
