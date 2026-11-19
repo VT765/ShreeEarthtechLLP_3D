@@ -26,15 +26,34 @@ export default function PinnedHero() {
   const [load, setLoad] = useState(false)
   const [ready, setReady] = useState(false)
 
-  // Text paints first; three.js is fetched once the browser is idle.
+  // Text paints first; three.js is fetched after page load once the browser is idle. On touch/small
+  // screens it also waits for the first interaction (or 4s) so it never competes with first paint.
   useEffect(() => {
-    const go = () => setLoad(true)
-    if ('requestIdleCallback' in window) {
-      const id = requestIdleCallback(go, { timeout: 1200 })
-      return () => cancelIdleCallback(id)
+    let idle = 0
+    let timer = 0
+    const events = ['pointerdown', 'wheel', 'touchstart', 'keydown', 'scroll'] as const
+    const go = () => {
+      cleanup()
+      setLoad(true)
     }
-    const id = setTimeout(go, 250)
-    return () => clearTimeout(id)
+    const whenIdle = () => {
+      if ('requestIdleCallback' in window) idle = requestIdleCallback(go, { timeout: 1200 })
+      else timer = setTimeout(go, 250)
+    }
+    const onLoad = () => {
+      if (!window.matchMedia('(pointer: coarse), (max-width: 767px)').matches) return whenIdle()
+      events.forEach((e) => window.addEventListener(e, whenIdle, { once: true, passive: true }))
+      timer = window.setTimeout(whenIdle, 4000)
+    }
+    function cleanup() {
+      window.removeEventListener('load', onLoad)
+      events.forEach((e) => window.removeEventListener(e, whenIdle))
+      if (idle) cancelIdleCallback(idle)
+      clearTimeout(timer)
+    }
+    if (document.readyState === 'complete') onLoad()
+    else window.addEventListener('load', onLoad, { once: true })
+    return cleanup
   }, [])
 
   useLayoutEffect(() => {

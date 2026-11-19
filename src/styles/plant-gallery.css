@@ -95,7 +95,7 @@
   font-family: var(--font-mono);
   font-size: 13px;
   font-weight: 600;
-  color: var(--teal);
+  color: #146b60; /* darker teal: ≥ 4.5:1 on white cards */
   padding-top: 4px;
 }
 .pg-num::after {

@@ -40,10 +40,8 @@ export default function Navbar() {
       (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
       { rootMargin: '-45% 0px -50% 0px' },
     )
-    nav.forEach(({ id }) => {
-      const el = document.getElementById(id)
-      if (el) io.observe(el)
-    })
+    // Observe every section (not just linked ones) so an unlinked section clears the highlight.
+    document.querySelectorAll('main section[id], footer section[id], #about').forEach((el) => io.observe(el))
     return () => io.disconnect()
   }, [isHome])
 
@@ -69,7 +67,7 @@ export default function Navbar() {
       }`}
     >
       <nav className="container-x flex h-[76px] items-center justify-between gap-6" aria-label="Primary">
-        <Link to="/" onClick={() => go(sections.home)} className="shrink-0" aria-label="Shree Earthtech home">
+        <Link to="/" onClick={() => go(sections.home)} className="shrink-0" title="Home">
           <Logo variant="dark" />
         </Link>
 

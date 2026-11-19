@@ -16,7 +16,7 @@ export default function Logo({ variant = 'light', className = '' }: Props) {
     )
   }
   return (
-    <span className={`inline-flex items-center gap-3 ${className}`} aria-label="Shree Earthtech LLP">
+    <span className={`inline-flex items-center gap-3 ${className}`} role="img" aria-label="Shree Earthtech LLP">
       <img src={asset('logo-icon.png')} alt="" width={177} height={207} className="h-11 w-auto" />
       <span className="font-display font-extrabold leading-[0.95] tracking-tight" aria-hidden>
         <span className="block text-[20px] text-white">Shree</span>

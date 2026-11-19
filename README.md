@@ -16,26 +16,46 @@ npm run lint      # ESLint (typescript-eslint, react-hooks, react-refresh)
 
 Requires Node 20+.
 
+## Home-page flow
+
+Navbar → pinned wireframe hero (slide 1: tagline + CTAs, slide 2: About) → Global Reach globe →
+Product Gallery → Grade Finder → Manufacturing Plant gallery → Footer (enquiry form, contact, map, certifications).
+`/products` and `/contact` redirect to the matching home-page sections.
+
 ## Where to edit things
 
 | What | Where |
 |---|---|
-| All copy, specs, contact details, grade-finder rules | `src/content.ts` |
+| Company details, about text, brochure path, certifications | `src/data/company.ts` |
+| Product grades, key specs, full spec table, TDS paths, product images | `src/data/products.ts` |
+| Oil → grade recommendations (Grade Finder) | `src/data/gradeFinder.ts` |
+| Export countries (globe) | `src/data/exportCountries.ts` |
+| Plant gallery images and captions | `src/data/plantGallery.ts` |
+| Hero slides | `src/data/hero.ts` |
+| Section headings and intro copy | `src/data/sections.ts` |
+| Navbar links and section ids | `src/data/nav.ts` |
 | Palette (CSS variables → Tailwind tokens) | `:root` and `@theme` at the top of `src/index.css` |
-| Page sections (one component each) | `src/sections/` |
+| Sections | `src/sections/` (hero in `src/sections/hero/`), footer in `src/components/Footer.tsx` |
 | 3D scenes (lazy-loaded) | `src/scenes/` |
-| Routes: `/`, `/products`, `/contact` | `src/App.tsx`, `src/pages/` |
 
 ## Placeholders to replace
 
-- **Hero artwork** — the hero is a procedurally drawn SVG panorama (`src/sections/hero/PlantLayers.tsx`).
-  Drop `layer-0-sky.webp`, `layer-1-hills.webp`, `layer-2-plant.webp`, `layer-3-foreground.webp` into
-  `public/hero/` and the hero switches to them automatically (prompt for generating them is in
-  `Shree_Earthtech_Website_Prompt.md`, appendix).
-- **Certificate images** — the lightbox in `src/sections/Certifications.tsx` renders a placeholder certificate; add images to `public/certificates/` and swap them in.
-- **RFQ form & catalogue gate** — both simulate success with a toast. Wire them to your backend / form service where marked `PLACEHOLDER` in `src/sections/Contact.tsx`.
-- **TDS download** — generated client-side from `content.ts` (`src/lib/tds.ts`). Replace with real PDFs if preferred.
-- **Company details, counters, social links** — dummy values in `src/content.ts`.
+All file paths go through `asset()` (`src/lib/asset.ts`) so they work under the GitHub Pages sub-path.
+
+- **Product photos** — `public/placeholders/products/*.svg` (paths in `data/products.ts`).
+- **Plant photos** — `public/placeholders/plant/*.svg` (paths in `data/plantGallery.ts`; 3:2, 1200×800 recommended).
+- **TDS PDFs** — `public/tds/*.pdf`; **brochure** — `public/brochure.pdf`.
+- **Export countries** — `data/exportCountries.ts` (also review the region wording in `data/sections.ts`).
+- **Grade Finder mapping** — `data/gradeFinder.ts` (marked TODO; confirm with the technical team).
+- **Contact details, social links** — dummy values in `data/company.ts`.
+- **Certification marks** — drawn seals in `components/Footer.tsx`; swap for real certificate logos.
+
+## Enquiry form
+
+GitHub Pages has no backend, so the form POSTs JSON to a hosted form service set by `VITE_FORM_ENDPOINT`
+(Formspree or Web3Forms; Web3Forms also needs `VITE_FORM_ACCESS_KEY`). See `.env.example`. For the Pages build,
+add them as repository **Variables** (Settings → Secrets and variables → Actions → Variables); the workflow passes
+them to `vite build`. Without an endpoint the form opens a pre-filled `mailto:` to the sales inbox.
 
 ## Logo assets
 
@@ -60,10 +80,11 @@ TS 7. `npm install` sets this up automatically. A few React Compiler rules are s
 
 - Eager JS is split into long-lived `react` (React, React DOM, router) and `motion` (GSAP, Lenis) vendor chunks plus
   the app chunk (`build.rolldownOptions.output.codeSplitting` in `vite.config.ts`).
-- three.js/R3F loads only when the first 3D scene is needed; every scene mounts only near the viewport and caps DPR on low-end devices.
-- Mobile: no hero parallax/blur, lighter pin (120vh, max scale 1.6), no pinned process timeline, touch-friendly 3D (no drag capture).
-- `prefers-reduced-motion`: no loader, no smooth scroll, no pinning; static panorama.
-- Semantic landmarks, skip link, labelled controls, keyboard-operable before/after slider and lightbox (Esc to close).
+- Hero text renders before any 3D: three.js/R3F load after page load (desktop: when idle; touch/small screens: on
+  first interaction or after 4 s). The three product bags share one WebGL canvas; the globe (`cobe`) is its own small chunk.
+- Fonts load without blocking first paint. Lighthouse mobile (local preview): performance 81–91, accessibility 100.
+- Mobile low-power, `prefers-reduced-motion` or no WebGL: static SVG hero with stacked slides, static globe/grid fallbacks.
+- Semantic landmarks, skip link, one h1, labelled form controls with inline validation, keyboard-operable grade finder.
 
 ## Preview on GitHub Pages
 
@@ -76,6 +97,6 @@ The site is then served at `https://vt765.github.io/ShreeEarthtechLLP_3D/`.
 1. Push this folder to a GitHub repository.
 2. In Vercel → **Add New Project** → import the repo.
 3. Framework preset: **Vite** (build command `npm run build`, output directory `dist`).
-4. Deploy. `vercel.json` already rewrites all routes to `index.html` so `/products` and `/contact` work on refresh.
+4. Deploy. `vercel.json` already rewrites all routes to `index.html` (the old `/products` and `/contact` URLs redirect to home-page sections).
 
 Or from the CLI: `npm i -g vercel && vercel --prod`.
