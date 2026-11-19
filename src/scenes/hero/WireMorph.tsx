@@ -8,7 +8,7 @@ type Props = { progress: RefObject<number>; lite: boolean }
 /** Rock → granules → oil drop. One shared buffer drawn twice: as line segments and as glowing points. */
 export default function WireMorph({ progress, lite }: Props) {
   const geometry = useMemo(() => buildMorphGeometry(lite ? { plates: 6, ringPts: 14 } : { plates: 8, ringPts: 24 }), [lite])
-  const uniforms = useMemo(createMorphUniforms, [])
+  const uniforms = useMemo(() => createMorphUniforms(), [])
   const [lineMat, pointMat] = useMemo(() => [createMorphMaterial(uniforms, false), createMorphMaterial(uniforms, true)], [uniforms])
 
   useEffect(() => () => geometry.dispose(), [geometry])
@@ -20,6 +20,8 @@ export default function WireMorph({ progress, lite }: Props) {
     [lineMat, pointMat],
   )
 
+  // Per-frame uniform writes are R3F's intended pattern; they never feed React rendering.
+  /* eslint-disable react-hooks/immutability */
   useFrame((state) => {
     uniforms.uProgress.value = progress.current ?? 0
     uniforms.uTime.value = state.clock.elapsedTime
@@ -28,6 +30,7 @@ export default function WireMorph({ progress, lite }: Props) {
     uniforms.uFogNear.value = dist - 0.8
     uniforms.uFogFar.value = dist + 3.2
   })
+  /* eslint-enable react-hooks/immutability */
 
   return (
     <>
