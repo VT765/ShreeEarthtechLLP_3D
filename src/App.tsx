@@ -41,7 +41,7 @@ function RouteEffects() {
   const { pathname, search, hash } = useLocation()
   const navigate = useNavigate()
   const lastPath = useRef('')
-  // GitHub Pages redirects /products → /products/ (a public/ folder shares the name); titles and the
+  // Static hosts may redirect /products → /products/ (a public/ folder shares the name); titles and the
   // nav match exact paths, so drop the trailing slash.
   useEffect(() => {
     if (pathname.length > 1 && pathname.endsWith('/')) navigate({ pathname: pathname.replace(/\/+$/, ''), search, hash }, { replace: true })
