@@ -12,7 +12,6 @@ export const company = {
       'We turn premium Indian bentonite (montmorillonite) into a high-surface-area adsorbent through controlled acid activation, washing, drying and fine milling.',
       'Our three grades purify edible, industrial and waste oils — removing colour pigments, gums, soaps and trace metals while keeping oil retention low.',
     ],
-    image: { src: 'placeholders/plant/lab-qc.svg', alt: 'Quality-control laboratory testing a batch of bleaching earth' },
   },
   addressLabel: 'Office Address',
   address: 'Office No. 5, Ground Floor, Shah Commercial Centre, Bhuj, Gujarat 370001, India',

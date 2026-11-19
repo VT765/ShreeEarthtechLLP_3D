@@ -1,10 +1,9 @@
 import type { ReactNode, Ref } from 'react'
+import { Link } from 'react-router-dom'
 import { ArrowRight, Download } from 'lucide-react'
 import { hero } from '../../data/hero'
 import { company } from '../../data/company'
-import { sections } from '../../data/nav'
 import { asset } from '../../lib/asset'
-import { scrollToId } from '../../components/SmoothScroll'
 
 type Props = {
   ref?: Ref<HTMLDivElement>
@@ -33,9 +32,9 @@ export default function Slide1({ ref, overlay, inactive, art }: Props) {
           </h1>
           <p className="mt-4 max-w-[560px] text-[15px] leading-relaxed text-white/75 sm:mt-5 sm:text-lg">{s.body}</p>
           <div className="mt-6 flex flex-wrap gap-3 sm:mt-8">
-            <button type="button" className="btn btn-orange" onClick={() => scrollToId(sections.contact)}>
+            <Link to="/contact" className="btn btn-orange">
               {s.primaryCta} <ArrowRight className="h-4 w-4" aria-hidden />
-            </button>
+            </Link>
             <a href={asset(company.brochure)} download className="btn btn-ghost-dark">
               <Download className="h-4 w-4" aria-hidden /> {s.secondaryCta}
             </a>

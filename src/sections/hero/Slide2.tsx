@@ -1,15 +1,18 @@
-import type { CSSProperties, Ref } from 'react'
+import type { CSSProperties, ReactNode, Ref } from 'react'
+import { Link } from 'react-router-dom'
+import { ArrowRight } from 'lucide-react'
 import { hero } from '../../data/hero'
-import { asset } from '../../lib/asset'
 
 type Props = {
   ref?: Ref<HTMLDivElement>
   overlay?: boolean
   inactive?: boolean
   style?: CSSProperties
+  /** Right-hand illustration for the static fallback; the pinned hero shows the 3D plant there instead. */
+  art?: ReactNode
 }
 
-export default function Slide2({ ref, overlay, inactive, style }: Props) {
+export default function Slide2({ ref, overlay, inactive, style, art }: Props) {
   const s = hero.slide2
   return (
     <div
@@ -30,21 +33,11 @@ export default function Slide2({ ref, overlay, inactive, style }: Props) {
               <p key={p}>{p}</p>
             ))}
           </div>
+          <Link to={s.profileLink.to} className="hero-text-link mt-6 inline-flex items-center gap-2 font-semibold text-orange-light">
+            {s.profileLink.label} <ArrowRight className="h-4 w-4" aria-hidden />
+          </Link>
         </div>
-        <figure
-          className={`hero-frame relative mx-auto w-full max-w-[460px] lg:col-span-5 lg:col-start-8 lg:mt-28 lg:max-w-[400px] ${
-            overlay ? '[@media(max-height:719px)_and_(max-width:1023px)]:hidden' : ''
-          }`}
-        >
-          <img
-            src={asset(s.image.src)}
-            alt={s.image.alt}
-            width={800}
-            height={600}
-            decoding="async"
-            className="aspect-[16/10] w-full rounded-xl object-cover lg:aspect-[4/3]"
-          />
-        </figure>
+        {art && <div className="mx-auto w-full max-w-[460px] lg:col-span-5 lg:col-start-8 lg:max-w-none">{art}</div>}
       </div>
     </div>
   )
