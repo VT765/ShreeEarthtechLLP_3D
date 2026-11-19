@@ -5,9 +5,13 @@ import { createMorphMaterial, createMorphUniforms } from './morphShader'
 
 type Props = { progress: RefObject<number>; lite: boolean }
 
-/** Rock → granules → oil drop. One shared buffer drawn twice: as line segments and as glowing points. */
+/** Bentonite crystal → granules → oil drop. One shared buffer drawn twice: as line segments and as glowing points. */
 export default function WireMorph({ progress, lite }: Props) {
-  const geometry = useMemo(() => buildMorphGeometry(lite ? { plates: 6, ringPts: 14 } : { plates: 8, ringPts: 24 }), [lite])
+  const geometry = useMemo(() => buildMorphGeometry(
+        lite
+          ? { layers: 3, rings: 1, edge: 0.42, perSide: 1, cationsPerGap: 4, ringPts: 14 }
+          : { layers: 4, rings: 2, edge: 0.3, perSide: 2, cationsPerGap: 6, ringPts: 24 },
+      ), [lite])
   const uniforms = useMemo(() => createMorphUniforms(), [])
   const [lineMat, pointMat] = useMemo(() => [createMorphMaterial(uniforms, false), createMorphMaterial(uniforms, true)], [uniforms])
 

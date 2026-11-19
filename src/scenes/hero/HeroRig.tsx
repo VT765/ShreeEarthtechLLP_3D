@@ -50,7 +50,8 @@ export default function HeroRig({ progress, children }: Props) {
 
     const ang = -0.28 + t * 0.56
     const dist = baseDist * (1 - 0.12 * t)
-    camera.position.set(Math.sin(ang) * dist, 1.1 * (1 - t) + 0.15, Math.cos(ang) * dist)
+    // Start high enough to see the honeycomb faces, settle level for the drop.
+    camera.position.set(Math.sin(ang) * dist, 2.1 * (1 - t) + 0.15, Math.cos(ang) * dist)
     camera.lookAt(0, 0, 0)
   })
 

@@ -1,13 +1,26 @@
 import * as THREE from 'three'
 
 // Target shapes for the hero wireframe morph. Both shapes are lists of line segments; segment i of
-// the rock, a scattered granule i and segment i of the drop share one vertex pair in the GPU buffer,
+// the crystal, a scattered granule i and segment i of the drop share one vertex pair in the GPU buffer,
 // so the shader can lerp between them without ever re-uploading geometry.
 
 type V3 = [number, number, number]
-type Seg = { a: V3; b: V3; layer: number }
+/** `accent`: 0 lattice, 1 gold lattice accent, 2 interlayer cation (gold, escapes first). */
+type Seg = { a: V3; b: V3; layer: number; accent?: number }
 
-export type MorphDetail = { plates: number; ringPts: number }
+export type MorphDetail = {
+  /** T-O-T layers in the stack. */
+  layers: number
+  /** Honeycomb rings around the centre hexagon on each silica sheet. */
+  rings: number
+  /** Honeycomb edge length. */
+  edge: number
+  /** Edge-band points per hexagon side (1 = corners only, 2 = corners + midpoints). */
+  perSide: number
+  cationsPerGap: number
+  /** Ring resolution of the oil drop. */
+  ringPts: number
+}
 
 /** Deterministic PRNG so the rock is the same on every visit. */
 function mulberry32(seed: number) {
@@ -19,39 +32,115 @@ function mulberry32(seed: number) {
   }
 }
 
-/** Layered clay block: stacked, slightly chipped plates (montmorillonite sheets). */
-function rock(rand: () => number, { plates, ringPts }: MorphDetail): Seg[] {
+/** Honeycomb (6-membered silica rings) clipped to `rings` rings around a centre cell, in the xz plane. */
+function honeycomb(rings: number, edge: number): [number, number][][] {
+  const pitch = Math.sqrt(3) * edge
+  const seen = new Set<string>()
+  const out: [number, number][][] = []
+  const key = (x: number, z: number) => `${x.toFixed(3)},${z.toFixed(3)}`
+  // Axial hex-grid cell coordinates within `rings` of the origin.
+  for (let q = -rings; q <= rings; q++) {
+    for (let r = Math.max(-rings, -q - rings); r <= Math.min(rings, -q + rings); r++) {
+      const cx = pitch * (q + r / 2)
+      const cz = pitch * r * (Math.sqrt(3) / 2)
+      const v = Array.from({ length: 6 }, (_, k) => {
+        const th = Math.PI / 6 + (k * Math.PI) / 3
+        return [cx + Math.cos(th) * edge, cz + Math.sin(th) * edge] as [number, number]
+      })
+      for (let k = 0; k < 6; k++) {
+        const [a, b] = [v[k], v[(k + 1) % 6]]
+        const id = [key(...a), key(...b)].sort().join('|')
+        if (!seen.has(id)) {
+          seen.add(id)
+          out.push([a, b])
+        }
+      }
+    }
+  }
+  return out
+}
+
+/** Points around a hexagon of circumradius `r` (corners first at angle `rot`), `perSide` per side. */
+function hexPerimeter(r: number, rot: number, perSide: number): [number, number][] {
+  const corner = (k: number) => [Math.cos(rot + (k * Math.PI) / 3) * r, Math.sin(rot + (k * Math.PI) / 3) * r]
+  const pts: [number, number][] = []
+  for (let k = 0; k < 6; k++) {
+    const [a, b] = [corner(k), corner(k + 1)]
+    for (let s = 0; s < perSide; s++) {
+      const f = s / perSide
+      pts.push([a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f])
+    }
+  }
+  return pts
+}
+
+/**
+ * Montmorillonite crystal: a stack of hexagonal T-O-T platelets, each turned a little (turbostratic
+ * stacking). Each layer: a honeycomb silica sheet on top, a triangle band of tetrahedra/octahedra down
+ * its edge to the alumina sheet and on to the lower silica sheet. Gold cations sit in the interlayer gaps.
+ */
+function crystal(rand: () => number, d: MorphDetail): Seg[] {
   const segs: Seg[] = []
-  const gap = 0.27
-  const thick = 0.11
-  const mid = (plates - 1) / 2
-  for (let i = 0; i < plates; i++) {
+  const pitch = 0.7 // layer + interlayer spacing
+  const half = 0.13 // silica sheet ↔ alumina sheet
+  // Full honeycomb on the top face only; lower faces get a smaller one so the stack doesn't blur together.
+  const topLattice = honeycomb(d.rings, d.edge)
+  const innerLattice = honeycomb(Math.max(0, d.rings - 1), d.edge)
+  const radius = d.rings * Math.sqrt(3) * d.edge + d.edge
+  const mid = (d.layers - 1) / 2
+  // Tilt the whole stack so its hexagonal faces read from the camera's three-quarter view.
+  const tilt = new THREE.Euler(0.12, 0, -0.16)
+  const v = new THREE.Vector3()
+  const place = (x: number, y: number, z: number, rot: number, ox: number, oz: number): V3 => {
+    const [c, s] = [Math.cos(rot), Math.sin(rot)]
+    v.set(x * c - z * s + ox, y, x * s + z * c + oz).applyEuler(tilt)
+    return [v.x, v.y, v.z]
+  }
+  const accent = () => (rand() < 0.04 ? 1 : 0)
+
+  for (let i = 0; i < d.layers; i++) {
     const layer = i - mid
-    const yc = layer * gap
-    const taper = 1 - 0.28 * (Math.abs(layer) / mid) ** 2
-    const base = (0.95 + rand() * 0.12) * taper
-    const [ph1, ph2] = [rand() * 6.28, rand() * 6.28]
-    const [ox, oz] = [(rand() - 0.5) * 0.14, (rand() - 0.5) * 0.14]
-    const [tiltX, tiltZ] = [(rand() - 0.5) * 0.08, (rand() - 0.5) * 0.08]
-    const top: V3[] = []
-    const bot: V3[] = []
-    for (let j = 0; j < ringPts; j++) {
-      const th = (j / ringPts) * Math.PI * 2
-      const r = base * (1 + 0.1 * Math.sin(3 * th + ph1) + 0.06 * Math.sin(5 * th + ph2) + (rand() - 0.5) * 0.05)
-      const x = Math.cos(th) * r * 1.3 + ox
-      const z = Math.sin(th) * r * 0.95 + oz
-      const lift = x * tiltZ + z * tiltX
-      top.push([x, yc + thick / 2 + lift + (rand() - 0.5) * 0.02, z])
-      bot.push([x * 0.97, yc - thick / 2 + lift, z * 0.97])
+    const yc = layer * pitch
+    const rot = (rand() - 0.5) * 0.9
+    const [ox, oz] = [(rand() - 0.5) * 0.16, (rand() - 0.5) * 0.16]
+    const size = 1 - 0.1 * Math.abs(layer) / Math.max(mid, 1) + (rand() - 0.5) * 0.06
+    const at = (x: number, y: number, z: number) => place(x * size, y, z * size, rot, ox, oz)
+
+    // Top silica sheet: the honeycomb.
+    const lattice = i === d.layers - 1 ? topLattice : innerLattice
+    for (const [a, b] of lattice) segs.push({ a: at(a[0], yc + half, a[1]), b: at(b[0], yc + half, b[1]), layer, accent: accent() })
+
+    // Edge band: silica corners → alumina sheet (offset half a step) → lower silica corners.
+    const top = hexPerimeter(radius, 0, d.perSide)
+    const step = Math.PI / (3 * d.perSide)
+    const oct = hexPerimeter(radius * 0.97, step / 2, d.perSide)
+    const n = top.length
+    for (let j = 0; j < n; j++) {
+      const k = (j + 1) % n
+      const T = (p: [number, number], y: number) => at(p[0], y, p[1])
+      segs.push(
+        { a: T(top[j], yc + half), b: T(top[k], yc + half), layer },
+        { a: T(oct[j], yc), b: T(oct[k], yc), layer },
+        { a: T(top[j], yc - half), b: T(top[k], yc - half), layer },
+        { a: T(top[j], yc + half), b: T(oct[j], yc), layer },
+        { a: T(oct[j], yc), b: T(top[k], yc + half), layer },
+        { a: T(top[j], yc - half), b: T(oct[j], yc), layer, accent: accent() },
+        { a: T(oct[j], yc), b: T(top[k], yc - half), layer },
+      )
     }
-    for (let j = 0; j < ringPts; j++) {
-      const k = (j + 1) % ringPts
-      segs.push({ a: top[j], b: top[k], layer }, { a: bot[j], b: bot[k], layer }, { a: top[j], b: bot[j], layer })
-    }
-    // A few chords across each top face hint at the crystal lattice.
-    const step = Math.max(2, Math.round(ringPts / 4))
-    for (let j = 0; j < ringPts; j += step) {
-      segs.push({ a: top[j], b: top[(j + Math.round(ringPts / 3)) % ringPts], layer })
+
+    // Interlayer cations (Na⁺/Ca²⁺) as tiny gold crosses in the gap above this layer.
+    if (i === d.layers - 1) continue
+    const yg = yc + pitch / 2
+    for (let c = 0; c < d.cationsPerGap; c++) {
+      const th = (c / d.cationsPerGap) * Math.PI * 2 + rand() * 0.6
+      const r = radius * (0.25 + rand() * 0.5)
+      const [x, z] = [Math.cos(th) * r, Math.sin(th) * r]
+      const s = 0.045
+      segs.push(
+        { a: at(x - s, yg, z), b: at(x + s, yg, z), layer: layer + 0.5, accent: 2 },
+        { a: at(x, yg, z - s), b: at(x, yg, z + s), layer: layer + 0.5, accent: 2 },
+      )
     }
   }
   return segs
@@ -95,11 +184,12 @@ function padTo(segs: Seg[], n: number) {
 
 /**
  * One merged buffer for the whole morph. Attributes per vertex:
- * position = rock, aTarget = drop, aScatter = loose granule, aMeta = (random, layer, gold accent, random2).
+ * position = crystal, aTarget = drop, aScatter = loose granule, aMeta = (random, layer, accent, random2)
+ * where accent is 0 lattice, 1 gold lattice line, 2 interlayer cation.
  */
 export function buildMorphGeometry(detail: MorphDetail) {
   const rand = mulberry32(7)
-  const a = rock(rand, detail)
+  const a = crystal(rand, detail)
   const b = drop(detail.ringPts, a.length)
   // Shuffle the drop so the regroup reads as particles converging, not slabs sliding.
   for (let i = b.length - 1; i > 0; i--) {
@@ -115,7 +205,7 @@ export function buildMorphGeometry(detail: MorphDetail) {
   const scatter = new Float32Array(n * 6)
   const meta = new Float32Array(n * 8)
   for (let i = 0; i < n; i++) {
-    // Granule centre: random point in a wide ellipsoid around the rock.
+    // Granule centre: random point in a wide ellipsoid around the crystal.
     let sx = 0
     let sy = 0
     let sz = 0
@@ -128,7 +218,7 @@ export function buildMorphGeometry(detail: MorphDetail) {
     const ca = a[i].a.map((v, k) => (v + a[i].b[k]) / 2)
     const r1 = rand()
     const r2 = rand()
-    const accent = rand() < 0.06 ? 1 : 0
+    const accent = a[i].accent ?? 0
     ;[a[i].a, a[i].b].forEach((p, e) => {
       const q = b[i][e ? 'b' : 'a']
       const o = (i * 2 + e) * 3
