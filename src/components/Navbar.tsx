@@ -36,7 +36,9 @@ export default function Navbar() {
   useEffect(() => {
     const onScroll = () => {
       const end = document.getElementById(HERO_END_ID)
-      setPastHero(!end || end.getBoundingClientRect().top <= BAR_H)
+      // The static hero's copy scrolls up under the bar, so over it the bar turns solid as soon as the page moves.
+      const overStaticCopy = window.scrollY > 8 && !!document.querySelector('[data-static-hero]')
+      setPastHero(!end || end.getBoundingClientRect().top <= BAR_H || overStaticCopy)
     }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })

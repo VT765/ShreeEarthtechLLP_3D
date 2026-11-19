@@ -6,7 +6,7 @@ import Slide2 from './Slide2'
 /** No-pin fallback: static dotted art (crystals, then the assembled plant), both slides as ordinary sections. */
 export default function StackedHero() {
   return (
-    <div className="hero-root on-dark bg-dark-hero">
+    <div className="hero-root on-dark bg-dark-hero" data-static-hero>
       <section id={sections.home} aria-labelledby="hero-title" className="relative overflow-hidden">
         <Slide1 art={<HeroIllustration variant="crystals" className="mx-auto max-w-[420px] lg:max-w-none" />} />
       </section>
