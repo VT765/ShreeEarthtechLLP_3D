@@ -81,8 +81,9 @@ export default function PinnedHero() {
           setActive(p >= 0.5 ? 1 : 0)
         },
       })
-      tl.fromTo(slide1.current, { opacity: 1, y: 0, filter: 'blur(0px)' }, { opacity: 0, y: -40, filter: 'blur(8px)', duration: 0.4 }, 0.1)
-        .fromTo(slide2.current, { opacity: 0, y: 40, filter: 'blur(8px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.4 }, 0.5)
+      // Opacity and transform only: an animated CSS blur over the WebGL canvas was the costliest thing on the page.
+      tl.fromTo(slide1.current, { opacity: 1, y: 0 }, { opacity: 0, y: -40, duration: 0.4 }, 0.1)
+        .fromTo(slide2.current, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.4 }, 0.5)
         .set({}, {}, 1)
       const st = tl.scrollTrigger
       if (st) placeMarker(st.start, st.end)

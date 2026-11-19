@@ -22,7 +22,7 @@
 }
 
 .hero-slide {
-  will-change: opacity, transform, filter;
+  will-change: opacity, transform;
 }
 
 /* Slide-2 "Read company profile" link: underline grows in on hover / focus. */
