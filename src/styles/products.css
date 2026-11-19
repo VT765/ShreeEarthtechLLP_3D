@@ -1,0 +1,79 @@
+/* Product gallery + grade finder extras (brand tokens come from index.css). */
+
+/* Gold ring shown for ~2.5s when another section calls highlightProduct(). */
+@keyframes product-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 3px var(--gold-light),
+      0 0 40px rgba(224, 176, 74, 0.45);
+  }
+  50% {
+    box-shadow:
+      0 0 0 5px var(--gold-light),
+      0 0 70px rgba(224, 176, 74, 0.7);
+  }
+}
+.product-card.is-highlighted {
+  border-color: var(--brand-gold);
+  animation: product-glow 1.25s ease-in-out 2;
+  box-shadow:
+    0 0 0 3px var(--gold-light),
+    0 0 40px rgba(224, 176, 74, 0.45);
+}
+.product-card:focus {
+  outline: none;
+}
+.product-card:focus-visible {
+  outline: 2px solid var(--brand-blue);
+  outline-offset: 4px;
+}
+
+/* Soft stage behind each bag / product image. */
+.bag-stage {
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 60%, rgba(224, 176, 74, 0.16), transparent 70%),
+    linear-gradient(180deg, var(--sand) 0%, #fff 100%);
+}
+
+/* Collapsible spec table: animates grid rows 0fr → 1fr. */
+.collapse-rows {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s var(--ease-out-soft);
+}
+.collapse-rows[data-open='true'] {
+  grid-template-rows: 1fr;
+}
+.collapse-rows > * {
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Grade finder result: rise + fade, or a plain fade when motion is reduced. */
+@keyframes gf-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+@keyframes gf-fade {
+  from {
+    opacity: 0;
+  }
+}
+.gf-result {
+  animation: gf-in 0.5s var(--ease-out-soft) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  /* Override the global animation kill-switch with an opacity-only fade. */
+  .gf-result.gf-result {
+    animation: gf-fade 0.25s linear both !important;
+  }
+}
+
+/* Segmented radio buttons / chips (native radios, visually styled). */
+.seg-option input:focus-visible + span {
+  outline: 2px solid var(--brand-blue);
+  outline-offset: 3px;
+}

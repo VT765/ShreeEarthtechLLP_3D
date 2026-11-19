@@ -1,0 +1,35 @@
+/* Footer: deep ink → midnight gradient with a faint gold glow. */
+.footer-bg {
+  background:
+    radial-gradient(ellipse 60% 40% at 85% 0%, rgba(191, 131, 17, 0.12), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 0% 30%, rgba(12, 113, 199, 0.14), transparent 70%),
+    linear-gradient(180deg, var(--ink-deep) 0%, var(--midnight) 55%, #04101f 100%);
+}
+
+/* Links on dark: underline grows on hover/focus. */
+.footer-link {
+  color: rgba(255, 255, 255, 0.78);
+  background: linear-gradient(var(--gold-light), var(--gold-light)) 0 100% / 0 1px no-repeat;
+  transition:
+    color 0.3s var(--ease-out-soft),
+    background-size 0.3s var(--ease-out-soft);
+}
+.footer-link:hover,
+.footer-link:focus-visible {
+  color: var(--gold-light);
+  background-size: 100% 1px;
+}
+.footer-dark :focus-visible {
+  outline-color: var(--gold-light);
+}
+
+/* Certification seal hover. */
+.seal {
+  transition:
+    transform 0.4s var(--ease-out-soft),
+    color 0.4s var(--ease-out-soft);
+}
+.seal:hover {
+  transform: translateY(-3px);
+  color: var(--gold-light);
+}
