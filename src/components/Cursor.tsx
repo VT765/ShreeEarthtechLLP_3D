@@ -3,7 +3,8 @@ import { useFinePointer, useReducedMotion } from '../hooks/useMedia'
 
 /** Subtle oil-droplet cursor that appears over interactive elements (desktop only). */
 export default function Cursor() {
-  const enabled = useFinePointer() && !useReducedMotion()
+  const fine = useFinePointer()
+  const enabled = !useReducedMotion() && fine
   const ref = useRef<HTMLDivElement>(null)
   const [hot, setHot] = useState(false)
 

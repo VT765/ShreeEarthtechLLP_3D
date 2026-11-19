@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",
@@ -25,8 +26,17 @@
     "@types/react-dom": "^19.3.0",
     "@types/three": "^0.187.0",
     "@vitejs/plugin-react": "^6.3.0",
+    "eslint": "^10.15.0",
     "tailwindcss": "^4.3.5",
     "typescript": "^7.0.2",
     "vite": "^8.3.8"
+  },
+  "workspaces": [
+    "tools/eslint"
+  ],
+  "overrides": {
+    "ts-api-utils": {
+      "typescript": "~6.0.3"
+    }
   }
 }
