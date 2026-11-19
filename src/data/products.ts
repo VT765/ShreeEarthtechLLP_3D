@@ -35,7 +35,7 @@ export const products: Product[] = [
     name: 'Earthtech Crystal Brite',
     short: 'Crystal Brite',
     grade: 'High-activity acidic grade',
-    body: 'For tough pigments and dark oils — rice bran, palm and heavily coloured crude.',
+    body: 'Maximum bleaching power for dark, pigment-heavy oils such as rice bran, palm and strongly coloured crude. Strips chlorophyll and carotenes at low dosage.',
     color: '#2C6A99',
     pack: { label: 'CRYSTALBRITE', main: '#1FAFB1', dark: '#0E5A63', accent: '#1FA3A6', light: '#BFEBEA', logo: ['#167F88', '#D9A930'], icon: ['#178F94', '#4CCBC6'] },
     keySpecs: [
@@ -52,7 +52,7 @@ export const products: Product[] = [
     name: 'Earthtech Hyper Clean',
     short: 'Hyper Clean',
     grade: 'Balanced all-round grade',
-    body: 'For most edible and industrial oils — dependable colour and gum removal at moderate dosage.',
+    body: 'Our most versatile grade for most edible and industrial oils: dependable colour, gum and soap removal at moderate dosage, with fast filtration.',
     color: '#D2691E',
     pack: { label: 'HYPERCLEAN', main: '#203E8C', dark: '#1A3478', accent: '#203E8C', light: '#AFC0EA', logo: ['#1E4FA8', '#9EA8B6'], icon: ['#1E4FA8', '#B8C0CC'] },
     keySpecs: [
@@ -69,7 +69,7 @@ export const products: Product[] = [
     name: 'Earthtech Pure Choice',
     short: 'Pure Choice',
     grade: 'Near-neutral grade',
-    body: 'For sensitive, premium edible oils where flavour stability and low acidity matter most.',
+    body: 'A gentle, near-neutral grade for premium edible oils such as sunflower and coconut, where flavour stability and low acidity matter most.',
     color: '#6B4A32',
     pack: { label: 'PURE CHOICE', main: '#2E7B3A', dark: '#245F33', accent: '#76A33A', light: '#DCE5B4', logo: ['#3C8C3C', '#A9B83A'], icon: ['#3E9142', '#C9B23A'] },
     keySpecs: [

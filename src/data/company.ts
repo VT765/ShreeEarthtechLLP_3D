@@ -4,13 +4,13 @@ export const company = {
   name: 'Shree Earthtech LLP',
   tagline: 'Purity, Engineered from the Earth.',
   intro:
-    'Shree Earthtech LLP manufactures high-efficiency Activated Bleaching Earth that refineries trust for cleaner, brighter, safer oils — consistent from batch to batch, tested before every dispatch.',
+    'Activated Bleaching Earth made from select Bhavnagar and Kutch bentonite, engineered for low dosage, fast filtration and low oil retention, and lab-tested batch by batch before it leaves our plant.',
   about: {
     heading: 'About Shree Earthtech',
-    subheading: "SE's Activated Bleaching Earth",
+    subheading: 'Gujarat bentonite, engineered into a precision adsorbent',
     body: [
-      'We turn premium Indian bentonite (montmorillonite) into a high-surface-area adsorbent through controlled acid activation, washing, drying and fine milling.',
-      'Our three grades purify edible, industrial and waste oils — removing colour pigments, gums, soaps and trace metals while keeping oil retention low.',
+      'We source montmorillonite-rich bentonite from the reserves of Bhavnagar and Kutch and transform it, through controlled acid activation, washing, drying and fine milling, into a high-surface-area bleaching earth.',
+      'Our three grades help refiners of edible, industrial and waste oils remove colour pigments, gums, soaps and trace metals at lower dosage, with less oil lost in the filter cake.',
     ],
   },
   addressLabel: 'Office Address',

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, CheckCircle2 } from 'lucide-react'
 import { companyProfile } from '../data/about'
 import { products } from '../data/products'
 import { routes } from '../data/routes'
@@ -53,6 +53,19 @@ export default function CompanyProfilePage() {
               </ul>
             </div>
           </aside>
+        </div>
+
+        <div className="container-x mt-16">
+          <h2 className="h2">{c.highlightsTitle}</h2>
+          <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {c.highlights.map((h) => (
+              <li key={h.title} className="card p-6">
+                <CheckCircle2 className="h-6 w-6 text-orange" strokeWidth={1.75} aria-hidden />
+                <h3 className="mt-3 text-lg">{h.title}</h3>
+                <p className="mt-1.5 text-[15px]">{h.body}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 

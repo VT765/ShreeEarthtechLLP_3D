@@ -1,11 +1,13 @@
 import { useRef, useState } from 'react'
 import { Maximize2, X } from 'lucide-react'
 import { certifications } from '../data/company'
+import { sectionCopy } from '../data/sections'
 import { asset } from '../lib/asset'
 import PageHero from '../components/PageHero'
 import '../styles/certifications.css'
 
 type Cert = (typeof certifications)[number]
+const copy = sectionCopy.certificates
 
 /** Every certificate as an image with a View button; View opens it full size. */
 export default function CertificatesPage() {
@@ -18,7 +20,7 @@ export default function CertificatesPage() {
 
   return (
     <>
-      <PageHero eyebrow="Quality & compliance" title="Our Certificates" crumbs={[{ label: 'Certificates' }]} />
+      <PageHero eyebrow={copy.eyebrow} title={copy.title} body={copy.body} crumbs={[{ label: 'Certificates' }]} />
 
       <div className="section bg-cream">
         <ul className="container-x grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3 lg:gap-8">

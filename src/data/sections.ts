@@ -4,59 +4,71 @@ export const sectionCopy = {
   reach: {
     eyebrow: 'Global Reach',
     titleLead: 'From Gujarat to',
-    titleAccent: 'markets worldwide',
+    titleAccent: 'refineries worldwide',
     // PLACEHOLDER — align the region list with data/exportCountries.ts.
-    body: 'Activated Bleaching Earth made in India and shipped to refiners across the Middle East, Africa and Asia, batch-tested and export-packed.',
+    body: 'Made in India and shipped to refiners across the Middle East, Africa and Asia: batch-tested, export-packed in 25 kg and 50 kg bags or jumbo FIBCs, and backed by full documentation.',
     dispatch: 'Dispatched from Gujarat, India',
     marketsCta: 'See all export markets',
   },
   /** Home-page product summary. */
   productsSummary: {
     eyebrow: 'Our products',
-    title: 'Three grades of Activated Bleaching Earth',
-    body: 'Each grade is tuned to a different oil profile. Open a product for its full specification and data sheet.',
+    title: 'Three grades. One standard of purity.',
+    body: 'Each grade is tuned to a different oil, from dark, pigment-heavy crude to delicate premium edible oils. Open a product for its full specification and technical data sheet.',
     cta: 'Compare all grades',
   },
   /** Full product gallery (/products). */
   products: {
     eyebrow: 'Our products',
     title: 'Three grades of Activated Bleaching Earth',
-    body: 'Each grade is tuned to a different oil profile — from tough, dark crude to delicate premium edible oils. Download the technical data sheet or ask our team for a sample.',
+    body: 'Choose the activity your oil needs: high-activity Crystal Brite for heavy pigments, all-round Hyper Clean for most edible and industrial oils, and near-neutral Pure Choice for premium oils. Download the data sheet or ask us for a sample.',
   },
   /** Home-page applications teaser. */
   applicationsSummary: {
     eyebrow: 'Applications',
-    title: 'Edible, industrial and waste oils',
-    body: 'Tell us the oil you refine and the Grade Finder suggests a starting grade.',
+    title: 'Built for edible, industrial and waste oils',
+    body: 'From soybean and palm to lube oil and used cooking oil: tell us what you refine and the Grade Finder suggests where to start.',
     cta: 'Open the Grade Finder',
+  },
+  /** Applications page hero (/applications). */
+  applications: {
+    eyebrow: 'Applications',
+    title: 'One adsorbent, three industries',
+    body: 'Our bleaching earth purifies edible oils, refines industrial oils and regenerates used oils. Use the Grade Finder to see which grade our technical team recommends for yours.',
   },
   /** Full grade finder (/applications). */
   gradeFinder: {
     eyebrow: 'Grade finder',
     title: 'Which grade suits your oil?',
-    body: 'Pick the oil you refine and we’ll point you to the grade our technical team recommends as a starting point.',
-    note: 'Recommendations are a starting point — final dosage is confirmed with a lab bleaching trial on your oil.',
+    body: 'Pick the oil you refine and we’ll show the grade our technical team recommends as a starting point.',
+    note: 'Recommendations are a starting point. Final dosage is confirmed with a lab bleaching trial on your oil.',
   },
   certifications: {
     eyebrow: 'Certifications',
     title: 'Quality you can audit',
-    body: 'Hover over, tap or focus a certificate to preview it.',
+    body: 'Independently certified systems for quality, food safety, the environment and workplace safety. Hover over or tap a seal to preview its certificate.',
+  },
+  /** Certificates page hero (/certificates). */
+  certificates: {
+    eyebrow: 'Quality & compliance',
+    title: 'Our Certificates',
+    body: 'Independent certification of how we manage quality, food safety, the environment and workplace safety, plus Kosher and Halal approval. Select View to open any certificate at full size.',
   },
   plant: {
     eyebrow: 'Manufacturing Plant',
     title: 'Inside the plant, step by step',
-    body: 'From acid activation to the QC bench: a look at the line that turns raw bentonite into high-performance bleaching earth.',
+    body: 'From raw bentonite to a sealed, batch-coded bag: follow the line that turns Gujarat clay into high-performance bleaching earth.',
   },
   /** Footer call-to-action band. */
   contactCta: {
     title: 'Let’s talk about your oil',
-    body: 'Tell us what you refine and how much you need. We’ll recommend a grade and arrange a sample.',
+    body: 'Tell us what you refine and roughly how much you need. We’ll recommend a grade, share the data sheet and send a sample for a lab trial.',
     cta: 'Request a quote',
   },
   /** Full contact page (/contact). */
   contact: {
     eyebrow: 'Contact us',
     title: 'Let’s talk about your oil',
-    body: 'Tell us what you refine and how much you need. We’ll recommend a grade, share the TDS and arrange a sample for a lab trial.',
+    body: 'Share the oil you refine, the bleaching earth you use today and your monthly volume. We’ll recommend a grade, send the technical data sheet and arrange a sample for your lab trial.',
   },
 }
