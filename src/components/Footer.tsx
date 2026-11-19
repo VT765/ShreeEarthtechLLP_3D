@@ -1,72 +1,118 @@
 import { Link } from 'react-router-dom'
-import { Mail, MapPin, Phone } from 'lucide-react'
-import { certifications, company, nav, products } from '../content'
+import { ArrowRight, Mail, Phone } from 'lucide-react'
+import { sectionCopy } from '../data/sections'
+import { isMenu, nav } from '../data/nav'
+import { company, telHref } from '../data/company'
+import { products } from '../data/products'
+import { routes } from '../data/routes'
+import { asset } from '../lib/asset'
 import Logo from './Logo'
-import { SWatermark } from './SCurve'
+import NavItemLink from './NavItemLink'
 import SocialIcon from './Social'
+import { SWatermark } from './SCurve'
+import '../styles/footer.css'
 
+const cta = sectionCopy.contactCta
+const listFormat = new Intl.ListFormat('en', { style: 'long', type: 'conjunction' })
+/** Every page link in the nav, flattened (dropdown items included). */
+const quickLinks = nav.flatMap((n) => (isMenu(n) ? n.items : [n])).filter((l) => !products.some((p) => l.to === routes.product(p.slug)))
+
+/** Slim footer: quote CTA, brand + quick links + product links, legal line. The full contact block is on /contact. */
 export default function Footer() {
+  const year = new Date().getFullYear()
+  const phone = company.phones[0]
+  const email = company.emails[0]
+
   return (
-    <footer className="on-dark relative overflow-hidden text-white/70" style={{ background: 'linear-gradient(180deg, #050F1E 0%, #071F3A 100%)' }}>
-      <SWatermark className="absolute -right-24 -top-10 h-[620px] w-[520px] text-white/[0.035]" />
-      <div className="container-x relative grid gap-12 py-20 md:grid-cols-2 lg:grid-cols-12">
-        <div className="lg:col-span-4">
-          <Logo variant="dark" />
-          <p className="mt-6 max-w-sm">
-            <span className="font-display text-lg font-bold text-white">Purity, Engineered from the Earth.</span>
-            <br />
-            High-efficiency Activated Bleaching Earth for edible, industrial and waste oils — made in Gujarat, trusted worldwide.
-          </p>
-          <div className="mt-6 flex gap-3">
-            {company.social.map((s) => (
-              <a key={s.name} href={s.href} aria-label={s.name} className="grid h-10 w-10 place-items-center rounded-full border border-white/15 text-gold-light transition-colors hover:border-gold-light hover:bg-gold-light hover:text-midnight">
-                <SocialIcon name={s.name} className="h-[18px] w-[18px]" />
-              </a>
-            ))}
+    <footer className="footer-bg on-dark relative overflow-hidden text-white/75">
+      <SWatermark className="absolute -left-28 top-10 h-[520px] w-auto text-white/[0.035]" />
+
+      {/* ---------- Quote CTA ---------- */}
+      <div className="footer-dark container-x relative border-b border-white/10 py-14">
+        <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-center">
+          <div className="max-w-2xl">
+            <h2 className="h2">{cta.title}</h2>
+            <p className="mt-3 text-lg text-white/75">{cta.body}</p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Link to={routes.contact} className="btn btn-orange">
+              {cta.cta} <ArrowRight className="h-4 w-4" aria-hidden />
+            </Link>
+            <a href={telHref(phone)} className="btn btn-ghost-dark">
+              <Phone className="h-4 w-4" aria-hidden /> {phone}
+            </a>
           </div>
         </div>
-        <FooterCol title="Quick links" className="lg:col-span-2">
-          {nav.slice(1).map((n) => (
-            <li key={n.id}>
-              <Link to={`/#${n.id}`} className="hover:text-gold-light">{n.label}</Link>
-            </li>
-          ))}
-        </FooterCol>
-        <FooterCol title="Products" className="lg:col-span-2">
-          {products.map((p) => (
-            <li key={p.id}>
-              <Link to="/products" className="hover:text-gold-light">{p.short}</Link>
-            </li>
-          ))}
-          <li><Link to="/products#specs" className="hover:text-gold-light">Technical specs</Link></li>
-          <li><Link to="/contact" className="hover:text-gold-light">Request a quote</Link></li>
-        </FooterCol>
-        <FooterCol title="Contact" className="lg:col-span-4">
-          <li className="flex gap-3"><MapPin className="mt-1 h-4 w-4 shrink-0 text-gold-light" strokeWidth={1.75} /><span><strong className="block font-semibold text-white">{company.addressLabel}</strong>{company.address}</span></li>
-          <li className="flex gap-3"><Phone className="mt-1 h-4 w-4 shrink-0 text-gold-light" strokeWidth={1.75} />{company.phones.join(' / ')}</li>
-          <li className="flex gap-3"><Mail className="mt-1 h-4 w-4 shrink-0 text-gold-light" strokeWidth={1.75} />{company.emails.join(' · ')}</li>
-        </FooterCol>
       </div>
-      <div className="container-x relative flex flex-wrap gap-2 pb-10">
-        {certifications.map((c) => (
-          <span key={c.id} className="rounded-full border border-gold-light/30 px-3 py-1 font-mono text-xs text-gold-light">{c.title}</span>
-        ))}
+
+      {/* ---------- Brand, quick links, products ---------- */}
+      <div className="footer-dark container-x relative grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+        <div>
+          <Logo variant="dark" />
+          <p className="mt-4 max-w-sm text-sm text-white/65">{company.tagline}</p>
+          <a href={`mailto:${email}`} className="footer-link mt-4 inline-flex items-center gap-2 text-sm">
+            <Mail className="h-4 w-4" aria-hidden /> {email}
+          </a>
+          <ul className="mt-6 flex gap-3" aria-label="Social media">
+            {company.social.map((s) => (
+              <li key={s.name}>
+                <a
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${company.name} on ${s.name}`}
+                  className="grid h-10 w-10 place-items-center rounded-full border border-white/15 text-white/80 transition-colors hover:border-orange-light hover:text-orange-light"
+                >
+                  <SocialIcon name={s.name} className="h-[18px] w-[18px]" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <nav aria-label="Quick links">
+          <h2 className="text-sm font-semibold uppercase tracking-[0.14em] text-white/60">Quick links</h2>
+          <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2.5 text-[15px] md:grid-cols-1">
+            {quickLinks.map((l) => (
+              <li key={l.to}>
+                <NavItemLink to={l.to} className="footer-link">
+                  {l.label}
+                </NavItemLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div>
+          <h2 className="text-sm font-semibold uppercase tracking-[0.14em] text-white/60">Products</h2>
+          <ul className="mt-4 space-y-2.5 text-[15px]">
+            {products.map((p) => (
+              <li key={p.id}>
+                <Link to={routes.product(p.slug)} className="footer-link">
+                  {p.name}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <a href={asset(company.brochure)} download className="footer-link">
+                Company brochure<span className="sr-only"> (PDF)</span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div className="relative border-t border-white/10">
-        <div className="container-x flex flex-col justify-between gap-2 py-6 text-sm sm:flex-row">
-          <p>© 2026 Shree Earthtech LLP. All rights reserved.</p>
-          <p>{company.website}</p>
+
+      {/* ---------- Legal ---------- */}
+      <div className="footer-dark relative border-t border-white/10">
+        <div className="container-x flex flex-col gap-2 pb-24 pt-6 text-xs text-white/60 md:flex-row md:items-center md:justify-between md:pb-6 md:pr-20">
+          <p>
+            © {year} {company.name}. All rights reserved.
+          </p>
+          <p>
+            {listFormat.format(products.map((p) => p.name))} are trademarks of {company.name}.
+          </p>
         </div>
       </div>
     </footer>
-  )
-}
-
-function FooterCol({ title, children, className = '' }: { title: string; children: React.ReactNode; className?: string }) {
-  return (
-    <div className={className}>
-      <h3 className="font-display text-sm font-bold uppercase tracking-[0.15em] !text-gold-light">{title}</h3>
-      <ul className="mt-5 space-y-3 text-[15px]">{children}</ul>
-    </div>
   )
 }

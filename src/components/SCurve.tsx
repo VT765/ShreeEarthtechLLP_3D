@@ -30,7 +30,7 @@ export function CurveDivider({ fill, flip = false, className = '' }: { fill: str
 export function CornerSweep({ className = '' }: { className?: string }) {
   return (
     <svg viewBox="0 0 60 60" className={`pointer-events-none absolute ${className}`} aria-hidden fill="none">
-      <path d="M58 2 C 30 2, 2 18, 2 58" stroke="var(--brand-gold)" strokeWidth="2.5" strokeLinecap="round" opacity="0.7" />
+      <path d="M58 2 C 30 2, 2 18, 2 58" stroke="var(--orange)" strokeWidth="2.5" strokeLinecap="round" opacity="0.7" />
     </svg>
   )
 }

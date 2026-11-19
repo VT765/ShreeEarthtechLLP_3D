@@ -1,0 +1,71 @@
+/* Home hero — imported by sections/hero/Hero.tsx */
+
+/* Gold focus ring: the global blue one disappears on midnight. */
+.hero-root :focus-visible {
+  outline-color: var(--orange-light);
+}
+
+/* Readability scrim: copy on the left, plant on the right (desktop). Kept light so the crystal field
+   still reads across the whole hero. */
+.hero-vignette {
+  background:
+    radial-gradient(130% 100% at 72% 50%, transparent 55%, rgba(14, 12, 10, 0.45) 100%),
+    linear-gradient(90deg, rgba(27, 23, 20, 0.8) 0%, rgba(27, 23, 20, 0.62) 34%, rgba(27, 23, 20, 0.18) 52%, transparent 62%);
+}
+/* Stacked layout: the object sits below the copy, so the scrim is vertical and clears towards the bottom. */
+@media (max-width: 1023px) {
+  .hero-vignette {
+    background:
+      radial-gradient(140% 80% at 50% 75%, transparent 40%, rgba(14, 12, 10, 0.45) 100%),
+      linear-gradient(180deg, rgba(27, 23, 20, 0.8) 0%, rgba(27, 23, 20, 0.68) 45%, rgba(27, 23, 20, 0.2) 72%, transparent 100%);
+  }
+}
+
+.hero-slide {
+  will-change: opacity, transform, filter;
+}
+
+/* Slide-2 "Read company profile" link: underline grows in on hover / focus. */
+.hero-text-link {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  transition: background-size 0.3s var(--ease-out-soft);
+}
+.hero-text-link:hover,
+.hero-text-link:focus-visible {
+  background-size: 100% 1px;
+}
+
+/* "Scroll" cue: a dot sliding down a hairline. */
+.hero-scroll-line {
+  position: relative;
+  width: 1px;
+  height: 36px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.2);
+}
+.hero-scroll-line::after {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: -8px;
+  width: 3px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--orange-light);
+  animation: hero-scroll 1.8s var(--ease-out-soft) infinite;
+}
+@keyframes hero-scroll {
+  to {
+    transform: translateY(52px);
+  }
+}
+
+/* Positioned by PinnedHero at the pin-end scroll offset; spans to the bottom so the nav highlights "About". */
+.hero-about-marker {
+  position: absolute;
+  left: 0;
+  width: 1px;
+  top: calc(220vh + 70px);
+  bottom: 0;
+  pointer-events: none;
+}

@@ -4,7 +4,8 @@ import { useFinePointer, useReducedMotion } from '../hooks/useMedia'
 /** Subtle 3D hover tilt for cards. */
 export default function Tilt({ className = '', children, max = 6, ...rest }: HTMLAttributes<HTMLDivElement> & { max?: number }) {
   const ref = useRef<HTMLDivElement>(null)
-  const enabled = useFinePointer() && !useReducedMotion()
+  const fine = useFinePointer()
+  const enabled = !useReducedMotion() && fine
   return (
     <div
       ref={ref}
