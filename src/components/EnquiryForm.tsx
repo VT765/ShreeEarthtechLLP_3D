@@ -223,9 +223,9 @@ export default function EnquiryForm() {
 
   return (
     <form ref={formRef} onSubmit={submit} noValidate aria-labelledby={`${uid}-title`} aria-busy={sending} className="card relative p-6 text-body md:p-8">
-      <h3 id={`${uid}-title`} className="text-2xl text-ink">
+      <h2 id={`${uid}-title`} className="text-2xl text-ink">
         Request a quote
-      </h3>
+      </h2>
       <p className="mt-1 text-sm text-stone">
         Fields marked <span className="text-error">*</span> are required. We reply within one business day.
       </p>

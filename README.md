@@ -16,39 +16,72 @@ npm run lint      # ESLint (typescript-eslint, react-hooks, react-refresh)
 
 Requires Node 20+.
 
-## Home-page flow
+## Pages
 
-Navbar → pinned wireframe hero (slide 1: tagline + CTAs, slide 2: About) → Global Reach globe →
-Product Gallery → Grade Finder → Manufacturing Plant gallery → Footer (enquiry form, contact, map, certifications).
-`/products` and `/contact` redirect to the matching home-page sections.
+| Route | Content |
+|---|---|
+| `/` | Hero (dotted crystals assemble into a miniature plant; slide 2 = About summary), Global Reach summary, product summary, applications teaser, Certification block, Plant Photo Gallery |
+| `/about/company-profile` | Company profile, product list, Global Reach with the full market list |
+| `/about/vision-mission` | Vision (`#vision`) and Mission (`#mission`) — placeholders until supplied |
+| `/products` | Full gallery: 3D bags, key specs, TDS downloads, spec comparison table |
+| `/products/:slug` | One page per grade (`crystal-brite`, `hyper-clean`, `pure-choice`) |
+| `/applications` | Interactive Grade Finder |
+| `/contact` | Contact details, map and enquiry form (`?grade=crystal` pre-selects a product) |
+
+The navbar's **About** and **Products** items are disclosure dropdowns (hover, click/tap, keyboard; Esc / outside
+click close). Pages are lazy-loaded; `vercel.json` and the Pages `404.html` copy serve them on direct visits.
 
 ## Where to edit things
 
 | What | Where |
 |---|---|
-| Company details, about text, brochure path, certifications | `src/data/company.ts` |
-| Product grades, key specs, full spec table, TDS paths, product images | `src/data/products.ts` |
+| Company details, about text, brochure path, certifications (+ certificate images) | `src/data/company.ts` |
+| Company Profile / Vision & Mission copy | `src/data/about.ts` |
+| Product grades, slugs, key specs, full spec table, TDS paths, product images | `src/data/products.ts` |
 | Oil → grade recommendations (Grade Finder) | `src/data/gradeFinder.ts` |
 | Export countries (globe) | `src/data/exportCountries.ts` |
 | Plant gallery images and captions | `src/data/plantGallery.ts` |
 | Hero slides | `src/data/hero.ts` |
-| Section headings and intro copy | `src/data/sections.ts` |
-| Navbar links and section ids | `src/data/nav.ts` |
+| Section headings and summary copy | `src/data/sections.ts` |
+| Routes | `src/data/routes.ts` (+ `<Routes>` in `src/App.tsx`) |
+| Navbar items and dropdowns, home section ids | `src/data/nav.ts` |
 | Palette (CSS variables → Tailwind tokens) | `:root` and `@theme` at the top of `src/index.css` |
-| Sections | `src/sections/` (hero in `src/sections/hero/`), footer in `src/components/Footer.tsx` |
-| 3D scenes (lazy-loaded) | `src/scenes/` |
+| Logo colours | `scripts/recolor-logo.py` (re-run after changing the target hues) |
+| Sections / pages | `src/sections/`, `src/pages/`; hero in `src/sections/hero/` + `src/scenes/hero/` |
+
+## Colour palette
+
+| Token | Hex | Used for |
+|---|---|---|
+| `cream` | `#FAF6EE` | Page background, dropdown panels, cards on beige |
+| `beige` | `#EFE4D2` | Alternate sections, badges, image stages |
+| `clay` | `#DCCBAE` | Borders and dividers |
+| `ink` | `#211A15` | Headings |
+| `body` | `#4A3F36` | Body text |
+| `stone` | `#6B5E50` | Captions, muted text |
+| `brown` / `brown-deep` | `#6B4A32` / `#47301F` | Pure Choice accent, earthy accents |
+| `charcoal` / `charcoal-2` / `coal` | `#1B1714` / `#2B241E` / `#0E0C0A` | Hero, navbar, page headers / dark cards / footer base |
+| `orange` / `orange-light` / `orange-deep` | `#D2691E` / `#F2A25C` / `#A14A0F` | CTAs, eyebrow rules, icons / accents on dark / orange text on light |
+| `sky` / `sky-deep` / `sky-light` / `sky-tint` | `#2C6A99` / `#22547A` / `#8CC3E8` / `#E5EFF6` | Links, primary buttons, focus / hover, table headers / wireframe dots on dark / zebra rows |
+
+Every text/background pair used meets WCAG AA (body on cream 9.5:1, stone on beige 5.0:1, orange-deep on cream
+5.6:1, white on sky 5.8:1, charcoal on orange 4.9:1, orange-light on charcoal 8.6:1).
 
 ## Placeholders to replace
 
 All file paths go through `asset()` (`src/lib/asset.ts`) so they work under the GitHub Pages sub-path.
 
+- **Certificates** — every entry in `certifications` (`data/company.ts`) points at the dummy
+  `public/certificates/placeholder-certificate.svg`. Add the real scan (e.g. `public/certificates/iso9001.jpg`) and
+  set that entry's `image`. Also confirm the certification list itself.
+- **Vision & Mission statements** — `data/about.ts` (marked PLACEHOLDER).
 - **Product photos** — `public/placeholders/products/*.svg` (paths in `data/products.ts`).
 - **Plant photos** — `public/placeholders/plant/*.svg` (paths in `data/plantGallery.ts`; 3:2, 1200×800 recommended).
 - **TDS PDFs** — `public/tds/*.pdf`; **brochure** — `public/brochure.pdf`.
 - **Export countries** — `data/exportCountries.ts` (also review the region wording in `data/sections.ts`).
 - **Grade Finder mapping** — `data/gradeFinder.ts` (marked TODO; confirm with the technical team).
 - **Contact details, social links** — dummy values in `data/company.ts`.
-- **Certification marks** — drawn seals in `components/Footer.tsx`; swap for real certificate logos.
+- **Certification marks** — drawn seals in `components/CertSeal.tsx`; swap for the certifying bodies' logos.
 
 ## Enquiry form
 
@@ -59,8 +92,9 @@ them to `vite build`. Without an endpoint the form opens a pre-filled `mailto:` 
 
 ## Logo assets
 
-`public/logo.png` is the original. `public/logo-transparent.png` (light backgrounds) and
-`public/logo-icon.png` (monogram; used with a white/gold wordmark on dark backgrounds) were derived from it.
+`public/logo.png` is the original artwork. `public/logo-transparent.png` (light backgrounds) and `public/logo-icon.png`
+(monogram; used with a white/orange wordmark on dark backgrounds) are recoloured copies (blue → sky industrial blue,
+gold → orange) generated by `scripts/recolor-logo.py` from the originals in `scripts/logo-src/`. The design is unchanged.
 
 ## SEO & social sharing
 
