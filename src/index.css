@@ -80,9 +80,10 @@
     line-height: 1.1;
     font-weight: 800;
   }
+  /* Translucent highlight that keeps the text colour: with tight display line-heights, descenders
+     fall outside the highlight box and would vanish if the selected text were recoloured to navy. */
   ::selection {
-    background: var(--gold-light);
-    color: var(--midnight);
+    background: rgb(224 176 74 / 0.4);
   }
   :focus-visible {
     outline: 2px solid var(--brand-blue);
