@@ -1,10 +1,12 @@
+import { useMemo } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { ArrowRight, Download, Send } from 'lucide-react'
 import { oilCategories } from '../data/gradeFinder'
-import { productBySlug, products, specs } from '../data/products'
+import { productBySlug, products, specs, type Product } from '../data/products'
 import { enquiryFor, routes } from '../data/routes'
 import { asset } from '../lib/asset'
 import PageHero from '../components/PageHero'
+import { useBagViews } from '../sections/products/useBagViews'
 import '../styles/products.css'
 
 /** One page per grade: key specs, its column of the spec table, recommended oils, TDS and enquiry. */
@@ -12,6 +14,12 @@ export default function ProductPage() {
   const { slug } = useParams()
   const p = productBySlug(slug)
   if (!p) return <Navigate to={routes.products} replace />
+  return <ProductDetail key={p.id} p={p} />
+}
+
+function ProductDetail({ p }: { p: Product }) {
+  const single = useMemo(() => [p], [p])
+  const { areaRef, slots, live, portal } = useBagViews(single)
   const idx = products.indexOf(p)
   const oils = oilCategories.flatMap((c) => c.oils.filter((o) => o.grade === p.id).map((o) => o.oil))
   const others = products.filter((o) => o.id !== p.id)
@@ -32,8 +40,16 @@ export default function ProductPage() {
       <section className="section bg-cream" aria-labelledby="spec-title">
         <div className="container-x grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <div className="bag-stage card aspect-square overflow-hidden">
-              <img src={asset(p.image.src)} alt={p.image.alt} width={600} height={600} className="h-full w-full object-contain p-10" />
+            <div ref={areaRef} className="bag-stage card aspect-square overflow-hidden">
+              <div ref={slots?.[p.id]} className="relative h-full w-full">
+                <img
+                  src={asset(p.image.src)}
+                  alt={p.image.alt}
+                  width={600}
+                  height={600}
+                  className={`h-full w-full object-contain p-8 transition-opacity duration-500 ${live ? 'opacity-0' : 'opacity-100'}`}
+                />
+              </div>
             </div>
             <dl className="mt-6 grid grid-cols-3 gap-3">
               {p.keySpecs.map((s) => (
@@ -101,6 +117,7 @@ export default function ProductPage() {
           </div>
         </div>
       </section>
+      {portal}
     </>
   )
 }

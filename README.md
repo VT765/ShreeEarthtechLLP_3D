@@ -75,7 +75,7 @@ All file paths go through `asset()` (`src/lib/asset.ts`) so they work under the 
   `public/certificates/placeholder-certificate.svg`. Add the real scan (e.g. `public/certificates/iso9001.jpg`) and
   set that entry's `image`. Also confirm the certification list itself.
 - **Vision & Mission statements** — `data/about.ts` (marked PLACEHOLDER).
-- **Product photos** — `public/placeholders/products/*.svg` (paths in `data/products.ts`).
+- **Product images** — `public/products/*.webp` are renders of the 3D pouch (`scripts/render-pouches.sh`); pouch print colours live in `data/products.ts` (`pack`).
 - **Plant photos** — `public/placeholders/plant/*.svg` (paths in `data/plantGallery.ts`; 3:2, 1200×800 recommended).
 - **TDS PDFs** — `public/tds/*.pdf`; **brochure** — `public/brochure.pdf`.
 - **Export countries** — `data/exportCountries.ts` (also review the region wording in `data/sections.ts`).

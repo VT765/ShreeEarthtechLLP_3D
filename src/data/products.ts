@@ -1,4 +1,5 @@
-// Product grades and specs. Images and TDS PDFs are PLACEHOLDERS — replace the files, keep the paths.
+// Product grades and specs. TDS PDFs are PLACEHOLDERS — replace the files, keep the paths.
+// Product images are renders of the 3D pouch (scripts/render-pouches.sh), so they match the live model.
 
 export type GradeId = 'crystal' | 'hyper' | 'pure'
 
@@ -11,13 +12,21 @@ export type Product = {
   /** Grade positioning, shown under the name. */
   grade: string
   body: string
-  /** Accent colour for the 3D bag label and card. */
+  /** Accent colour for the card. */
   color: string
+  /** Pouch print: grade name as printed, and colours taken from the real packaging. */
+  pack: Pack
   keySpecs: { label: string; value: string }[]
   /** Path under /public (resolve with `asset()`). */
   tds: string
   image: { src: string; alt: string }
 }
+
+/**
+ * `main` top/bottom bands, `dark` small type and the vertical wordmark, `accent` grade name, `light` pattern lines,
+ * `logo` the S / E of the mark, `icon` the grade icon's gradient.
+ */
+export type Pack = { label: string; main: string; dark: string; accent: string; light: string; logo: [string, string]; icon: [string, string] }
 
 export const products: Product[] = [
   {
@@ -28,13 +37,14 @@ export const products: Product[] = [
     grade: 'High-activity acidic grade',
     body: 'For tough pigments and dark oils — rice bran, palm and heavily coloured crude.',
     color: '#2C6A99',
+    pack: { label: 'CRYSTALBRITE', main: '#1FAFB1', dark: '#0E5A63', accent: '#1FA3A6', light: '#BFEBEA', logo: ['#167F88', '#D9A930'], icon: ['#178F94', '#4CCBC6'] },
     keySpecs: [
       { label: 'pH (10% susp.)', value: '2.5 – 3.5' },
       { label: 'Bleaching efficiency', value: '≥ 95%' },
       { label: 'Avg. particle size', value: '23 µm min' },
     ],
     tds: 'tds/crystal-brite.pdf',
-    image: { src: 'placeholders/products/crystal-brite.svg', alt: 'Earthtech Crystal Brite 25 kg bag' },
+    image: { src: 'products/crystal-brite.webp', alt: 'Earthtech Crystal Brite stand-up pouch of Activated Bleaching Earth' },
   },
   {
     id: 'hyper',
@@ -44,13 +54,14 @@ export const products: Product[] = [
     grade: 'Balanced all-round grade',
     body: 'For most edible and industrial oils — dependable colour and gum removal at moderate dosage.',
     color: '#D2691E',
+    pack: { label: 'HYPERCLEAN', main: '#203E8C', dark: '#1A3478', accent: '#203E8C', light: '#AFC0EA', logo: ['#1E4FA8', '#9EA8B6'], icon: ['#1E4FA8', '#B8C0CC'] },
     keySpecs: [
       { label: 'pH (10% susp.)', value: '4 – 5' },
       { label: 'Bleaching efficiency', value: '≥ 95%' },
       { label: 'Avg. particle size', value: '21 µm min' },
     ],
     tds: 'tds/hyper-clean.pdf',
-    image: { src: 'placeholders/products/hyper-clean.svg', alt: 'Earthtech Hyper Clean 25 kg bag' },
+    image: { src: 'products/hyper-clean.webp', alt: 'Earthtech Hyper Clean stand-up pouch of Activated Bleaching Earth' },
   },
   {
     id: 'pure',
@@ -60,13 +71,14 @@ export const products: Product[] = [
     grade: 'Near-neutral grade',
     body: 'For sensitive, premium edible oils where flavour stability and low acidity matter most.',
     color: '#6B4A32',
+    pack: { label: 'PURE CHOICE', main: '#2E7B3A', dark: '#245F33', accent: '#76A33A', light: '#DCE5B4', logo: ['#3C8C3C', '#A9B83A'], icon: ['#3E9142', '#C9B23A'] },
     keySpecs: [
       { label: 'pH (10% susp.)', value: '5 – 7' },
       { label: 'Bleaching efficiency', value: '≥ 95%' },
       { label: 'Avg. particle size', value: '25 µm min' },
     ],
     tds: 'tds/pure-choice.pdf',
-    image: { src: 'placeholders/products/pure-choice.svg', alt: 'Earthtech Pure Choice 25 kg bag' },
+    image: { src: 'products/pure-choice.webp', alt: 'Earthtech Pure Choice stand-up pouch of Activated Bleaching Earth' },
   },
 ]
 

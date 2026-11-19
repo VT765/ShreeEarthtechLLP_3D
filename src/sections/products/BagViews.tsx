@@ -1,15 +1,16 @@
 import { useEffect, type RefObject } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { PerspectiveCamera, View } from '@react-three/drei'
-import ProductBag, { type BagPointer } from '../../scenes/ProductBag'
+import ProductPouch, { type BagPointer } from '../../scenes/ProductPouch'
+import type { Product } from '../../data/products'
 import { isLowEnd } from '../../hooks/useMedia'
 
-export type BagViewItem = { id: string; name: string; color: string; track: RefObject<HTMLElement | null>; pointer: BagPointer }
+export type BagViewItem = { product: Product; track: RefObject<HTMLElement | null>; pointer: BagPointer }
 
 /**
- * ONE WebGL context for every product card. A transparent, click-through canvas is fixed over the
- * viewport and drei `<View track>` scissors each bag into the rect of its card's slot element, so
- * the bags follow the cards (scroll, hover tilt, reveal) without one context per card.
+ * ONE WebGL context for every product slot on the page. A transparent, click-through canvas is fixed over
+ * the viewport and drei `<View track>` scissors each pouch into the rect of its slot element, so the pouches
+ * follow the cards (scroll, hover tilt, reveal) without one context per card.
  */
 export default function BagViews({ items, onReady }: { items: BagViewItem[]; onReady: (ready: boolean) => void }) {
   useEffect(() => () => onReady(false), [onReady])
@@ -23,9 +24,9 @@ export default function BagViews({ items, onReady }: { items: BagViewItem[]; onR
       onCreated={() => onReady(true)}
     >
       {items.map((it) => (
-        <View key={it.id} track={it.track as RefObject<HTMLElement>}>
-          <PerspectiveCamera makeDefault position={[0, 0.2, 4.4]} fov={38} />
-          <ProductBag name={it.name} color={it.color} pointer={it.pointer} shadowRes={256} />
+        <View key={it.product.id} track={it.track as RefObject<HTMLElement>}>
+          <PerspectiveCamera makeDefault position={[0, 0.15, 4.4]} fov={38} />
+          <ProductPouch product={it.product} pointer={it.pointer} shadowRes={256} />
         </View>
       ))}
     </Canvas>

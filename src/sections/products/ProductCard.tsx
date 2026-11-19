@@ -2,7 +2,7 @@ import { forwardRef, type RefObject } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Download, Send } from 'lucide-react'
 import type { Product } from '../../data/products'
-import type { BagPointer } from '../../scenes/ProductBag'
+import type { BagPointer } from '../../scenes/ProductPouch'
 import { asset } from '../../lib/asset'
 import { enquiryFor, routes } from '../../data/routes'
 import Tilt from '../../components/Tilt'
@@ -18,7 +18,7 @@ const gradeText: Record<Product['id'], string> = {
 type Props = {
   p: Product
   index: number
-  /** When set, the bag is drawn by the shared WebGL canvas into `slotRef`; the image stays as a poster until `live`. */
+  /** When set, the pouch is drawn by the shared WebGL canvas into `slotRef`; the image stays as a poster until `live`. */
   slotRef?: RefObject<HTMLDivElement | null>
   live: boolean
   pointer?: BagPointer
