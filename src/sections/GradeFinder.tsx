@@ -1,5 +1,6 @@
 import { useId, useState, type ReactNode } from 'react'
 import { ArrowRight, Droplets, Factory, Recycle, Send } from 'lucide-react'
+import { sectionCopy } from '../data/sections'
 import { sections } from '../data/nav'
 import { oilCategories, type OilCategory } from '../data/gradeFinder'
 import { productById } from '../data/products'
@@ -10,13 +11,7 @@ import SectionHeader from '../components/SectionHeader'
 import { SWatermark } from '../components/SCurve'
 import '../styles/products.css'
 
-// Section copy. TODO: move into data/gradeFinder.ts once that file is open for edits.
-const copy = {
-  eyebrow: 'Grade finder',
-  title: 'Which grade suits your oil?',
-  body: 'Pick the oil you refine and we’ll point you to the grade our technical team recommends as a starting point.',
-  note: 'Recommendations are a starting point — final dosage is confirmed with a lab bleaching trial on your oil.',
-}
+const copy = sectionCopy.gradeFinder
 
 const categoryIcon: Record<OilCategory['id'], typeof Droplets> = { edible: Droplets, industrial: Factory, waste: Recycle }
 

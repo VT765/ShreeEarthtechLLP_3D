@@ -30,6 +30,9 @@ jobs:
         env:
           # Absolute URLs (canonical, og:image, JSON-LD) point at the Pages preview instead of the .env default.
           VITE_SITE_URL: https://vt765.github.io/ShreeEarthtechLLP_3D
+          # Enquiry form service (repo Settings → Secrets and variables → Actions → Variables). Unset = mailto fallback.
+          VITE_FORM_ENDPOINT: ${{ vars.VITE_FORM_ENDPOINT }}
+          VITE_FORM_ACCESS_KEY: ${{ vars.VITE_FORM_ACCESS_KEY }}
       # GitHub Pages has no SPA rewrites: serve the app for /products, /contact etc.
       - run: cp dist/index.html dist/404.html && touch dist/.nojekyll
       - uses: actions/upload-pages-artifact@v3

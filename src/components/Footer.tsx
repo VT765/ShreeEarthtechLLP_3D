@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { Clock, Download, Mail, MapPin, Phone } from 'lucide-react'
+import { sectionCopy } from '../data/sections'
 import { sections, nav } from '../data/nav'
 import { certifications, company, telHref } from '../data/company'
 import { products } from '../data/products'
@@ -12,14 +13,7 @@ import SocialIcon from './Social'
 import { SWatermark } from './SCurve'
 import '../styles/footer.css'
 
-// Section copy. TODO: move into data/company.ts once that file is open for edits.
-const copy = {
-  eyebrow: 'Contact us',
-  title: 'Let’s talk about your oil',
-  body: 'Tell us what you refine and how much you need. We’ll recommend a grade, share the TDS and arrange a sample for a lab trial.',
-  certsEyebrow: 'Certifications',
-  certsTitle: 'Quality you can audit',
-}
+const copy = sectionCopy.contact
 
 const whatsappHref = `https://wa.me/${company.whatsapp}?text=${encodeURIComponent('Hello Shree Earthtech, I would like a quote for activated bleaching earth.')}`
 

@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { sectionCopy } from '../data/sections'
 import { sections } from '../data/nav'
 import { exportCountries, origin } from '../data/exportCountries'
 import SectionHeader from '../components/SectionHeader'
@@ -63,13 +64,13 @@ export default function GlobalReach() {
       <div className="container-x grid items-center gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
         <div>
           <SectionHeader
-            eyebrow="Global Reach"
+            eyebrow={sectionCopy.reach.eyebrow}
             title={
               <span id="global-reach-title">
-                From Kutch to <span className="text-teal">markets worldwide</span>
+                {sectionCopy.reach.titleLead} <span className="text-teal">{sectionCopy.reach.titleAccent}</span>
               </span>
             }
-            body={`Activated Bleaching Earth made in ${origin.name} and shipped to refiners across the Middle East, Africa and Asia, batch-tested and export-packed.`}
+            body={sectionCopy.reach.body}
           />
 
           <div ref={statRef} className="mt-10 flex items-end gap-5" data-reveal="0.15">
@@ -121,7 +122,7 @@ export default function GlobalReach() {
           )}
           <p className="relative mt-4 flex items-center justify-center gap-2 text-center text-xs font-medium text-stone" aria-hidden="true">
             <span className="inline-block h-2.5 w-2.5 rounded-full bg-gold-light ring-2 ring-[#FFF3C4]" />
-            Dispatched from Bhuj, Gujarat
+            {sectionCopy.reach.dispatch}
           </p>
         </div>
       </div>

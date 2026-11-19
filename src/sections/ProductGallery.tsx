@@ -1,5 +1,6 @@
 import { createRef, lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type RefObject } from 'react'
 import { createPortal } from 'react-dom'
+import { sectionCopy } from '../data/sections'
 import { sections } from '../data/nav'
 import { products, type GradeId } from '../data/products'
 import { onHighlightProduct } from '../lib/events'
@@ -17,12 +18,7 @@ const BagViews = lazy(() => import('./products/BagViews'))
 
 const HIGHLIGHT_MS = 2500
 
-// Section copy. TODO: move into data/products.ts once that file is open for edits.
-const copy = {
-  eyebrow: 'Our products',
-  title: 'Three grades of Activated Bleaching Earth',
-  body: 'Each grade is tuned to a different oil profile — from tough, dark crude to delicate premium edible oils. Download the technical data sheet or ask our team for a sample.',
-}
+const copy = sectionCopy.products
 
 function hasWebGL() {
   try {

@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef } from 'react'
+import { sectionCopy } from '../data/sections'
 import { sections } from '../data/nav'
 import { plantGallery } from '../data/plantGallery'
 import SectionHeader from '../components/SectionHeader'
@@ -110,9 +111,9 @@ export default function PlantGallery() {
     >
       <div className="container-x flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <SectionHeader
-          eyebrow="Manufacturing Plant"
-          title={<span id="plant-gallery-title">Inside the plant, step by step</span>}
-          body="From acid activation to the QC bench: a look at the line that turns raw bentonite into high-performance bleaching earth."
+          eyebrow={sectionCopy.plant.eyebrow}
+          title={<span id="plant-gallery-title">{sectionCopy.plant.title}</span>}
+          body={sectionCopy.plant.body}
         />
         {pin && (
           <div className="hidden shrink-0 items-center gap-3 text-xs font-semibold uppercase tracking-[0.14em] text-stone md:flex" aria-hidden="true">
