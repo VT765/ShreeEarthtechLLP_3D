@@ -11,6 +11,7 @@ npm install
 npm run dev       # http://localhost:5173
 npm run build     # type-check + production build to dist/
 npm run preview   # serve the production build
+npm run lint      # ESLint (typescript-eslint, react-hooks, react-refresh)
 ```
 
 Requires Node 20+.
@@ -41,8 +42,24 @@ Requires Node 20+.
 `public/logo.png` is the original. `public/logo-transparent.png` (light backgrounds) and
 `public/logo-icon.png` (monogram; used with a white/gold wordmark on dark backgrounds) were derived from it.
 
+## SEO & social sharing
+
+- `VITE_SITE_URL` (default in `.env`: `https://www.shreeearthtech.com`, no trailing slash) builds the absolute
+  canonical, Open Graph, Twitter and JSON-LD URLs in `index.html`. The GitHub Pages workflow overrides it with the Pages URL.
+- `public/og-image.png` (1200×630) is the share image. Regenerate it with `scripts/og-image.sh` after editing
+  `scripts/og-image.html` (uses headless Google Chrome, no project dependencies).
+- `public/robots.txt` and `public/sitemap.xml` list the production domain; update them if the domain changes.
+
+## Linting
+
+`eslint.config.js` (flat config). typescript-eslint does not support TypeScript 7 yet, so the ESLint plugins are
+installed in the `tools/eslint` npm workspace with their own TypeScript 6.0; the app itself still type-checks with
+TS 7. `npm install` sets this up automatically. A few React Compiler rules are set to `warn` until the code is refactored.
+
 ## Performance & accessibility notes
 
+- Eager JS is split into long-lived `react` (React, React DOM, router) and `motion` (GSAP, Lenis) vendor chunks plus
+  the app chunk (`build.rolldownOptions.output.codeSplitting` in `vite.config.ts`).
 - three.js/R3F loads only when the first 3D scene is needed; every scene mounts only near the viewport and caps DPR on low-end devices.
 - Mobile: no hero parallax/blur, lighter pin (120vh, max scale 1.6), no pinned process timeline, touch-friendly 3D (no drag capture).
 - `prefers-reduced-motion`: no loader, no smooth scroll, no pinning; static panorama.

@@ -4,7 +4,8 @@ import { useFinePointer, useReducedMotion } from '../hooks/useMedia'
 /** Gently pulls its child toward the pointer (desktop only). */
 export default function Magnetic({ children, strength = 0.25 }: { children: ReactNode; strength?: number }) {
   const ref = useRef<HTMLSpanElement>(null)
-  const enabled = useFinePointer() && !useReducedMotion()
+  const fine = useFinePointer()
+  const enabled = !useReducedMotion() && fine
   return (
     <span
       ref={ref}

@@ -1,0 +1,16 @@
+{
+  "name": "@shree-earthtech/eslint-config",
+  "private": true,
+  "description": "ESLint toolchain, isolated so typescript-eslint can use its own TypeScript 6.0 (it does not support TS 7 yet).",
+  "type": "module",
+  "main": "index.js",
+  "dependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.8",
+    "globals": "^17.14.0",
+    "ts-api-utils": "^2.5.0",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.73.0"
+  }
+}
