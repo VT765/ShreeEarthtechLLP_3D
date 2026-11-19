@@ -92,7 +92,7 @@ export default function HeroIllustration({ variant, className = '' }: Props) {
   }
   return (
     <div className={box}>
-      <svg viewBox={`0 0 ${W} ${H}`} className="h-full w-full" role="img" aria-label="Illustration of a miniature bleaching earth plant" focusable="false">
+      <svg viewBox={`0 0 ${W} ${H}`} className="h-full w-full" role="img" aria-label="Illustration of a bleaching earth plant" focusable="false">
         <path d={plant.grid} stroke={SKY} opacity={0.35} {...dots} />
         <path d={plant.structure} stroke={SKY} opacity={0.9} {...dots} />
         <path d={plant.accent} stroke={ORANGE} {...dots} />

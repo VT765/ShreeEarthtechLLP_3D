@@ -5,18 +5,19 @@
   outline-color: var(--orange-light);
 }
 
-/* Readability scrim: copy on the left, wireframe on the right (desktop). */
+/* Readability scrim: copy on the left, plant on the right (desktop). Kept light so the crystal field
+   still reads across the whole hero. */
 .hero-vignette {
   background:
-    radial-gradient(120% 95% at 72% 50%, transparent 45%, rgba(14, 12, 10, 0.6) 100%),
-    linear-gradient(90deg, rgba(27, 23, 20, 0.94) 0%, rgba(27, 23, 20, 0.8) 34%, rgba(27, 23, 20, 0.3) 58%, transparent 74%);
+    radial-gradient(130% 100% at 72% 50%, transparent 55%, rgba(14, 12, 10, 0.45) 100%),
+    linear-gradient(90deg, rgba(27, 23, 20, 0.8) 0%, rgba(27, 23, 20, 0.62) 34%, rgba(27, 23, 20, 0.18) 52%, transparent 62%);
 }
 /* Stacked layout: the object sits below the copy, so the scrim is vertical and clears towards the bottom. */
 @media (max-width: 1023px) {
   .hero-vignette {
     background:
-      radial-gradient(140% 80% at 50% 75%, transparent 30%, rgba(14, 12, 10, 0.55) 100%),
-      linear-gradient(180deg, rgba(27, 23, 20, 0.92) 0%, rgba(27, 23, 20, 0.82) 45%, rgba(27, 23, 20, 0.3) 72%, rgba(27, 23, 20, 0.2) 100%);
+      radial-gradient(140% 80% at 50% 75%, transparent 40%, rgba(14, 12, 10, 0.45) 100%),
+      linear-gradient(180deg, rgba(27, 23, 20, 0.8) 0%, rgba(27, 23, 20, 0.68) 45%, rgba(27, 23, 20, 0.2) 72%, transparent 100%);
   }
 }
 
@@ -64,7 +65,7 @@
   position: absolute;
   left: 0;
   width: 1px;
-  top: calc(150vh + 70px);
+  top: calc(220vh + 70px);
   bottom: 0;
   pointer-events: none;
 }

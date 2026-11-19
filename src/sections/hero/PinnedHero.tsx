@@ -11,7 +11,7 @@ const HeroCanvas = lazy(() => import('../../scenes/hero/HeroCanvas'))
 const NAV_OFFSET = 70
 
 /**
- * Pinned two-slide hero. Scroll progress (0 → 1) drives both the copy swap and the wireframe morph;
+ * Pinned two-slide hero. Scroll progress (0 → 1) drives both the copy swap and the crystal-to-plant assembly;
  * the scene reads `progress` from a ref every frame, so scrolling never re-renders React.
  */
 export default function PinnedHero() {
@@ -68,11 +68,11 @@ export default function PinnedHero() {
           trigger: pin.current,
           pin: true,
           start: 'top top',
-          end: '+=150%',
+          end: '+=220%',
           scrub: 1,
           anticipatePin: 1,
           invalidateOnRefresh: true,
-          snap: { snapTo: 1, duration: { min: 0.25, max: 0.7 }, delay: 0.08, ease: 'power2.inOut' },
+          // No snap: the plant builds exactly as far as the visitor has scrolled.
           onRefresh: (self) => placeMarker(self.start, self.end),
         },
         onUpdate: () => {
@@ -106,7 +106,7 @@ export default function PinnedHero() {
         <Slide1 ref={slide1} overlay inactive={active !== 0} />
         <Slide2 ref={slide2} overlay inactive={active !== 1} style={{ opacity: 0 }} />
       </section>
-      {/* Nav target for "About Us": scrolling here shows slide 2 fully (pin end, snap 1). */}
+      {/* Nav target for "About Us": scrolling here shows slide 2 fully and the plant formed (pin end). */}
       <span id={sections.about} ref={marker} className="hero-about-marker" />
     </div>
   )
