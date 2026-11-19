@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef } from 'react'
-import { Route, Routes, useLocation } from 'react-router-dom'
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Cursor from './components/Cursor'
@@ -38,8 +38,14 @@ function titleFor(pathname: string) {
 }
 
 function RouteEffects() {
-  const { pathname, hash } = useLocation()
+  const { pathname, search, hash } = useLocation()
+  const navigate = useNavigate()
   const lastPath = useRef('')
+  // GitHub Pages redirects /products → /products/ (a public/ folder shares the name); titles and the
+  // nav match exact paths, so drop the trailing slash.
+  useEffect(() => {
+    if (pathname.length > 1 && pathname.endsWith('/')) navigate({ pathname: pathname.replace(/\/+$/, ''), search, hash }, { replace: true })
+  }, [pathname, search, hash, navigate])
   useEffect(() => {
     document.title = titleFor(pathname)
     const newPage = lastPath.current !== pathname
