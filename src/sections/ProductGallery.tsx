@@ -1,9 +1,8 @@
-import { createRef, lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type RefObject } from 'react'
+import { createRef, lazy, Suspense, useCallback, useMemo, useState, type RefObject } from 'react'
 import { createPortal } from 'react-dom'
 import { sectionCopy } from '../data/sections'
 import { sections } from '../data/nav'
 import { products, type GradeId } from '../data/products'
-import { onHighlightProduct } from '../lib/events'
 import { useReveal } from '../hooks/useReveal'
 import { useInView } from '../hooks/useInView'
 import { isLowEnd, useIsMobile, useReducedMotion } from '../hooks/useMedia'
@@ -15,8 +14,6 @@ import '../styles/products.css'
 
 // three / R3F / drei load only in this lazy chunk, and only on capable desktop devices.
 const BagViews = lazy(() => import('./products/BagViews'))
-
-const HIGHLIGHT_MS = 2500
 
 const copy = sectionCopy.products
 
@@ -38,10 +35,8 @@ export default function ProductGallery() {
   const use3D = capable && !reduced && !mobile
   const [gridRef, inView] = useInView<HTMLDivElement>('150px')
   const [live, setLive] = useState(false)
-  const [highlighted, setHighlighted] = useState<GradeId | null>(null)
 
-  // Stable per-product refs: card element (focus target), 3D slot, and mutable hover pointer.
-  const cards = useRef<Partial<Record<GradeId, HTMLElement | null>>>({})
+  // Stable per-product refs: 3D slot and mutable hover pointer.
   const slots = useMemo(() => Object.fromEntries(products.map((p) => [p.id, createRef<HTMLDivElement>()])) as Record<GradeId, RefObject<HTMLDivElement | null>>, [])
   const pointers = useMemo(() => Object.fromEntries(products.map((p) => [p.id, { x: 0, y: 0, active: false }])) as Record<GradeId, BagPointer>, [])
   const viewItems = useMemo(
@@ -50,20 +45,6 @@ export default function ProductGallery() {
   )
   const onReady = useCallback((ready: boolean) => setLive(ready), [])
 
-  useEffect(() => {
-    let timer: number | undefined
-    const off = onHighlightProduct((grade) => {
-      setHighlighted(grade)
-      // Move focus for keyboard / screen-reader users without fighting the smooth scroll.
-      cards.current[grade]?.focus({ preventScroll: true })
-      window.clearTimeout(timer)
-      timer = window.setTimeout(() => setHighlighted(null), HIGHLIGHT_MS)
-    })
-    return () => {
-      off()
-      window.clearTimeout(timer)
-    }
-  }, [])
 
   const show3D = use3D && inView
 
@@ -80,12 +61,8 @@ export default function ProductGallery() {
           {products.map((p, i) => (
             <ProductCard
               key={p.id}
-              ref={(el) => {
-                cards.current[p.id] = el
-              }}
               p={p}
               index={i}
-              highlighted={highlighted === p.id}
               slotRef={use3D ? slots[p.id] : undefined}
               pointer={use3D ? pointers[p.id] : undefined}
               live={show3D && live}

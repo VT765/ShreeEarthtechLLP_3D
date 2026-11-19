@@ -1,6 +1,9 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { sectionCopy } from '../data/sections'
+import { Link } from 'react-router-dom'
+import { ArrowRight } from 'lucide-react'
 import { sections } from '../data/nav'
+import { routes } from '../data/routes'
 import { exportCountries, origin } from '../data/exportCountries'
 import SectionHeader from '../components/SectionHeader'
 import { useInView } from '../hooks/useInView'
@@ -15,7 +18,8 @@ const Globe = lazy(() => import('./globe/Globe'))
 
 const total = exportCountries.length
 
-export default function GlobalReach() {
+/** `summary` (home) hides the market list and links to it; `full` (company profile) shows everything. */
+export default function GlobalReach({ variant = 'full' }: { variant?: 'summary' | 'full' }) {
   const sectionRef = useReveal<HTMLElement>()
   const reduced = useReducedMotion()
   const mobile = useIsMobile()
@@ -90,17 +94,23 @@ export default function GlobalReach() {
             </p>
           </div>
 
-          <div className="mt-10" data-reveal="0.2">
-            <h3 className="text-base font-bold text-ink">Markets we supply</h3>
-            <ul className="mt-4 flex flex-wrap gap-2" aria-label={`Export markets supplied from ${origin.name}`}>
-              {exportCountries.map((c) => (
-                <li key={c.name} className="gr-chip">
-                  <span className="gr-chip-dot" aria-hidden="true" />
-                  {c.name}
-                </li>
-              ))}
-            </ul>
-          </div>
+          {variant === 'summary' ? (
+            <Link to={`${routes.companyProfile}#${sections.reach}`} className="btn btn-secondary mt-10" data-reveal="0.2">
+              {sectionCopy.reach.marketsCta} <ArrowRight className="h-4 w-4" aria-hidden />
+            </Link>
+          ) : (
+            <div className="mt-10" data-reveal="0.2">
+              <h3 className="text-base font-bold text-ink">Markets we supply</h3>
+              <ul className="mt-4 flex flex-wrap gap-2" aria-label={`Export markets supplied from ${origin.name}`}>
+                {exportCountries.map((c) => (
+                  <li key={c.name} className="gr-chip">
+                    <span className="gr-chip-dot" aria-hidden="true" />
+                    {c.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         <div ref={globeRef} className="relative mx-auto w-full max-w-[340px] sm:max-w-[460px] lg:max-w-[580px]" data-reveal="0.1">

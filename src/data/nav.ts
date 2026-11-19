@@ -1,3 +1,6 @@
+import { products } from './products'
+import { routes } from './routes'
+
 /** Section ids on the home page. Every section component renders `<section id={sections.x}>`. */
 export const sections = {
   home: 'home',
@@ -5,16 +8,36 @@ export const sections = {
   reach: 'global-reach',
   products: 'products',
   gradeFinder: 'grade-finder',
+  certificates: 'certificates',
   plant: 'plant',
   contact: 'contact',
-  certificates: 'certificates',
+  vision: 'vision',
+  mission: 'mission',
 } as const
 
-export const nav = [
-  { label: 'Home', id: sections.home },
-  { label: 'About Us', id: sections.about },
-  { label: 'Products', id: sections.products },
-  { label: 'Applications', id: sections.gradeFinder },
-  { label: 'Certificates', id: sections.certificates },
-  { label: 'Contact', id: sections.contact },
+export type NavLink = { label: string; to: string; description?: string }
+export type NavMenu = { label: string; id: string; items: NavLink[] }
+export type NavItem = NavLink | NavMenu
+
+export const isMenu = (item: NavItem): item is NavMenu => 'items' in item
+
+export const nav: NavItem[] = [
+  { label: 'Home', to: routes.home },
+  {
+    label: 'About',
+    id: 'about-menu',
+    items: [
+      { label: 'Company Profile', to: routes.companyProfile },
+      { label: 'Vision', to: `${routes.visionMission}#${sections.vision}` },
+      { label: 'Mission', to: `${routes.visionMission}#${sections.mission}` },
+    ],
+  },
+  {
+    label: 'Products',
+    id: 'products-menu',
+    items: products.map((p) => ({ label: p.name, to: routes.product(p.slug), description: p.grade })),
+  },
+  { label: 'Applications', to: routes.applications },
+  { label: 'Certificates', to: `${routes.home}#${sections.certificates}` },
+  { label: 'Contact', to: routes.contact },
 ]

@@ -1,0 +1,109 @@
+/* Primary navigation: transparent over the home hero, solid charcoal everywhere else. */
+.site-nav.is-solid {
+  background: rgba(27, 23, 20, 0.92);
+  box-shadow: 0 8px 30px rgba(14, 12, 10, 0.35);
+  backdrop-filter: blur(20px);
+}
+
+.nav-link {
+  position: relative;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.82);
+  transition: color 0.3s;
+}
+.nav-link:hover,
+.nav-link[aria-expanded='true'] {
+  color: #fff;
+}
+.nav-link.is-active {
+  color: var(--orange-light);
+}
+.nav-link.is-active::after {
+  content: '';
+  position: absolute;
+  inset-inline: 12px;
+  bottom: -2px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--orange);
+}
+
+/* Dropdown panel. `visibility` keeps closed links out of the tab order. */
+.nav-menu {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  padding-top: 10px;
+  min-width: 260px;
+  transform: translate(-50%, 6px);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.2s,
+    transform 0.25s var(--ease-out-soft),
+    visibility 0s 0.25s;
+}
+.nav-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+  transition:
+    opacity 0.2s,
+    transform 0.25s var(--ease-out-soft);
+}
+.nav-menu-list {
+  border: 1px solid var(--clay);
+  border-top: 3px solid var(--orange);
+  border-radius: 12px;
+  background: var(--cream);
+  padding: 6px;
+  box-shadow: 0 20px 44px rgba(14, 12, 10, 0.28);
+}
+.nav-menu-link {
+  display: block;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+.nav-menu-link:hover,
+.nav-menu-link:focus-visible {
+  background: var(--beige);
+}
+
+/* Mobile drawer */
+.mobile-menu {
+  max-height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  transition:
+    max-height 0.5s var(--ease-out-soft),
+    visibility 0s 0.5s;
+}
+.mobile-menu.is-open {
+  max-height: 80vh;
+  overflow-y: auto;
+  visibility: visible;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  transition: max-height 0.5s var(--ease-out-soft);
+}
+.mobile-link {
+  display: block;
+  width: 100%;
+  border-radius: 8px;
+  padding: 12px;
+  text-align: left;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+}
+.mobile-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+.mobile-sublink {
+  padding-block: 10px;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.78);
+}

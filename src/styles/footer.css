@@ -1,9 +1,9 @@
-/* Footer: deep ink → midnight gradient with a faint gold glow. */
+/* Footer: coal → charcoal gradient with a faint orange and sky glow. */
 .footer-bg {
   background:
-    radial-gradient(ellipse 60% 40% at 85% 0%, rgba(191, 131, 17, 0.12), transparent 70%),
-    radial-gradient(ellipse 50% 40% at 0% 30%, rgba(12, 113, 199, 0.14), transparent 70%),
-    linear-gradient(180deg, var(--coal) 0%, var(--charcoal) 55%, #04101f 100%);
+    radial-gradient(ellipse 60% 40% at 85% 0%, rgba(210, 105, 30, 0.12), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 0% 30%, rgba(44, 106, 153, 0.12), transparent 70%),
+    linear-gradient(180deg, var(--coal) 0%, var(--charcoal) 55%, #0e0c0a 100%);
 }
 
 /* Links on dark: underline grows on hover/focus. */
@@ -23,13 +23,3 @@
   outline-color: var(--orange-light);
 }
 
-/* Certification seal hover. */
-.seal {
-  transition:
-    transform 0.4s var(--ease-out-soft),
-    color 0.4s var(--ease-out-soft);
-}
-.seal:hover {
-  transform: translateY(-3px);
-  color: var(--orange-light);
-}

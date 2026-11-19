@@ -1,26 +1,5 @@
 /* Product gallery + grade finder extras (brand tokens come from index.css). */
 
-/* Gold ring shown for ~2.5s when another section calls highlightProduct(). */
-@keyframes product-glow {
-  0%,
-  100% {
-    box-shadow:
-      0 0 0 3px var(--orange-light),
-      0 0 40px rgba(242, 162, 92, 0.45);
-  }
-  50% {
-    box-shadow:
-      0 0 0 5px var(--orange-light),
-      0 0 70px rgba(242, 162, 92, 0.7);
-  }
-}
-.product-card.is-highlighted {
-  border-color: var(--orange);
-  animation: product-glow 1.25s ease-in-out 2;
-  box-shadow:
-    0 0 0 3px var(--orange-light),
-    0 0 40px rgba(242, 162, 92, 0.45);
-}
 .product-card:focus {
   outline: none;
 }

@@ -2,8 +2,8 @@ import { useEffect, useId, useRef, useState, type ChangeEvent, type FormEvent, t
 import { AlertCircle, CheckCircle2, Loader2, Send } from 'lucide-react'
 import { company } from '../data/company'
 import { allOils } from '../data/gradeFinder'
-import { productById, products, type GradeId } from '../data/products'
-import { onEnquire } from '../lib/events'
+import { useSearchParams } from 'react-router-dom'
+import { isGradeId, productById, products, type GradeId } from '../data/products'
 import { useToast } from './Toast'
 
 const ENDPOINT = import.meta.env.VITE_FORM_ENDPOINT?.trim() || ''
@@ -147,15 +147,17 @@ export default function EnquiryForm() {
   const id = (k: Key) => `${uid}-${k}`
   const errorFor = (k: Key) => (touched[k] ? errors[k] : undefined)
 
-  // Pre-select the product when any "Enquire" button is pressed elsewhere on the page.
-  useEffect(
-    () =>
-      onEnquire((grade) => {
-        setValues((v) => ({ ...v, grade }))
-        setPreselected(grade)
-      }),
-    [],
-  )
+  // Pre-select the product from ?grade=… (every "Enquire" link points here with one).
+  const [params] = useSearchParams()
+  const requested = params.get('grade')
+  const [appliedRequest, setAppliedRequest] = useState<string | null>(null)
+  if (requested !== appliedRequest) {
+    setAppliedRequest(requested)
+    if (isGradeId(requested)) {
+      setValues((v) => ({ ...v, grade: requested }))
+      setPreselected(requested)
+    }
+  }
 
   // Success / mailto messages fade back to idle.
   useEffect(() => {

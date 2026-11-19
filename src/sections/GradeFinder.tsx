@@ -4,7 +4,8 @@ import { sectionCopy } from '../data/sections'
 import { sections } from '../data/nav'
 import { oilCategories, type OilCategory } from '../data/gradeFinder'
 import { productById } from '../data/products'
-import { enquireAbout, highlightProduct } from '../lib/events'
+import { Link } from 'react-router-dom'
+import { enquiryFor, routes } from '../data/routes'
 import { asset } from '../lib/asset'
 import { useReveal } from '../hooks/useReveal'
 import SectionHeader from '../components/SectionHeader'
@@ -120,12 +121,12 @@ export default function GradeFinder() {
                 ))}
               </dl>
               <div className="mt-7 flex flex-wrap gap-3">
-                <button type="button" onClick={() => highlightProduct(product.id)} className="btn btn-orange h-11 flex-1 text-sm">
+                <Link to={routes.product(product.slug)} className="btn btn-orange h-11 flex-1 text-sm">
                   View product <ArrowRight className="h-4 w-4" aria-hidden />
-                </button>
-                <button type="button" onClick={() => enquireAbout(product.id)} className="btn btn-ghost-dark h-11 flex-1 text-sm">
+                </Link>
+                <Link to={enquiryFor(product.id)} className="btn btn-ghost-dark h-11 flex-1 text-sm">
                   <Send className="h-4 w-4" aria-hidden /> Enquire
-                </button>
+                </Link>
               </div>
             </article>
           </div>

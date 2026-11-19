@@ -1,9 +1,10 @@
 import { forwardRef, type RefObject } from 'react'
-import { Download, Send, Sparkles } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { ArrowRight, Download, Send } from 'lucide-react'
 import type { Product } from '../../data/products'
 import type { BagPointer } from '../../scenes/ProductBag'
 import { asset } from '../../lib/asset'
-import { enquireAbout } from '../../lib/events'
+import { enquiryFor, routes } from '../../data/routes'
 import Tilt from '../../components/Tilt'
 import { CornerSweep } from '../../components/SCurve'
 
@@ -11,13 +12,12 @@ import { CornerSweep } from '../../components/SCurve'
 const gradeText: Record<Product['id'], string> = {
   crystal: 'var(--sky-deep)',
   hyper: 'var(--orange-deep)',
-  pure: '#176B60',
+  pure: 'var(--brown)',
 }
 
 type Props = {
   p: Product
   index: number
-  highlighted: boolean
   /** When set, the bag is drawn by the shared WebGL canvas into `slotRef`; the image stays as a poster until `live`. */
   slotRef?: RefObject<HTMLDivElement | null>
   live: boolean
@@ -25,7 +25,7 @@ type Props = {
   reveal: boolean
 }
 
-const ProductCard = forwardRef<HTMLElement, Props>(function ProductCard({ p, index, highlighted, slotRef, live, pointer, reveal }, ref) {
+const ProductCard = forwardRef<HTMLElement, Props>(function ProductCard({ p, index, slotRef, live, pointer, reveal }, ref) {
   const titleId = `product-${p.id}-title`
   return (
     <Tilt max={5} className="h-full" data-reveal={reveal ? index * 0.08 : undefined}>
@@ -33,7 +33,7 @@ const ProductCard = forwardRef<HTMLElement, Props>(function ProductCard({ p, ind
         ref={ref}
         tabIndex={-1}
         aria-labelledby={titleId}
-        className={`product-card card card-hover relative flex h-full flex-col overflow-hidden ${highlighted ? 'is-highlighted' : ''}`}
+        className="product-card card card-hover relative flex h-full flex-col overflow-hidden"
         onPointerMove={(e) => {
           if (!pointer || e.pointerType !== 'mouse') return
           const r = e.currentTarget.getBoundingClientRect()
@@ -56,11 +56,6 @@ const ProductCard = forwardRef<HTMLElement, Props>(function ProductCard({ p, ind
             decoding="async"
             className={`absolute inset-0 h-full w-full object-contain p-6 transition-opacity duration-500 ${live ? 'opacity-0' : 'opacity-100'}`}
           />
-          {highlighted && (
-            <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-orange-light px-3 py-1 text-xs font-bold text-charcoal">
-              <Sparkles className="h-3.5 w-3.5" strokeWidth={2} aria-hidden /> Recommended
-            </span>
-          )}
         </div>
 
         <div className="flex flex-1 flex-col p-6">
@@ -68,7 +63,9 @@ const ProductCard = forwardRef<HTMLElement, Props>(function ProductCard({ p, ind
             {p.grade}
           </p>
           <h3 id={titleId} className="mt-2 text-2xl">
-            {p.name}
+            <Link to={routes.product(p.slug)} className="hover:text-sky">
+              {p.name}
+            </Link>
           </h3>
           <p className="mt-2 text-[15px]">{p.body}</p>
 
@@ -85,10 +82,13 @@ const ProductCard = forwardRef<HTMLElement, Props>(function ProductCard({ p, ind
             <a href={asset(p.tds)} download className="btn btn-secondary h-11 flex-1 text-sm" aria-label={`Download ${p.short} technical data sheet (PDF)`}>
               <Download className="h-4 w-4" aria-hidden /> Download TDS
             </a>
-            <button type="button" onClick={() => enquireAbout(p.id)} className="btn btn-primary h-11 flex-1 text-sm" aria-label={`Enquire about ${p.short}`}>
+            <Link to={enquiryFor(p.id)} className="btn btn-primary h-11 flex-1 text-sm" aria-label={`Enquire about ${p.short}`}>
               <Send className="h-4 w-4" aria-hidden /> Enquire
-            </button>
+            </Link>
           </div>
+          <Link to={routes.product(p.slug)} className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-sky hover:text-sky-deep">
+            Full product details <ArrowRight className="h-4 w-4" aria-hidden />
+          </Link>
         </div>
       </article>
     </Tilt>

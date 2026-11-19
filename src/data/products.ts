@@ -4,6 +4,8 @@ export type GradeId = 'crystal' | 'hyper' | 'pure'
 
 export type Product = {
   id: GradeId
+  /** URL segment of the product page: /products/<slug>. */
+  slug: string
   name: string
   short: string
   /** Grade positioning, shown under the name. */
@@ -20,6 +22,7 @@ export type Product = {
 export const products: Product[] = [
   {
     id: 'crystal',
+    slug: 'crystal-brite',
     name: 'Earthtech Crystal Brite',
     short: 'Crystal Brite',
     grade: 'High-activity acidic grade',
@@ -35,6 +38,7 @@ export const products: Product[] = [
   },
   {
     id: 'hyper',
+    slug: 'hyper-clean',
     name: 'Earthtech Hyper Clean',
     short: 'Hyper Clean',
     grade: 'Balanced all-round grade',
@@ -50,6 +54,7 @@ export const products: Product[] = [
   },
   {
     id: 'pure',
+    slug: 'pure-choice',
     name: 'Earthtech Pure Choice',
     short: 'Pure Choice',
     grade: 'Near-neutral grade',
@@ -79,3 +84,5 @@ export const specs: { parameter: string; values: [string, string, string] }[] = 
 ]
 
 export const productById = (id: GradeId) => products.find((p) => p.id === id)!
+export const productBySlug = (slug: string | undefined) => products.find((p) => p.slug === slug)
+export const isGradeId = (v: string | null): v is GradeId => products.some((p) => p.id === v)
