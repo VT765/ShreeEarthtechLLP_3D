@@ -3,7 +3,7 @@ import { Canvas } from '@react-three/fiber'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
 import { useIsMobile } from '../../hooks/useMedia'
 import HeroRig from './HeroRig'
-import WireMorph from './WireMorph'
+import CrystalPlant from './CrystalPlant'
 
 type Props = {
   progress: RefObject<number>
@@ -19,13 +19,13 @@ export default function HeroCanvas({ progress, active, onReady }: Props) {
     <Canvas
       dpr={[1, 1.5]}
       frameloop={active ? 'always' : 'never'}
-      camera={{ fov: 40, near: 0.1, far: 40, position: [0, 1, 7] }}
+      camera={{ fov: 40, near: 0.1, far: 40, position: [0, 1.5, 7] }}
       gl={{ antialias: lite, alpha: false, powerPreference: 'high-performance' }}
       onCreated={() => requestAnimationFrame(onReady)}
     >
       <color attach="background" args={['#1B1714']} />
       <HeroRig progress={progress}>
-        <WireMorph progress={progress} lite={lite} />
+        <CrystalPlant progress={progress} lite={lite} />
       </HeroRig>
       {/* Bloom is the expensive bit, so phones go without it. */}
       {!lite && (

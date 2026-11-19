@@ -11,12 +11,12 @@
     radial-gradient(120% 95% at 72% 50%, transparent 45%, rgba(14, 12, 10, 0.6) 100%),
     linear-gradient(90deg, rgba(27, 23, 20, 0.94) 0%, rgba(27, 23, 20, 0.8) 34%, rgba(27, 23, 20, 0.3) 58%, transparent 74%);
 }
-/* Stacked layout: the object sits behind/below the copy, so the scrim is heavier and vertical. */
+/* Stacked layout: the object sits below the copy, so the scrim is vertical and clears towards the bottom. */
 @media (max-width: 1023px) {
   .hero-vignette {
     background:
       radial-gradient(140% 80% at 50% 75%, transparent 30%, rgba(14, 12, 10, 0.55) 100%),
-      linear-gradient(180deg, rgba(27, 23, 20, 0.92) 0%, rgba(27, 23, 20, 0.82) 45%, rgba(27, 23, 20, 0.5) 72%, rgba(27, 23, 20, 0.7) 100%);
+      linear-gradient(180deg, rgba(27, 23, 20, 0.92) 0%, rgba(27, 23, 20, 0.82) 45%, rgba(27, 23, 20, 0.3) 72%, rgba(27, 23, 20, 0.2) 100%);
   }
 }
 
@@ -24,37 +24,14 @@
   will-change: opacity, transform, filter;
 }
 
-/* Thin gold-cornered frame around the slide-2 image. */
-.hero-frame {
-  padding: 10px;
-  border-radius: 20px;
-  border: 1px solid rgba(242, 162, 92, 0.28);
-  background: rgba(27, 23, 20, 0.55);
-  backdrop-filter: blur(6px);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+/* Slide-2 "Read company profile" link: underline grows in on hover / focus. */
+.hero-text-link {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  transition: background-size 0.3s var(--ease-out-soft);
 }
-.hero-frame::before,
-.hero-frame::after {
-  content: '';
-  position: absolute;
-  width: 28px;
-  height: 28px;
-  border: 2px solid var(--orange-light);
-  pointer-events: none;
-}
-.hero-frame::before {
-  top: -6px;
-  left: -6px;
-  border-right: 0;
-  border-bottom: 0;
-  border-top-left-radius: 12px;
-}
-.hero-frame::after {
-  right: -6px;
-  bottom: -6px;
-  border-left: 0;
-  border-top: 0;
-  border-bottom-right-radius: 12px;
+.hero-text-link:hover,
+.hero-text-link:focus-visible {
+  background-size: 100% 1px;
 }
 
 /* "Scroll" cue: a dot sliding down a hairline. */
