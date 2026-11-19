@@ -1,0 +1,93 @@
+/* Home hero — imported by sections/hero/Hero.tsx */
+
+/* Gold focus ring: the global blue one disappears on midnight. */
+.hero-root :focus-visible {
+  outline-color: var(--gold-light);
+}
+
+/* Readability scrim: copy on the left, wireframe on the right (desktop). */
+.hero-vignette {
+  background:
+    radial-gradient(120% 95% at 72% 50%, transparent 45%, rgba(5, 15, 30, 0.6) 100%),
+    linear-gradient(90deg, rgba(7, 31, 58, 0.94) 0%, rgba(7, 31, 58, 0.8) 34%, rgba(7, 31, 58, 0.3) 58%, transparent 74%);
+}
+/* Stacked layout: the object sits behind/below the copy, so the scrim is heavier and vertical. */
+@media (max-width: 1023px) {
+  .hero-vignette {
+    background:
+      radial-gradient(140% 80% at 50% 75%, transparent 30%, rgba(5, 15, 30, 0.55) 100%),
+      linear-gradient(180deg, rgba(7, 31, 58, 0.92) 0%, rgba(7, 31, 58, 0.82) 45%, rgba(7, 31, 58, 0.5) 72%, rgba(7, 31, 58, 0.7) 100%);
+  }
+}
+
+.hero-slide {
+  will-change: opacity, transform, filter;
+}
+
+/* Thin gold-cornered frame around the slide-2 image. */
+.hero-frame {
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(224, 176, 74, 0.28);
+  background: rgba(7, 31, 58, 0.55);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+}
+.hero-frame::before,
+.hero-frame::after {
+  content: '';
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--gold-light);
+  pointer-events: none;
+}
+.hero-frame::before {
+  top: -6px;
+  left: -6px;
+  border-right: 0;
+  border-bottom: 0;
+  border-top-left-radius: 12px;
+}
+.hero-frame::after {
+  right: -6px;
+  bottom: -6px;
+  border-left: 0;
+  border-top: 0;
+  border-bottom-right-radius: 12px;
+}
+
+/* "Scroll" cue: a dot sliding down a hairline. */
+.hero-scroll-line {
+  position: relative;
+  width: 1px;
+  height: 36px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.2);
+}
+.hero-scroll-line::after {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: -8px;
+  width: 3px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--gold-light);
+  animation: hero-scroll 1.8s var(--ease-out-soft) infinite;
+}
+@keyframes hero-scroll {
+  to {
+    transform: translateY(52px);
+  }
+}
+
+/* Positioned by PinnedHero at the pin-end scroll offset; spans to the bottom so the nav highlights "About". */
+.hero-about-marker {
+  position: absolute;
+  left: 0;
+  width: 1px;
+  top: calc(150vh + 70px);
+  bottom: 0;
+  pointer-events: none;
+}
