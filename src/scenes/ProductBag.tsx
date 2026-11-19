@@ -20,7 +20,7 @@ function useLabel(name: string, color: string) {
     const c = tex.image as HTMLCanvasElement
     const ctx = c.getContext('2d')!
     const draw = (logo?: HTMLImageElement) => {
-      ctx.fillStyle = '#FAF7F2'
+      ctx.fillStyle = '#FAF6EE'
       ctx.fillRect(0, 0, 512, 720)
       // kraft texture
       for (let i = 0; i < 1400; i++) {
@@ -33,7 +33,7 @@ function useLabel(name: string, color: string) {
       }
       ctx.fillStyle = color
       ctx.fillRect(0, 300, 512, 150)
-      ctx.fillStyle = '#BF8311'
+      ctx.fillStyle = '#D2691E'
       ctx.fillRect(0, 450, 512, 10)
       const [brand, ...rest] = name.split(' ')
       ctx.fillStyle = '#ffffff'
@@ -42,13 +42,13 @@ function useLabel(name: string, color: string) {
       ctx.fillText(brand.toUpperCase(), 256, 345)
       ctx.font = '800 54px "Plus Jakarta Sans", sans-serif'
       ctx.fillText(rest.join(' '), 256, 410)
-      ctx.fillStyle = '#1A1D24'
+      ctx.fillStyle = '#211A15'
       ctx.font = '600 24px Inter, sans-serif'
       ctx.fillText('ACTIVATED BLEACHING EARTH', 256, 520)
-      ctx.fillStyle = '#4F5562'
+      ctx.fillStyle = '#4A3F36'
       ctx.font = '500 20px "JetBrains Mono", monospace'
       ctx.fillText('NET WT. 25 KG  ·  MADE IN INDIA', 256, 570)
-      ctx.fillStyle = '#0C5A9E'
+      ctx.fillStyle = '#22547A'
       ctx.font = '700 22px Inter, sans-serif'
       ctx.fillText('www.shreeearthtech.com', 256, 660)
       tex.needsUpdate = true
@@ -93,7 +93,7 @@ function Bag({ name, color, pointer }: { name: string; color: string; pointer?: 
         {/* stitched top seam */}
         <mesh position={[0, 1.04, 0]}>
           <boxGeometry args={[1.42, 0.06, 0.42]} />
-          <meshStandardMaterial color="#BF8311" metalness={0.8} roughness={0.35} />
+          <meshStandardMaterial color="#D2691E" metalness={0.8} roughness={0.35} />
         </mesh>
       </group>
     </group>
@@ -117,7 +117,7 @@ export default function ProductBag({ name, color, pointer, shadowRes = 512 }: Pr
       <Float speed={1.2} rotationIntensity={0.15} floatIntensity={0.4}>
         <Bag name={name} color={color} pointer={pointer} />
       </Float>
-      <ContactShadows position={[0, -1.35, 0]} opacity={0.35} scale={5} blur={2.4} far={2} resolution={shadowRes} color="#071F3A" />
+      <ContactShadows position={[0, -1.35, 0]} opacity={0.35} scale={5} blur={2.4} far={2} resolution={shadowRes} color="#1B1714" />
     </>
   )
 }

@@ -24,7 +24,7 @@ export const products: Product[] = [
     short: 'Crystal Brite',
     grade: 'High-activity acidic grade',
     body: 'For tough pigments and dark oils — rice bran, palm and heavily coloured crude.',
-    color: '#0C71C7',
+    color: '#2C6A99',
     keySpecs: [
       { label: 'pH (10% susp.)', value: '2.5 – 3.5' },
       { label: 'Bleaching efficiency', value: '≥ 95%' },
@@ -39,7 +39,7 @@ export const products: Product[] = [
     short: 'Hyper Clean',
     grade: 'Balanced all-round grade',
     body: 'For most edible and industrial oils — dependable colour and gum removal at moderate dosage.',
-    color: '#BF8311',
+    color: '#D2691E',
     keySpecs: [
       { label: 'pH (10% susp.)', value: '4 – 5' },
       { label: 'Bleaching efficiency', value: '≥ 95%' },
@@ -54,7 +54,7 @@ export const products: Product[] = [
     short: 'Pure Choice',
     grade: 'Near-neutral grade',
     body: 'For sensitive, premium edible oils where flavour stability and low acidity matter most.',
-    color: '#1E8C7E',
+    color: '#6B4A32',
     keySpecs: [
       { label: 'pH (10% susp.)', value: '5 – 7' },
       { label: 'Bleaching efficiency', value: '≥ 95%' },

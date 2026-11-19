@@ -67,18 +67,18 @@ export default function GlobalReach() {
             eyebrow={sectionCopy.reach.eyebrow}
             title={
               <span id="global-reach-title">
-                {sectionCopy.reach.titleLead} <span className="text-teal">{sectionCopy.reach.titleAccent}</span>
+                {sectionCopy.reach.titleLead} <span className="text-sky">{sectionCopy.reach.titleAccent}</span>
               </span>
             }
             body={sectionCopy.reach.body}
           />
 
           <div ref={statRef} className="mt-10 flex items-end gap-5" data-reveal="0.15">
-            <p className="font-display text-[clamp(64px,9vw,104px)] font-extrabold leading-none tracking-tight text-midnight">
+            <p className="font-display text-[clamp(64px,9vw,104px)] font-extrabold leading-none tracking-tight text-charcoal">
               <span ref={numRef} aria-hidden="true">
                 {reduced ? total : 0}
               </span>
-              <span className="text-brand-gold" aria-hidden="true">
+              <span className="text-orange" aria-hidden="true">
                 +
               </span>
               <span className="sr-only">{total}+ countries served</span>
@@ -121,7 +121,7 @@ export default function GlobalReach() {
             </div>
           )}
           <p className="relative mt-4 flex items-center justify-center gap-2 text-center text-xs font-medium text-stone" aria-hidden="true">
-            <span className="inline-block h-2.5 w-2.5 rounded-full bg-gold-light ring-2 ring-[#FFF3C4]" />
+            <span className="inline-block h-2.5 w-2.5 rounded-full bg-orange-light ring-2 ring-[#FFE3C2]" />
             {sectionCopy.reach.dispatch}
           </p>
         </div>

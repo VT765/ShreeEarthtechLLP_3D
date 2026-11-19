@@ -33,7 +33,7 @@ export default function Slide1({ ref, overlay, inactive, art }: Props) {
           </h1>
           <p className="mt-4 max-w-[560px] text-[15px] leading-relaxed text-white/75 sm:mt-5 sm:text-lg">{s.body}</p>
           <div className="mt-6 flex flex-wrap gap-3 sm:mt-8">
-            <button type="button" className="btn btn-gold" onClick={() => scrollToId(sections.contact)}>
+            <button type="button" className="btn btn-orange" onClick={() => scrollToId(sections.contact)}>
               {s.primaryCta} <ArrowRight className="h-4 w-4" aria-hidden />
             </button>
             <a href={asset(company.brochure)} download className="btn btn-ghost-dark">

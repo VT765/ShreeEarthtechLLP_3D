@@ -83,8 +83,8 @@ export function createMorphUniforms() {
     uFogNear: { value: 6 },
     uFogFar: { value: 10 },
     // Pushed above 1 so the lines feed the bloom pass.
-    uTeal: { value: new THREE.Color('#1E8C7E').multiplyScalar(1.8) },
-    uGold: { value: new THREE.Color('#E0B04A').multiplyScalar(1.25) },
+    uTeal: { value: new THREE.Color('#2C6A99').multiplyScalar(1.8) },
+    uGold: { value: new THREE.Color('#F2A25C').multiplyScalar(1.25) },
   }
 }
 

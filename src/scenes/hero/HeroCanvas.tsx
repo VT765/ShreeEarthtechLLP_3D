@@ -23,7 +23,7 @@ export default function HeroCanvas({ progress, active, onReady }: Props) {
       gl={{ antialias: lite, alpha: false, powerPreference: 'high-performance' }}
       onCreated={() => requestAnimationFrame(onReady)}
     >
-      <color attach="background" args={['#071F3A']} />
+      <color attach="background" args={['#1B1714']} />
       <HeroRig progress={progress}>
         <WireMorph progress={progress} lite={lite} />
       </HeroRig>

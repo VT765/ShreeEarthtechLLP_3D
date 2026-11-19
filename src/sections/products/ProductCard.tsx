@@ -9,8 +9,8 @@ import { CornerSweep } from '../../components/SCurve'
 
 /** Grade line colours with AA contrast on white (the raw brand colours are too light for small text). */
 const gradeText: Record<Product['id'], string> = {
-  crystal: 'var(--blue-deep)',
-  hyper: 'var(--gold-dark)',
+  crystal: 'var(--sky-deep)',
+  hyper: 'var(--orange-deep)',
   pure: '#176B60',
 }
 
@@ -57,7 +57,7 @@ const ProductCard = forwardRef<HTMLElement, Props>(function ProductCard({ p, ind
             className={`absolute inset-0 h-full w-full object-contain p-6 transition-opacity duration-500 ${live ? 'opacity-0' : 'opacity-100'}`}
           />
           {highlighted && (
-            <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-gold-light px-3 py-1 text-xs font-bold text-midnight">
+            <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-orange-light px-3 py-1 text-xs font-bold text-charcoal">
               <Sparkles className="h-3.5 w-3.5" strokeWidth={2} aria-hidden /> Recommended
             </span>
           )}

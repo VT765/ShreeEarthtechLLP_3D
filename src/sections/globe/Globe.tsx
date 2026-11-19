@@ -14,10 +14,10 @@ const rgb = (hex: string): [number, number, number] => {
   return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255]
 }
 
-const TEAL = rgb('#1E8C7E')
-const NAVY = rgb('#0A3A68')
-const GOLD = rgb('#E0B04A')
-const INDIA = rgb('#FFF3C4')
+const TEAL = rgb('#2C6A99')
+const NAVY = rgb('#2B241E')
+const GOLD = rgb('#F2A25C')
+const INDIA = rgb('#FFE3C2')
 
 const rad = (d: number) => (d * Math.PI) / 180
 

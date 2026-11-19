@@ -2,21 +2,21 @@
 
 /* Gold focus ring: the global blue one disappears on midnight. */
 .hero-root :focus-visible {
-  outline-color: var(--gold-light);
+  outline-color: var(--orange-light);
 }
 
 /* Readability scrim: copy on the left, wireframe on the right (desktop). */
 .hero-vignette {
   background:
-    radial-gradient(120% 95% at 72% 50%, transparent 45%, rgba(5, 15, 30, 0.6) 100%),
-    linear-gradient(90deg, rgba(7, 31, 58, 0.94) 0%, rgba(7, 31, 58, 0.8) 34%, rgba(7, 31, 58, 0.3) 58%, transparent 74%);
+    radial-gradient(120% 95% at 72% 50%, transparent 45%, rgba(14, 12, 10, 0.6) 100%),
+    linear-gradient(90deg, rgba(27, 23, 20, 0.94) 0%, rgba(27, 23, 20, 0.8) 34%, rgba(27, 23, 20, 0.3) 58%, transparent 74%);
 }
 /* Stacked layout: the object sits behind/below the copy, so the scrim is heavier and vertical. */
 @media (max-width: 1023px) {
   .hero-vignette {
     background:
-      radial-gradient(140% 80% at 50% 75%, transparent 30%, rgba(5, 15, 30, 0.55) 100%),
-      linear-gradient(180deg, rgba(7, 31, 58, 0.92) 0%, rgba(7, 31, 58, 0.82) 45%, rgba(7, 31, 58, 0.5) 72%, rgba(7, 31, 58, 0.7) 100%);
+      radial-gradient(140% 80% at 50% 75%, transparent 30%, rgba(14, 12, 10, 0.55) 100%),
+      linear-gradient(180deg, rgba(27, 23, 20, 0.92) 0%, rgba(27, 23, 20, 0.82) 45%, rgba(27, 23, 20, 0.5) 72%, rgba(27, 23, 20, 0.7) 100%);
   }
 }
 
@@ -28,8 +28,8 @@
 .hero-frame {
   padding: 10px;
   border-radius: 20px;
-  border: 1px solid rgba(224, 176, 74, 0.28);
-  background: rgba(7, 31, 58, 0.55);
+  border: 1px solid rgba(242, 162, 92, 0.28);
+  background: rgba(27, 23, 20, 0.55);
   backdrop-filter: blur(6px);
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
 }
@@ -39,7 +39,7 @@
   position: absolute;
   width: 28px;
   height: 28px;
-  border: 2px solid var(--gold-light);
+  border: 2px solid var(--orange-light);
   pointer-events: none;
 }
 .hero-frame::before {
@@ -73,7 +73,7 @@
   width: 3px;
   height: 8px;
   border-radius: 2px;
-  background: var(--gold-light);
+  background: var(--orange-light);
   animation: hero-scroll 1.8s var(--ease-out-soft) infinite;
 }
 @keyframes hero-scroll {

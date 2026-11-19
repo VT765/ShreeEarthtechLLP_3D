@@ -17,11 +17,11 @@ export default function StaticMap() {
     <svg viewBox={`0 0 ${W} ${H.toFixed(0)}`} className="h-auto w-full" aria-hidden="true" focusable="false">
       <defs>
         <radialGradient id="gr-static-bg" cx="55%" cy="45%" r="75%">
-          <stop offset="0" stopColor="#0A3A68" />
-          <stop offset="1" stopColor="#071F3A" />
+          <stop offset="0" stopColor="#2B241E" />
+          <stop offset="1" stopColor="#1B1714" />
         </radialGradient>
         <pattern id="gr-static-dots" width="12" height="12" patternUnits="userSpaceOnUse">
-          <circle cx="6" cy="6" r="1" fill="#1E8C7E" opacity="0.35" />
+          <circle cx="6" cy="6" r="1" fill="#2C6A99" opacity="0.35" />
         </pattern>
       </defs>
       <rect width={W} height={H} rx="24" fill="url(#gr-static-bg)" />
@@ -36,14 +36,14 @@ export default function StaticMap() {
         const my = Math.min(oy, y) - Math.hypot(x - ox, y - oy) * 0.18
         return (
           <g key={c.name}>
-            <path d={`M${ox},${oy} Q${mx},${my} ${x},${y}`} fill="none" stroke="#E0B04A" strokeOpacity="0.75" strokeWidth="1.5" />
-            <circle cx={x} cy={y} r="4" fill="#E0B04A" />
+            <path d={`M${ox},${oy} Q${mx},${my} ${x},${y}`} fill="none" stroke="#F2A25C" strokeOpacity="0.75" strokeWidth="1.5" />
+            <circle cx={x} cy={y} r="4" fill="#F2A25C" />
           </g>
         )
       })}
-      <circle cx={ox} cy={oy} r="13" fill="#FFF3C4" opacity="0.2" />
-      <circle cx={ox} cy={oy} r="6.5" fill="#FFF3C4" stroke="#BF8311" strokeWidth="2" />
-      <text x={ox + 12} y={oy - 12} fill="#FFF3C4" fontSize="14" fontWeight="700" fontFamily="Plus Jakarta Sans, sans-serif">
+      <circle cx={ox} cy={oy} r="13" fill="#FFE3C2" opacity="0.2" />
+      <circle cx={ox} cy={oy} r="6.5" fill="#FFE3C2" stroke="#D2691E" strokeWidth="2" />
+      <text x={ox + 12} y={oy - 12} fill="#FFE3C2" fontSize="14" fontWeight="700" fontFamily="Plus Jakarta Sans, sans-serif">
         India
       </text>
     </svg>

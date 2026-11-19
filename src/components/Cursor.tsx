@@ -42,9 +42,9 @@ export default function Cursor() {
       >
         <defs>
           <linearGradient id="drop" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#FFF3C4" />
-            <stop offset="0.5" stopColor="#E0B04A" />
-            <stop offset="1" stopColor="#BF8311" />
+            <stop offset="0" stopColor="#FFE3C2" />
+            <stop offset="0.5" stopColor="#F2A25C" />
+            <stop offset="1" stopColor="#D2691E" />
           </linearGradient>
         </defs>
         <path d="M12 1 C 12 1, 2 14, 2 21 a10 10 0 0 0 20 0 C 22 14, 12 1, 12 1z" fill="url(#drop)" />

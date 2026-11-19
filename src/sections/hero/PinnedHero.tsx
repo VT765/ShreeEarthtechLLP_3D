@@ -92,7 +92,7 @@ export default function PinnedHero() {
 
   return (
     <div ref={wrap} className="hero-root relative">
-      <section id={sections.home} ref={pin} aria-labelledby="hero-title" className="on-dark relative h-[100svh] min-h-[560px] overflow-hidden bg-midnight">
+      <section id={sections.home} ref={pin} aria-labelledby="hero-title" className="on-dark relative h-[100svh] min-h-[560px] overflow-hidden bg-charcoal">
         <div ref={stage} className="absolute inset-0" aria-hidden>
           <div className={`absolute inset-0 transition-opacity duration-1000 ${ready ? 'opacity-100' : 'opacity-0'}`}>
             {load && (

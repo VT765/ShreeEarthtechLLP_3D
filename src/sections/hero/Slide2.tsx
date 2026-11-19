@@ -24,7 +24,7 @@ export default function Slide2({ ref, overlay, inactive, style }: Props) {
           <h2 id="about-title" className="h2">
             {s.heading}
           </h2>
-          <p className="mt-3 font-display text-lg font-semibold text-gold-light sm:text-xl">{s.subheading}</p>
+          <p className="mt-3 font-display text-lg font-semibold text-orange-light sm:text-xl">{s.subheading}</p>
           <div className="mt-5 space-y-4 text-[15px] leading-relaxed text-white/75 sm:text-[17px]">
             {s.body.map((p) => (
               <p key={p}>{p}</p>

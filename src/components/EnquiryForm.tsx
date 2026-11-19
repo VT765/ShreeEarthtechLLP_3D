@@ -220,7 +220,7 @@ export default function EnquiryForm() {
   const sending = status.kind === 'sending'
 
   return (
-    <form ref={formRef} onSubmit={submit} noValidate aria-labelledby={`${uid}-title`} aria-busy={sending} className="card relative p-6 text-slate md:p-8">
+    <form ref={formRef} onSubmit={submit} noValidate aria-labelledby={`${uid}-title`} aria-busy={sending} className="card relative p-6 text-body md:p-8">
       <h3 id={`${uid}-title`} className="text-2xl text-ink">
         Request a quote
       </h3>
@@ -307,17 +307,17 @@ export default function EnquiryForm() {
         )}
         {sending && <p className="mt-5 text-sm text-stone">Sending your enquiry…</p>}
         {status.kind === 'success' && (
-          <p className="mt-5 flex items-start gap-2 rounded-lg border-l-4 border-teal bg-teal/10 px-4 py-3 text-sm text-ink">
-            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-teal" aria-hidden />
+          <p className="mt-5 flex items-start gap-2 rounded-lg border-l-4 border-sky bg-sky/10 px-4 py-3 text-sm text-ink">
+            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-sky" aria-hidden />
             Thank you — your enquiry has been sent. Our team will get back to you shortly.
           </p>
         )}
         {status.kind === 'mailto' && (
-          <p className="mt-5 flex items-start gap-2 rounded-lg border-l-4 border-brand-blue bg-sky-tint px-4 py-3 text-sm text-ink">
-            <Send className="mt-0.5 h-4 w-4 shrink-0 text-brand-blue" aria-hidden />
+          <p className="mt-5 flex items-start gap-2 rounded-lg border-l-4 border-sky bg-sky-tint px-4 py-3 text-sm text-ink">
+            <Send className="mt-0.5 h-4 w-4 shrink-0 text-sky" aria-hidden />
             <span>
               We’ve opened your email app with the enquiry filled in — just press send. Nothing opened? Email us at{' '}
-              <a className="font-semibold text-brand-blue underline" href={mailtoHref(values)}>
+              <a className="font-semibold text-sky underline" href={mailtoHref(values)}>
                 {SALES_EMAIL}
               </a>
               .
@@ -330,7 +330,7 @@ export default function EnquiryForm() {
           <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-error" aria-hidden />
           <span>
             Sorry, we couldn’t send your enquiry ({status.detail}). Please try again, or{' '}
-            <a className="font-semibold text-brand-blue underline" href={mailtoHref(values)}>
+            <a className="font-semibold text-sky underline" href={mailtoHref(values)}>
               email it to {SALES_EMAIL}
             </a>{' '}
             instead — your details will be filled in.

@@ -1,8 +1,8 @@
 // Static stand-in for the 3D morph (reduced motion / low-power phones / no WebGL):
 // layered clay block → loose granules → oil drop, drawn as thin teal and gold strokes.
 
-const TEAL = '#1E8C7E'
-const GOLD = '#E0B04A'
+const TEAL = '#2C6A99'
+const GOLD = '#F2A25C'
 
 /** Irregular plate outline, deterministic so it never jitters between renders. */
 function plate(cx: number, cy: number, rx: number, seed: number) {

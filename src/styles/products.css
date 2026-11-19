@@ -5,35 +5,35 @@
   0%,
   100% {
     box-shadow:
-      0 0 0 3px var(--gold-light),
-      0 0 40px rgba(224, 176, 74, 0.45);
+      0 0 0 3px var(--orange-light),
+      0 0 40px rgba(242, 162, 92, 0.45);
   }
   50% {
     box-shadow:
-      0 0 0 5px var(--gold-light),
-      0 0 70px rgba(224, 176, 74, 0.7);
+      0 0 0 5px var(--orange-light),
+      0 0 70px rgba(242, 162, 92, 0.7);
   }
 }
 .product-card.is-highlighted {
-  border-color: var(--brand-gold);
+  border-color: var(--orange);
   animation: product-glow 1.25s ease-in-out 2;
   box-shadow:
-    0 0 0 3px var(--gold-light),
-    0 0 40px rgba(224, 176, 74, 0.45);
+    0 0 0 3px var(--orange-light),
+    0 0 40px rgba(242, 162, 92, 0.45);
 }
 .product-card:focus {
   outline: none;
 }
 .product-card:focus-visible {
-  outline: 2px solid var(--brand-blue);
+  outline: 2px solid var(--sky);
   outline-offset: 4px;
 }
 
 /* Soft stage behind each bag / product image. */
 .bag-stage {
   background:
-    radial-gradient(ellipse 70% 55% at 50% 60%, rgba(224, 176, 74, 0.16), transparent 70%),
-    linear-gradient(180deg, var(--sand) 0%, #fff 100%);
+    radial-gradient(ellipse 70% 55% at 50% 60%, rgba(242, 162, 92, 0.16), transparent 70%),
+    linear-gradient(180deg, var(--beige) 0%, #fff 100%);
 }
 
 /* Collapsible spec table: animates grid rows 0fr → 1fr. */
@@ -74,6 +74,6 @@
 
 /* Segmented radio buttons / chips (native radios, visually styled). */
 .seg-option input:focus-visible + span {
-  outline: 2px solid var(--brand-blue);
+  outline: 2px solid var(--sky);
   outline-offset: 3px;
 }

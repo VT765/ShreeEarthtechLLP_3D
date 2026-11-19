@@ -31,11 +31,11 @@ function RadioOption({ name, value, checked, onChange, children, variant }: {
   const state =
     variant === 'segment'
       ? checked
-        ? 'bg-midnight text-white shadow-[0_8px_20px_rgba(7,31,58,0.2)]'
-        : 'text-slate hover:bg-white hover:text-ink'
+        ? 'bg-charcoal text-white shadow-[0_8px_20px_rgba(27,23,20,0.2)]'
+        : 'text-body hover:bg-white hover:text-ink'
       : checked
-        ? 'border-brand-gold bg-gold-light/25 text-midnight'
-        : 'border-clay bg-white text-slate hover:border-brand-blue hover:text-ink'
+        ? 'border-orange bg-orange-light/25 text-charcoal'
+        : 'border-clay bg-white text-body hover:border-sky hover:text-ink'
   return (
     <label className="seg-option relative cursor-pointer">
       <input type="radio" name={name} value={value} checked={checked} onChange={() => onChange(value)} className="absolute inset-0 h-full w-full cursor-pointer opacity-0" />
@@ -60,7 +60,7 @@ export default function GradeFinder() {
   }
 
   return (
-    <section id={sections.gradeFinder} ref={ref} className="section grain overflow-hidden bg-sand" aria-labelledby="grade-finder-title">
+    <section id={sections.gradeFinder} ref={ref} className="section grain overflow-hidden bg-beige" aria-labelledby="grade-finder-title">
       <SWatermark className="absolute -right-16 top-10 hidden h-[420px] w-auto text-clay/70 lg:block" />
       <div className="container-x relative">
         <SectionHeader eyebrow={copy.eyebrow} title={<span id="grade-finder-title">{copy.title}</span>} body={copy.body} />
@@ -69,7 +69,7 @@ export default function GradeFinder() {
           <div className="lg:col-span-7" data-reveal="0.1">
             <fieldset>
               <legend className="mb-3 text-sm font-semibold uppercase tracking-[0.12em] text-stone">1. Oil category</legend>
-              <div className="grid grid-cols-1 gap-1.5 rounded-2xl border border-clay bg-ivory p-1.5 sm:grid-cols-3">
+              <div className="grid grid-cols-1 gap-1.5 rounded-2xl border border-clay bg-cream p-1.5 sm:grid-cols-3">
                 {oilCategories.map((c) => {
                   const Icon = categoryIcon[c.id]
                   return (
@@ -107,7 +107,7 @@ export default function GradeFinder() {
                   <h3 id={`${uid}-result`} className="text-2xl">
                     {product.name}
                   </h3>
-                  <p className="mt-1 text-sm font-medium text-gold-light">{product.grade}</p>
+                  <p className="mt-1 text-sm font-medium text-orange-light">{product.grade}</p>
                 </div>
               </div>
               <p className="mt-5 text-[15px] text-white/80">{match.reason}</p>
@@ -120,7 +120,7 @@ export default function GradeFinder() {
                 ))}
               </dl>
               <div className="mt-7 flex flex-wrap gap-3">
-                <button type="button" onClick={() => highlightProduct(product.id)} className="btn btn-gold h-11 flex-1 text-sm">
+                <button type="button" onClick={() => highlightProduct(product.id)} className="btn btn-orange h-11 flex-1 text-sm">
                   View product <ArrowRight className="h-4 w-4" aria-hidden />
                 </button>
                 <button type="button" onClick={() => enquireAbout(product.id)} className="btn btn-ghost-dark h-11 flex-1 text-sm">

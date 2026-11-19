@@ -68,7 +68,7 @@ export default function ProductGallery() {
   const show3D = use3D && inView
 
   return (
-    <section id={sections.products} ref={ref} className="section bg-ivory" aria-labelledby="products-title">
+    <section id={sections.products} ref={ref} className="section bg-cream" aria-labelledby="products-title">
       <div className="container-x">
         <SectionHeader
           eyebrow={copy.eyebrow}

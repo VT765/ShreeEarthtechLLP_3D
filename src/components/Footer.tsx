@@ -22,7 +22,7 @@ const listFormat = new Intl.ListFormat('en', { style: 'long', type: 'conjunction
 function ContactRow({ icon, label, children }: { icon: ReactNode; label: string; children: ReactNode }) {
   return (
     <li className="flex gap-4">
-      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/5 text-gold-light">{icon}</span>
+      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/5 text-orange-light">{icon}</span>
       <div className="min-w-0">
         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/55">{label}</p>
         <div className="mt-0.5 text-[15px] text-white/85">{children}</div>
@@ -44,7 +44,7 @@ function Seal({ title }: { title: string }) {
       {Array.from({ length: 24 }, (_, i) => (
         <line key={i} x1="50" y1="5" x2="50" y2="8.5" stroke="currentColor" strokeWidth="1" opacity="0.5" transform={`rotate(${i * 15} 50 50)`} />
       ))}
-      <path d="M50 18 l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.6-4.8 2.6.9-5.4-3.9-3.8 5.4-.8z" fill="var(--gold-light)" />
+      <path d="M50 18 l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.6-4.8 2.6.9-5.4-3.9-3.8 5.4-.8z" fill="var(--orange-light)" />
       {iso ? (
         <>
           <text x="50" y="45" textAnchor="middle" fontSize="9" fontWeight="600" letterSpacing="2" fill="currentColor" fontFamily="Inter, sans-serif">
@@ -75,7 +75,7 @@ export default function Footer() {
   return (
     <footer ref={ref} className="footer-bg on-dark relative overflow-hidden text-white/75">
       <SWatermark className="absolute -left-28 top-20 h-[560px] w-auto text-white/[0.035] md:h-[760px]" />
-      <SWatermark className="absolute -right-24 bottom-24 hidden h-[420px] w-auto rotate-180 text-brand-gold/[0.06] lg:block" />
+      <SWatermark className="absolute -right-24 bottom-24 hidden h-[420px] w-auto rotate-180 text-orange/[0.06] lg:block" />
 
       {/* ---------- Contact + enquiry ---------- */}
       <section id={sections.contact} className="section relative" aria-labelledby="contact-title">
@@ -128,7 +128,7 @@ export default function Footer() {
             </address>
 
             <div className="mt-8 flex flex-wrap gap-3" data-reveal="0.2">
-              <a href={asset(company.brochure)} download className="btn btn-gold">
+              <a href={asset(company.brochure)} download className="btn btn-orange">
                 <Download className="h-4 w-4" aria-hidden /> Download Brochure
               </a>
               <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="btn btn-ghost-dark">
@@ -164,7 +164,7 @@ export default function Footer() {
           </div>
           <ul className="mt-10 grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-6">
             {certifications.map((c) => (
-              <li key={c.id} className="seal flex flex-col items-center text-center text-gold-light/80">
+              <li key={c.id} className="seal flex flex-col items-center text-center text-orange-light/80">
                 <Seal title={c.title} />
                 <p className="mt-3 font-display text-sm font-bold text-white">{c.title}</p>
                 <p className="text-xs text-white/60">{c.caption}</p>
@@ -187,7 +187,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${company.name} on ${s.name}`}
-                  className="grid h-10 w-10 place-items-center rounded-full border border-white/15 text-white/80 transition-colors hover:border-gold-light hover:text-gold-light"
+                  className="grid h-10 w-10 place-items-center rounded-full border border-white/15 text-white/80 transition-colors hover:border-orange-light hover:text-orange-light"
                 >
                   <SocialIcon name={s.name} className="h-[18px] w-[18px]" />
                 </a>

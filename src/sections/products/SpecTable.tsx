@@ -13,7 +13,7 @@ export default function SpecTable() {
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen((o) => !o)}
-        className="group flex w-full items-center justify-between gap-4 rounded-2xl border border-clay bg-white px-5 py-4 text-left shadow-[0_10px_30px_rgba(7,31,58,0.06)] transition-colors hover:border-brand-blue md:px-6"
+        className="group flex w-full items-center justify-between gap-4 rounded-2xl border border-clay bg-white px-5 py-4 text-left shadow-[0_10px_30px_rgba(27,23,20,0.06)] transition-colors hover:border-sky md:px-6"
       >
         <span>
           <span className="block font-display text-lg font-bold text-ink md:text-xl">Full specification comparison</span>
@@ -21,7 +21,7 @@ export default function SpecTable() {
             {specs.length} parameters across {products.length} grades
           </span>
         </span>
-        <span className="flex shrink-0 items-center gap-2 text-sm font-semibold text-brand-blue">
+        <span className="flex shrink-0 items-center gap-2 text-sm font-semibold text-sky">
           <span className="hidden sm:inline">{open ? 'Hide table' : 'Show table'}</span>
           <ChevronDown className={`h-5 w-5 transition-transform duration-300 ${open ? 'rotate-180' : ''}`} aria-hidden />
         </span>
@@ -29,7 +29,7 @@ export default function SpecTable() {
 
       <div id={panelId} className="collapse-rows" data-open={open} inert={!open}>
         <div>
-          <div className="mt-4 overflow-x-auto rounded-2xl border border-clay shadow-[0_10px_30px_rgba(7,31,58,0.08)]" tabIndex={open ? 0 : -1} role="region" aria-label="Specification table, scrolls horizontally">
+          <div className="mt-4 overflow-x-auto rounded-2xl border border-clay shadow-[0_10px_30px_rgba(27,23,20,0.08)]" tabIndex={open ? 0 : -1} role="region" aria-label="Specification table, scrolls horizontally">
             <table className="spec-table w-full min-w-[640px] border-collapse text-left">
               <caption className="sr-only">Technical specifications of each activated bleaching earth grade</caption>
               <thead>

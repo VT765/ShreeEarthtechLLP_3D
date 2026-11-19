@@ -63,7 +63,7 @@ export default function Navbar() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-out-soft ${
-        solid ? 'bg-midnight/90 shadow-[0_8px_30px_rgba(5,15,30,0.35)] backdrop-blur-xl' : 'bg-transparent'
+        solid ? 'bg-charcoal/90 shadow-[0_8px_30px_rgba(14,12,10,0.35)] backdrop-blur-xl' : 'bg-transparent'
       }`}
     >
       <nav className="container-x flex h-[76px] items-center justify-between gap-6" aria-label="Primary">
@@ -84,12 +84,12 @@ export default function Navbar() {
                   }}
                   aria-current={isActive ? 'true' : undefined}
                   className={`relative rounded-md px-3 py-2 text-[14px] font-medium text-white/80 transition-colors hover:text-white ${
-                    isActive ? '!text-gold-light' : ''
+                    isActive ? '!text-orange-light' : ''
                   }`}
                 >
                   {label}
                   <span
-                    className={`absolute inset-x-3 -bottom-0.5 h-0.5 origin-left rounded bg-brand-gold transition-transform duration-500 ${
+                    className={`absolute inset-x-3 -bottom-0.5 h-0.5 origin-left rounded bg-orange transition-transform duration-500 ${
                       isActive ? 'scale-x-100' : 'scale-x-0'
                     }`}
                   />
@@ -101,7 +101,7 @@ export default function Navbar() {
 
         <div className="flex items-center gap-3">
           <Magnetic>
-            <a href={telHref(phone)} className="btn btn-gold hidden h-11 sm:inline-flex" aria-label={`Call now: ${phone}`}>
+            <a href={telHref(phone)} className="btn btn-orange hidden h-11 sm:inline-flex" aria-label={`Call now: ${phone}`}>
               <Phone className="h-4 w-4" /> Call Now
             </a>
           </Magnetic>
@@ -132,7 +132,7 @@ export default function Navbar() {
             </li>
           ))}
           <li className="pt-2 sm:hidden">
-            <a href={telHref(phone)} className="btn btn-gold w-full">
+            <a href={telHref(phone)} className="btn btn-orange w-full">
               <Phone className="h-4 w-4" /> Call Now
             </a>
           </li>

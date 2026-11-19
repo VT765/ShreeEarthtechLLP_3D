@@ -20,7 +20,7 @@ export default function Logo({ variant = 'light', className = '' }: Props) {
       <img src={asset('logo-icon.png')} alt="" width={177} height={207} className="h-11 w-auto" />
       <span className="font-display font-extrabold leading-[0.95] tracking-tight" aria-hidden>
         <span className="block text-[20px] text-white">Shree</span>
-        <span className="block text-[20px] text-gold-light">
+        <span className="block text-[20px] text-orange-light">
           EarthTech <span className="text-[13px]">LLP</span>
         </span>
       </span>
