@@ -1,4 +1,4 @@
-import { company } from '../content'
+import { company } from '../data/company'
 import SocialIcon from './Social'
 
 export default function WhatsAppButton() {
