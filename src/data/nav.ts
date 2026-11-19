@@ -38,6 +38,6 @@ export const nav: NavItem[] = [
     items: products.map((p) => ({ label: p.name, to: routes.product(p.slug), description: p.grade })),
   },
   { label: 'Applications', to: routes.applications },
-  { label: 'Certificates', to: `${routes.home}#${sections.certificates}` },
+  { label: 'Certificates', to: routes.certificates },
   { label: 'Contact', to: routes.contact },
 ]

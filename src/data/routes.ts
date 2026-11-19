@@ -8,6 +8,7 @@ export const routes = {
   products: '/products',
   product: (slug: string) => `/products/${slug}`,
   applications: '/applications',
+  certificates: '/certificates',
   contact: '/contact',
 } as const
 

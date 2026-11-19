@@ -19,6 +19,7 @@ const ProductsPage = lazy(() => import('./pages/ProductsPage'))
 const ProductPage = lazy(() => import('./pages/ProductPage'))
 const ApplicationsPage = lazy(() => import('./pages/ApplicationsPage'))
 const ContactPage = lazy(() => import('./pages/ContactPage'))
+const CertificatesPage = lazy(() => import('./pages/CertificatesPage'))
 
 const SITE = 'Shree Earthtech LLP'
 const titles: Record<string, string> = {
@@ -27,6 +28,7 @@ const titles: Record<string, string> = {
   [routes.visionMission]: `Vision & Mission | ${SITE}`,
   [routes.products]: `Products — Crystal Brite, Hyper Clean, Pure Choice | ${SITE}`,
   [routes.applications]: `Applications & Grade Finder | ${SITE}`,
+  [routes.certificates]: `Certificates — ISO, Kosher & Halal | ${SITE}`,
   [routes.contact]: `Contact & Request a Quote | ${SITE}`,
 }
 
@@ -77,6 +79,7 @@ export default function App() {
             <Route path={routes.products} element={<ProductsPage />} />
             <Route path={`${routes.products}/:slug`} element={<ProductPage />} />
             <Route path={routes.applications} element={<ApplicationsPage />} />
+            <Route path={routes.certificates} element={<CertificatesPage />} />
             <Route path={routes.contact} element={<ContactPage />} />
             <Route path="*" element={<Home />} />
           </Routes>

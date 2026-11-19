@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { companyProfile } from '../data/about'
-import { sections } from '../data/nav'
 import { products } from '../data/products'
 import { routes } from '../data/routes'
 import PageHero from '../components/PageHero'
@@ -28,7 +27,7 @@ export default function CompanyProfilePage() {
               <Link to={routes.visionMission} className="btn btn-primary">
                 Vision &amp; Mission <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
-              <Link to={`${routes.home}#${sections.certificates}`} className="btn btn-secondary">
+              <Link to={routes.certificates} className="btn btn-secondary">
                 Certifications
               </Link>
             </div>

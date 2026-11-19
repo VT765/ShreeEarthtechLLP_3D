@@ -34,7 +34,7 @@ export const company = {
 export const telHref = (phone: string) => `tel:${phone.replace(/[^\d+]/g, '')}`
 
 /**
- * Certifications shown on the home page. `image` is a DUMMY certificate for now: put the real scan in
+ * Certifications: seals on the home page, full certificates on /certificates. `image` is a DUMMY certificate for now: put the real scan in
  * public/certificates/ (e.g. iso9001.jpg) and point `image` at it. Confirm every entry before launch.
  */
 const DUMMY_CERTIFICATE = 'certificates/placeholder-certificate.svg'

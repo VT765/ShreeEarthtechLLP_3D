@@ -19,8 +19,7 @@ function isActive(item: NavItem, pathname: string, homeSection: string) {
   if (isMenu(item)) return item.items.some((i) => pathname === i.to.split('#')[0])
   const [path, id] = item.to.split('#')
   if (pathname !== path) return false
-  if (path === routes.home) return id ? homeSection === id : homeSection !== sections.certificates
-  return true
+  return !id || homeSection === id
 }
 
 export default function Navbar() {
