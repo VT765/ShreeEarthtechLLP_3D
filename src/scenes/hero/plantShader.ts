@@ -3,8 +3,9 @@ import { BELT_A, BELT_B } from './plantModel'
 
 // Assembly timeline (uProgress 0 → 1, shared with the slide swap; 1 = pin end, About fully shown):
 //   0.00        tiny crystals fill the hero, revolving slowly round the screen centre
-//   0.03–1.00   dot k leaves the field over a 0.28 window starting at 0.03 + 0.62·k/n (+ jitter),
-//               so the plant keeps building for as long as the visitor scrolls
+//   0.03–0.80   dot k leaves the field over a 0.25 window starting at 0.03 + 0.47·k/n (+ jitter),
+//               so the plant keeps building for most of the pin
+//   0.80–1.00   plant stands complete before the pin releases (the scrub lag can't leave it half built)
 //   1.00        plant formed; material dots ride the conveyor; free dust keeps drifting behind it
 
 const vertexShader = /* glsl */ `
@@ -51,8 +52,8 @@ const vertexShader = /* glsl */ `
     vec3 target = (modelViewMatrix * vec4(position + uBelt * fract(rnd + uTime * 0.12) * flow, 1.0)).xyz;
 
     // Build order with a little jitter, so parts stream in rather than pop.
-    float d = 0.03 + aMeta.x * 0.62 + fract(rnd * 7.0) * 0.06;
-    float e = smoothstep(d, d + 0.28, uProgress) * (1.0 - dust);
+    float d = 0.03 + aMeta.x * 0.47 + fract(rnd * 7.0) * 0.05;
+    float e = smoothstep(d, d + 0.25, uProgress) * (1.0 - dust);
     float arc = sin(e * 3.14159);
     vec3 p = mix(start, target, e);
     p.y += arc * (0.3 + 0.3 * ph);

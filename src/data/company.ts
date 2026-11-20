@@ -38,12 +38,14 @@ export const telHref = (phone: string) => `tel:${phone.replace(/[^\d+]/g, '')}`
  * public/certificates/ (e.g. iso9001.jpg) and point `image` at it. Confirm every entry before launch.
  */
 const DUMMY_CERTIFICATE = 'certificates/placeholder-certificate.svg'
+// TODO: fill in the certifying body and expiry date of each certificate (shown on the home cards).
+const TBC = 'TBC'
 
 export const certifications = [
-  { id: 'iso9001', title: 'ISO 9001:2015', caption: 'Quality Management', image: DUMMY_CERTIFICATE },
-  { id: 'iso14001', title: 'ISO 14001:2015', caption: 'Environmental Management', image: DUMMY_CERTIFICATE },
-  { id: 'iso22000', title: 'ISO 22000:2018', caption: 'Food Safety Management', image: DUMMY_CERTIFICATE },
-  { id: 'iso45001', title: 'ISO 45001:2018', caption: 'Occupational Health & Safety', image: DUMMY_CERTIFICATE },
-  { id: 'kosher', title: 'Kosher', caption: 'Kosher Certified', image: DUMMY_CERTIFICATE },
-  { id: 'halal', title: 'Halal', caption: 'Halal Certified', image: DUMMY_CERTIFICATE },
+  { id: 'iso9001', title: 'ISO 9001:2015', caption: 'Quality Management', issuer: TBC, validTill: TBC, image: DUMMY_CERTIFICATE },
+  { id: 'iso14001', title: 'ISO 14001:2015', caption: 'Environmental Management', issuer: TBC, validTill: TBC, image: DUMMY_CERTIFICATE },
+  { id: 'iso22000', title: 'ISO 22000:2018', caption: 'Food Safety Management', issuer: TBC, validTill: TBC, image: DUMMY_CERTIFICATE },
+  { id: 'iso45001', title: 'ISO 45001:2018', caption: 'Occupational Health & Safety', issuer: TBC, validTill: TBC, image: DUMMY_CERTIFICATE },
+  { id: 'kosher', title: 'Kosher', caption: 'Kosher Certified', issuer: TBC, validTill: TBC, image: DUMMY_CERTIFICATE },
+  { id: 'halal', title: 'Halal', caption: 'Halal Certified', issuer: TBC, validTill: TBC, image: DUMMY_CERTIFICATE },
 ]

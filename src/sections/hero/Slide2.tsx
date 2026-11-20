@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactNode, Ref } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight } from 'lucide-react'
 import { hero } from '../../data/hero'
+import { tightPunct } from '../../lib/tightPunct'
 
 type Props = {
   ref?: Ref<HTMLDivElement>
@@ -25,7 +25,7 @@ export default function Slide2({ ref, overlay, inactive, style, art }: Props) {
       <div className="container-x grid items-center gap-8 lg:grid-cols-12 lg:gap-10">
         <div className="min-w-0 lg:col-span-6">
           <h2 id="about-title" className="h2">
-            {s.heading}
+            {tightPunct(s.heading)}
           </h2>
           <p className="mt-3 font-display text-lg font-semibold text-orange-light sm:text-xl">{s.subheading}</p>
           <div className="mt-5 space-y-4 text-[15px] leading-relaxed text-white/75 sm:text-[17px]">
@@ -34,7 +34,7 @@ export default function Slide2({ ref, overlay, inactive, style, art }: Props) {
             ))}
           </div>
           <Link to={s.profileLink.to} className="hero-text-link mt-6 inline-flex items-center gap-2 font-semibold text-orange-light">
-            {s.profileLink.label} <ArrowRight className="h-4 w-4" aria-hidden />
+            {s.profileLink.label}
           </Link>
         </div>
         {art && <div className="mx-auto w-full max-w-[460px] lg:col-span-5 lg:col-start-8 lg:max-w-none">{art}</div>}

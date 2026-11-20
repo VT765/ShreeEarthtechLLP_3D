@@ -21,7 +21,7 @@ export function scrollToTop(immediate = true) {
 export default function SmoothScroll() {
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    lenis = new Lenis({ lerp: 0.1, smoothWheel: true })
+    lenis = new Lenis({ lerp: 0.15, wheelMultiplier: 1, smoothWheel: true, syncTouch: false })
     lenis.on('scroll', ScrollTrigger.update)
     const tick = (t: number) => lenis?.raf(t * 1000)
     gsap.ticker.add(tick)

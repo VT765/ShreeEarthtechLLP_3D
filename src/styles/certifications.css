@@ -1,15 +1,14 @@
-/* Certification block: seal cards with a certificate preview pop-up. */
+/* Certification block: cards with the certificate details on show. */
 .cert-card {
+  position: relative;
   display: flex;
-  width: 100%;
-  /* Fill the grid cell, so a caption that wraps (e.g. "Occupational Health & Safety") doesn't make one card taller. */
   height: 100%;
   flex-direction: column;
   align-items: center;
   border: 1px solid var(--clay);
   border-radius: 16px;
   background: var(--cream);
-  padding: 20px 12px;
+  padding: 20px 14px 16px;
   text-align: center;
   transition:
     transform 0.4s var(--ease-out-soft),
@@ -17,56 +16,10 @@
     box-shadow 0.4s;
 }
 .cert-card:hover,
-.cert-card.is-open {
+.cert-card:focus-within {
   transform: translateY(-4px);
-  border-color: var(--orange);
+  border-color: var(--accent);
   box-shadow: 0 16px 34px rgba(27, 23, 20, 0.12);
-}
-
-/* Absolutely positioned above the card, so opening it never shifts layout. */
-.cert-preview {
-  position: absolute;
-  bottom: calc(100% + 12px);
-  left: 50%;
-  z-index: 30;
-  width: 240px;
-  border: 1px solid var(--clay);
-  border-top: 3px solid var(--orange);
-  border-radius: 14px;
-  background: #fff;
-  padding: 10px;
-  box-shadow: 0 24px 50px rgba(14, 12, 10, 0.3);
-  opacity: 0;
-  visibility: hidden;
-  transform: translate(-50%, 8px);
-  transition:
-    opacity 0.2s,
-    transform 0.25s var(--ease-out-soft),
-    visibility 0s 0.25s;
-  pointer-events: none;
-}
-.cert-preview.is-open {
-  opacity: 1;
-  visibility: visible;
-  transform: translate(-50%, 0);
-  transition:
-    opacity 0.2s,
-    transform 0.25s var(--ease-out-soft);
-}
-
-/* Small screens: a fixed card near the bottom, so edge items never overflow the viewport. */
-@media (max-width: 767px) {
-  .cert-preview {
-    position: fixed;
-    inset: auto 0 96px;
-    margin-inline: auto;
-    left: 0;
-    width: min(260px, calc(100vw - 32px));
-    transform: translateY(8px);
-  }
-  .cert-preview.is-open {
-    transform: none;
-  }
 }
 
 /* ---------- /certificates page ---------- */

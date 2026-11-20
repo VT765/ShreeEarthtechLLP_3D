@@ -35,37 +35,12 @@
   background-size: 100% 1px;
 }
 
-/* "Scroll" cue: a dot sliding down a hairline. */
-.hero-scroll-line {
-  position: relative;
-  width: 1px;
-  height: 36px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.2);
-}
-.hero-scroll-line::after {
-  content: '';
-  position: absolute;
-  left: -1px;
-  top: -8px;
-  width: 3px;
-  height: 8px;
-  border-radius: 2px;
-  background: var(--orange-light);
-  animation: hero-scroll 1.8s var(--ease-out-soft) infinite;
-}
-@keyframes hero-scroll {
-  to {
-    transform: translateY(52px);
-  }
-}
-
 /* Positioned by PinnedHero at the pin-end scroll offset; spans to the bottom so the nav highlights "About". */
 .hero-about-marker {
   position: absolute;
   left: 0;
   width: 1px;
-  top: calc(220vh + 70px);
+  top: calc(120vh + 70px);
   bottom: 0;
   pointer-events: none;
 }

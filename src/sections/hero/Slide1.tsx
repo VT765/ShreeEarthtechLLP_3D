@@ -4,6 +4,7 @@ import { ArrowRight, Download } from 'lucide-react'
 import { hero } from '../../data/hero'
 import { company } from '../../data/company'
 import { asset } from '../../lib/asset'
+import { tightPunct } from '../../lib/tightPunct'
 
 type Props = {
   ref?: Ref<HTMLDivElement>
@@ -28,7 +29,7 @@ export default function Slide1({ ref, overlay, inactive, art }: Props) {
         <div className="min-w-0 lg:col-span-7 xl:col-span-6">
           <p className="eyebrow">{s.eyebrow}</p>
           <h1 id="hero-title" className="mt-3 text-[clamp(2.1rem,6.2vw,4.5rem)] leading-[1.04] sm:mt-4">
-            {s.title}
+            {tightPunct(s.title)}
           </h1>
           <p className="mt-4 max-w-[560px] text-[15px] leading-relaxed text-white/75 sm:mt-5 sm:text-lg">{s.body}</p>
           <div className="mt-6 flex flex-wrap gap-3 sm:mt-8">
@@ -42,16 +43,6 @@ export default function Slide1({ ref, overlay, inactive, art }: Props) {
         </div>
         {art && <div className="lg:col-span-5 xl:col-start-8">{art}</div>}
       </div>
-      {overlay && <ScrollCue />}
-    </div>
-  )
-}
-
-function ScrollCue() {
-  return (
-    <div className="absolute inset-x-0 bottom-5 flex flex-col items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.25em] text-white/60 [@media(max-height:600px)]:hidden" aria-hidden>
-      Scroll
-      <span className="hero-scroll-line" />
     </div>
   )
 }

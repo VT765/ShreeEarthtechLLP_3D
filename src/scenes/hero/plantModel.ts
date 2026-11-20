@@ -54,8 +54,10 @@ function vessel(s: Sketch, x: number, z: number, r: number, ys: number[], vertic
 
 /** Clay stockpile → hopper → conveyor → activation reactors → filter press → rotary dryer → cyclone → stack,
  * with a saw-tooth shed, product silos and bagged pallets, on a gridded slab. Edges are listed roughly in
- * assembly order (ground first, then left to right), which the shader uses to stagger the build. */
-export function plantEdges(): Edge[] {
+ * assembly order (ground first, then left to right), which the shader uses to stagger the build.
+ * TRIAL: `detail` adds secondary plant (acid tank, pipe header, bucket elevator, platforms, lamp masts, …);
+ * the static SVG fallback keeps calling it without. */
+export function plantEdges(detail = false): Edge[] {
   const s = new Sketch()
 
   // Ground slab with a sparse floor grid.
@@ -64,6 +66,16 @@ export function plantEdges(): Edge[] {
   for (const x of [-1.4, -0.7, 0, 0.7, 1.4]) s.line([x, G, -1.1], [x, G, 1.1])
   for (const z of [-0.37, 0.37]) s.line([-2.1, G, z], [2.1, G, z])
   s.density = 1
+
+  // Yard lamp masts with orange lamp heads.
+  if (detail) {
+    for (const [lx, lz] of [[-2.0, 1.0], [1.3, 1.0]]) {
+      s.line([lx, G, lz], [lx, 0.05, lz])
+      s.kind = 1
+      s.line([lx, 0.05, lz], [lx + 0.16, 0.05, lz - 0.06])
+      s.kind = 0
+    }
+  }
 
   // Raw clay stockpile: a dotted mound.
   const [mx, mz] = [-1.72, 0.66]
@@ -108,6 +120,13 @@ export function plantEdges(): Edge[] {
     s.kind = 0
   }
   s.path([[-1.62, G, z1], [-1.62, G + 0.45, z1], [-1.24, G + 0.45, z1], [-1.24, G, z1]])
+  // Cladding seams and a pair of windows on the front wall.
+  if (detail) {
+    s.density = 0.5
+    for (const x of [-1.85, -1.7, -1.09, -0.97]) s.line([x, G, z1], [x, W, z1])
+    s.density = 1
+    for (const wx of [-1.98, -1.18]) s.box([wx + 0.03, -0.85, z1], [wx + 0.15, -0.66, z1 + 0.01])
+  }
 
   // Acid activation reactors: tall vessels with domed lids and agitator motors.
   const rz = -0.38
@@ -131,6 +150,15 @@ export function plantEdges(): Edge[] {
   for (let y = G + 0.15; y < -0.05; y += 0.16) s.line([0.76, y, cz], [0.76, y, cz + 0.08])
   s.density = 1
 
+  // Acid line rising behind the reactors to a header that drops into each lid.
+  if (detail) {
+    s.density = 0.8
+    s.path([[0.3, G, -0.85], [0.3, 0.3, -0.85], [0.3, 0.3, -0.55]])
+    s.line([-0.6, 0.3, -0.55], [0.5, 0.3, -0.55])
+    for (const rx of [-0.55, -0.05, 0.45]) s.line([rx, 0.3, -0.55], [rx, 0.12, -0.51])
+    s.density = 1
+  }
+
   // Filter press: two end heads, side bars and a stack of plates, on legs; fed by a pipe from the reactors.
   const [fx0, fx1, fz0, fz1, fy0, fy1] = [-0.35, 0.45, 0.3, 0.62, G + 0.25, G + 0.62]
   s.box([fx0, fy0, fz0], [fx0 + 0.07, fy1, fz1])
@@ -141,6 +169,12 @@ export function plantEdges(): Edge[] {
   s.density = 1
   for (const x of [fx0 + 0.03, fx1 - 0.03]) for (const z of [fz0, fz1]) s.line([x, fy0, z], [x, G, z])
   s.path([[-0.05, -1.0, -0.18], [-0.05, -1.0, 0.12], [-0.05, fy1 + 0.12, 0.12], [0.05, fy1 + 0.12, 0.46], [0.05, fy1, 0.46]])
+  // Cake bin under the plates.
+  if (detail) {
+    s.density = 0.7
+    s.box([-0.25, G, 0.35], [0.35, G + 0.12, 0.57])
+    s.density = 1
+  }
 
   // Rotary dryer: long inclined drum with orange riding rings on saddles, burner box at the inlet.
   const dA: V3 = [0.68, -0.86, 0.6]
@@ -164,6 +198,14 @@ export function plantEdges(): Edge[] {
     for (const dz of [-0.14, 0.14]) s.line([c[0], c[1] - r * 1.1, c[2] + dz], [c[0], G, c[2] + dz * 1.2])
   }
   s.box([0.5, G, 0.46], [0.64, -0.68, 0.74])
+  // Drive motor beside the drum, belted up to the girth gear.
+  if (detail) {
+    const c = lerp3(dA, dB, 0.5)
+    s.box([c[0] - 0.06, G, c[2] + 0.24], [c[0] + 0.06, G + 0.12, c[2] + 0.34])
+    s.kind = 1
+    s.line([c[0], G + 0.12, c[2] + 0.29], [c[0], c[1] - r * 0.7, c[2] + r * 0.7])
+    s.kind = 0
+  }
   s.line([fx1, fy1, 0.46], [0.72, -0.7, 0.6])
 
   // Cyclone separator on legs: ducted from the dryer outlet, venting into the stack.
@@ -178,6 +220,25 @@ export function plantEdges(): Edge[] {
   for (const k of [2, 6, 10, 14]) s.line(cylBot[k], [cylBot[k][0], G, cylBot[k][2]])
   s.path([[1.6, -0.82, 0.6], [1.6, -0.2, 0.6], [1.61, -0.2, yz]])
 
+  // Rotary valve under the cyclone; a ground screw conveyor carries the dried product to a bucket elevator,
+  // whose orange head box chutes into both silos.
+  if (detail) {
+    s.box([yx - 0.04, -0.87, yz - 0.04], [yx + 0.04, -0.77, yz + 0.04])
+    s.line([yx, -0.87, yz], [yx, G + 0.08, yz])
+    const sc = G + 0.08
+    s.path([[1.55, sc, 0.42], [yx, sc, yz], [0.98, sc, -0.42]])
+    s.line([1.55, sc, 0.42], [1.6, -1.2, 0.6])
+    const [ex0, ex1, ez0, ez1, eTop] = [0.86, 0.98, -0.51, -0.39, 0.85]
+    s.box([ex0, G, ez0], [ex1, eTop, ez1])
+    s.density = 0.5
+    for (let y = G + 0.35; y < eTop - 0.1; y += 0.35) s.path([[ex0, y, ez1], [ex1, y, ez1]])
+    s.density = 1
+    s.kind = 1
+    s.box([ex0 - 0.02, eTop, ez0 - 0.02], [ex1 + 0.02, eTop + 0.1, ez1 + 0.02])
+    s.kind = 0
+    for (const sx of [0.72, 1.12]) s.line([0.92, eTop, ez0], [sx, 0.7, -0.82])
+  }
+
   // Product silos: cone bottoms on legs, orange roof rings.
   for (const sx of [0.72, 1.12]) {
     const sz = -0.82
@@ -190,6 +251,14 @@ export function plantEdges(): Edge[] {
     for (const k of [0, 4, 7, 11]) s.line(bot[k], [sx, -0.85, sz])
     for (const k of [2, 5, 9, 12]) s.line(bot[k], [bot[k][0], G, bot[k][2]])
   }
+  // Caged ladder up the front of the far silo.
+  if (detail) {
+    const lz = -0.82 + 0.18
+    for (const dx of [-0.04, 0.04]) s.line([1.12 + dx, -0.5, lz], [1.12 + dx, 0.55, lz])
+    s.density = 0.6
+    for (let y = -0.42; y < 0.55; y += 0.12) s.line([1.08, y, lz], [1.16, y, lz])
+    s.density = 1
+  }
 
   // Chimney stack with orange warning bands; the cyclone's vent duct joins it.
   const [kx, kz] = [1.85, -0.75]
@@ -201,6 +270,14 @@ export function plantEdges(): Edge[] {
   s.kind = 0
   const kMid = s.ring([kx, 0.5, kz], 0.11, 12)
   for (const k of [0, 3, 6, 9]) s.line(kMid[k], kTop[k])
+  // Sampling platform part way up the stack, with an orange handrail.
+  if (detail) {
+    const deck = s.ring([kx, 0.9, kz], 0.2, 14)
+    s.kind = 1
+    s.ring([kx, 1.0, kz], 0.2, 14)
+    s.kind = 0
+    for (const k of [0, 4, 7, 11]) s.line(deck[k], [kx + Math.cos((k / 14) * Math.PI * 2) * 0.11, 0.78, kz + Math.sin((k / 14) * Math.PI * 2) * 0.11])
+  }
 
   // Pallets of finished bags.
   for (const pz of [0.66, 0.92]) {

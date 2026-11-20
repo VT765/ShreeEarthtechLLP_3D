@@ -17,6 +17,8 @@ export type Product = {
   /** Pouch print: grade name as printed, and colours taken from the real packaging. */
   pack: Pack
   keySpecs: { label: string; value: string }[]
+  /** Side-by-side comparison rows on the home cards, in `compareRows` order. */
+  compare: Record<CompareKey, string>
   /** Path under /public (resolve with `asset()`). */
   tds: string
   image: { src: string; alt: string }
@@ -26,6 +28,19 @@ export type Product = {
  * `main` top/bottom bands, `dark` small type and the vertical wordmark, `accent` grade name, `light` pattern lines,
  * `logo` the S / E of the mark, `icon` the grade icon's gradient.
  */
+export type CompareKey = 'activity' | 'moisture' | 'dosage' | 'bestFor'
+
+/** Row labels for `Product.compare`. Activity and moisture come from `specs`; best-for from the Grade Finder. */
+export const compareRows: { key: CompareKey; label: string }[] = [
+  { key: 'activity', label: 'Activity / acidity' },
+  { key: 'moisture', label: 'Moisture' },
+  { key: 'dosage', label: 'Typical dosage' },
+  { key: 'bestFor', label: 'Best for' },
+]
+
+// TODO: typical dosage is not in the spec sheet yet — get the range for each grade from the technical team.
+const DOSAGE_TBC = 'TBC'
+
 export type Pack = { label: string; main: string; dark: string; accent: string; light: string; logo: [string, string]; icon: [string, string] }
 
 export const products: Product[] = [
@@ -43,6 +58,7 @@ export const products: Product[] = [
       { label: 'Bleaching efficiency', value: '≥ 95%' },
       { label: 'Avg. particle size', value: '23 µm min' },
     ],
+    compare: { activity: 'High · pH 2.5–3.5', moisture: '15% max', dosage: DOSAGE_TBC, bestFor: 'Rice bran, palm, used oils' },
     tds: 'tds/crystal-brite.pdf',
     image: { src: 'products/crystal-brite.webp', alt: 'Earthtech Crystal Brite stand-up pouch of Activated Bleaching Earth' },
   },
@@ -60,6 +76,7 @@ export const products: Product[] = [
       { label: 'Bleaching efficiency', value: '≥ 95%' },
       { label: 'Avg. particle size', value: '21 µm min' },
     ],
+    compare: { activity: 'Medium · pH 4–5', moisture: '15% max', dosage: DOSAGE_TBC, bestFor: 'Soybean, mustard, industrial oils' },
     tds: 'tds/hyper-clean.pdf',
     image: { src: 'products/hyper-clean.webp', alt: 'Earthtech Hyper Clean stand-up pouch of Activated Bleaching Earth' },
   },
@@ -77,6 +94,7 @@ export const products: Product[] = [
       { label: 'Bleaching efficiency', value: '≥ 95%' },
       { label: 'Avg. particle size', value: '25 µm min' },
     ],
+    compare: { activity: 'Low · pH 5–7', moisture: '15% max', dosage: DOSAGE_TBC, bestFor: 'Sunflower, coconut, paraffin wax' },
     tds: 'tds/pure-choice.pdf',
     image: { src: 'products/pure-choice.webp', alt: 'Earthtech Pure Choice stand-up pouch of Activated Bleaching Earth' },
   },

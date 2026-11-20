@@ -14,7 +14,7 @@ export default function CertSeal({ title, className = 'h-20 w-20' }: { title: st
       <path d="M50 18 l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.6-4.8 2.6.9-5.4-3.9-3.8 5.4-.8z" fill="var(--orange)" />
       {iso ? (
         <>
-          <text x="50" y="45" textAnchor="middle" fontSize="9" fontWeight="600" letterSpacing="2" fill="var(--sky-deep)" fontFamily="Inter, sans-serif">
+          <text x="50" y="45" textAnchor="middle" fontSize="9" fontWeight="600" letterSpacing="2" fill="var(--orange-deep)" fontFamily="Inter, sans-serif">
             ISO
           </text>
           <text x="50" y="62" textAnchor="middle" fontSize="17" fontWeight="800" fill="var(--ink)" fontFamily="'Plus Jakarta Sans', sans-serif">

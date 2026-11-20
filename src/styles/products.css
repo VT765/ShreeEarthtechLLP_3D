@@ -4,7 +4,7 @@
   outline: none;
 }
 .product-card:focus-visible {
-  outline: 2px solid var(--sky);
+  outline: 2px solid var(--accent-text);
   outline-offset: 4px;
 }
 
@@ -53,6 +53,6 @@
 
 /* Segmented radio buttons / chips (native radios, visually styled). */
 .seg-option input:focus-visible + span {
-  outline: 2px solid var(--sky);
+  outline: 2px solid var(--accent-text);
   outline-offset: 3px;
 }

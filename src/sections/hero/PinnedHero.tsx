@@ -68,8 +68,8 @@ export default function PinnedHero() {
           trigger: pin.current,
           pin: true,
           start: 'top top',
-          end: '+=220%',
-          scrub: 1,
+          end: '+=120%',
+          scrub: 0.3,
           anticipatePin: 1,
           invalidateOnRefresh: true,
           // No snap: the plant builds exactly as far as the visitor has scrolled.

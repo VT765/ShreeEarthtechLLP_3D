@@ -11,12 +11,17 @@ export type PlantDetail = {
   plant: number
   /** Dots that stay in the background field. */
   dust: number
+  /** TRIAL: build the detailed plant (see plantEdges). */
+  detail?: boolean
 }
 
 /** Point budget. Phones get fewer, larger dots (see CrystalPlant). */
 export const PLANT_DETAIL = {
   desktop: { plant: 5600, dust: 1600 },
   mobile: { plant: 2100, dust: 700 },
+  // TRIAL: the detailed plant has ~16% more line length; it gets ~28% more dots so the outlines also read crisper.
+  desktopDetail: { plant: 7200, dust: 1600, detail: true },
+  mobileDetail: { plant: 2700, dust: 700, detail: true },
 } satisfies Record<string, PlantDetail>
 
 /** Deterministic PRNG so the scene is the same on every visit. */
@@ -55,12 +60,12 @@ function sample(edges: Edge[], n: number) {
  * aMeta = (build order 0–1, kind 0–3, random, unused).
  * Plant dots are in edge order, so the plant builds ground first, then left to right, the stack last.
  */
-export function buildPlantGeometry({ plant, dust }: PlantDetail) {
+export function buildPlantGeometry({ plant, dust, detail = false }: PlantDetail) {
   const rand = mulberry32(11)
   // A few dots ride the conveyor instead of sitting on an edge; they come last, so material starts moving
   // once the plant stands.
   const flowCount = Math.round(plant * 0.012)
-  const pts = sample(plantEdges(), plant - flowCount)
+  const pts = sample(plantEdges(detail), plant - flowCount)
   for (let i = 0; i < flowCount; i++) pts.push({ p: [...BELT_A] as V3, kind: 2 })
   for (let i = 0; i < dust; i++) pts.push({ p: [0, 0, 0], kind: 3 })
 

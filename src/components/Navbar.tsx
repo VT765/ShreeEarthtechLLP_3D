@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { ChevronDown, Menu, Phone, X } from 'lucide-react'
-import { isMenu, nav, sections, type NavItem, type NavMenu } from '../data/nav'
-import { company, telHref } from '../data/company'
+import { ChevronDown, Menu, X } from 'lucide-react'
+import { isMenu, nav, navSpy, sections, type NavItem, type NavMenu } from '../data/nav'
 import { routes } from '../data/routes'
 import Logo from './Logo'
 import Magnetic from './Magnetic'
@@ -10,12 +9,12 @@ import NavDropdown from './NavDropdown'
 import NavItemLink from './NavItemLink'
 import '../styles/nav.css'
 
-/** Placed right after the hero; the bar turns solid once this reaches it. */
-export const HERO_END_ID = 'hero-end'
-const BAR_H = 76
+/** The bar turns solid once the page has scrolled this far, so content never shows through it. */
+const SOLID_AFTER = 10
 
-/** Which top-level item matches the current page (and, on home, the section in view). */
+/** Which top-level item matches the current page (on home: the section in view). */
 function isActive(item: NavItem, pathname: string, homeSection: string) {
+  if (pathname === routes.home) return navSpy[item.label]?.includes(homeSection) ?? false
   if (isMenu(item)) return item.items.some((i) => pathname === i.to.split('#')[0])
   const [path, id] = item.to.split('#')
   if (pathname !== path) return false
@@ -23,7 +22,7 @@ function isActive(item: NavItem, pathname: string, homeSection: string) {
 }
 
 export default function Navbar() {
-  const [pastHero, setPastHero] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [menuOpen, setMenuOpen] = useState<string | null>(null)
   // Separate from the desktop dropdowns: their outside-click handler must not collapse the accordion.
@@ -31,22 +30,13 @@ export default function Navbar() {
   const [homeSection, setHomeSection] = useState<string>(sections.home)
   const { pathname } = useLocation()
   const isHome = pathname === routes.home
-  const solid = pastHero || !isHome || mobileOpen
+  const solid = scrolled || !isHome || mobileOpen
 
   useEffect(() => {
-    const onScroll = () => {
-      const end = document.getElementById(HERO_END_ID)
-      // The static hero's copy scrolls up under the bar, so over it the bar turns solid as soon as the page moves.
-      const overStaticCopy = window.scrollY > 8 && !!document.querySelector('[data-static-hero]')
-      setPastHero(!end || end.getBoundingClientRect().top <= BAR_H || overStaticCopy)
-    }
+    const onScroll = () => setScrolled(window.scrollY > SOLID_AFTER)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll)
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
-    }
+    return () => window.removeEventListener('scroll', onScroll)
   }, [pathname])
 
   // Close every menu when the page changes (adjusted during render, not in an effect).
@@ -58,7 +48,8 @@ export default function Navbar() {
     setMobileGroup(null)
   }
 
-  // Home only: track the section in view so "Certificates" lights up over its block.
+  // Home only: scrollspy. The section crossing the middle of the screen picks the active item (see navSpy).
+  // #about is the pinned hero's About marker (a span), not a section.
   useEffect(() => {
     if (!isHome) return
     const io = new IntersectionObserver(
@@ -78,10 +69,8 @@ export default function Navbar() {
 
   const setOpenFor = useCallback((id: string) => (open: boolean) => setMenuOpen((cur) => (open ? id : cur === id ? null : cur)), [])
 
-  const phone = company.phones[0]
-
   return (
-    <header className={`site-nav fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-out-soft ${solid ? 'is-solid' : ''}`}>
+    <header className={`site-nav on-dark fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-out-soft ${solid ? 'is-solid' : ''}`}>
       <nav className="container-x flex h-[76px] items-center justify-between gap-6" aria-label="Primary">
         <Link to={routes.home} className="shrink-0" title="Home">
           <Logo variant="dark" />
@@ -104,9 +93,9 @@ export default function Navbar() {
 
         <div className="flex items-center gap-3">
           <Magnetic>
-            <a href={telHref(phone)} className="btn btn-orange hidden h-11 sm:inline-flex" aria-label={`Call now: ${phone}`}>
-              <Phone className="h-4 w-4" /> Call Now
-            </a>
+            <Link to={routes.contact} className="btn btn-primary btn-sm hidden sm:inline-flex">
+              Request a quote
+            </Link>
           </Magnetic>
           <button
             className="grid h-11 w-11 place-items-center rounded-lg text-white lg:hidden"
@@ -140,9 +129,9 @@ export default function Navbar() {
             ),
           )}
           <li className="pt-2 sm:hidden">
-            <a href={telHref(phone)} className="btn btn-orange w-full">
-              <Phone className="h-4 w-4" /> Call Now
-            </a>
+            <Link to={routes.contact} className="btn btn-primary w-full">
+              Request a quote
+            </Link>
           </li>
         </ul>
       </div>

@@ -1,7 +1,7 @@
-/* Manufacturing Plant Gallery */
+/* Manufacturing plant steps */
 .pg-section {
   background: var(--cream);
-  /* Left edge of .container-x content, so the track lines up with the header. */
+  /* Left edge of .container-x content, so the row lines up with the header (and card 01 is never clipped). */
   --pg-gutter: max(20px, calc((100vw - 1280px) / 2 + 20px));
 }
 @media (min-width: 768px) {
@@ -10,61 +10,45 @@
   }
 }
 
-/* Pinned (desktop): fill the viewport, clear the fixed navbar. */
-.pg-pin {
-  min-height: 100vh;
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-block: 104px 48px;
+/* Phones: a vertical stepper inside the page gutter. Positioned, so the sr-only step labels are clipped
+   with the row instead of widening the page. */
+.pg-track {
+  position: relative;
+  display: grid;
+  gap: 16px;
+  margin-top: 32px;
+  padding-inline: var(--pg-gutter);
 }
-@media (max-height: 820px) {
-  .pg-pin header > p:not(.eyebrow) {
-    display: none;
+
+/* Tablet / desktop: one row, native horizontal scroll with snap. */
+@media (min-width: 768px) {
+  .pg-track {
+    display: flex;
+    gap: 24px;
+    margin-top: 40px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--pg-gutter);
+    /* Room for card shadows and the scrollbar. */
+    padding-block: 4px 24px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--clay) transparent;
+  }
+  /* Trailing gutter: flex containers drop the end padding inside a scroller. */
+  .pg-track::after {
+    content: '';
+    flex: 0 0 1px;
+    margin-left: calc(var(--pg-gutter) - 25px);
+  }
+  .pg-slide {
+    flex: none;
+    width: clamp(300px, 34vw, 440px);
+    scroll-snap-align: start;
   }
 }
-
-.pg-viewport {
-  overflow: hidden;
-  /* Room for card shadows inside the clipped viewport. */
-  padding-block: 8px 36px;
-  margin-block: 32px -36px; /* 40px gap below the header, minus the shadow padding */
-}
-.pg-track {
-  display: flex;
-  gap: 24px;
-  width: max-content;
-  padding-inline: var(--pg-gutter);
-  will-change: transform;
-}
-.pg-pin .pg-slide {
-  /* Bound by width and by viewport height so a card (3:2 image + caption) always fits. */
-  width: clamp(300px, min(36vw, calc((100svh - 470px) * 1.5)), 560px);
-  flex: none;
-}
-
-/* Swipe (touch / small screens): native horizontal scroll with snap. */
-.pg-swipe {
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline: var(--pg-gutter);
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scrollbar-color: var(--clay) transparent;
-  padding-bottom: 16px;
-}
-.pg-swipe:focus-visible {
+.pg-track:focus-visible {
   outline-offset: -2px;
-}
-.pg-swipe .pg-track {
-  gap: 16px;
-}
-.pg-swipe .pg-slide {
-  flex: none;
-  width: min(82vw, 400px);
-  scroll-snap-align: start;
 }
 
 .pg-card {
@@ -84,18 +68,12 @@
   object-fit: cover;
   user-select: none;
 }
-.pg-pin .pg-img {
-  /* Room for the horizontal drift. */
-  width: 114%;
-  max-width: none;
-  margin-left: -7%;
-}
 .pg-num {
   flex: none;
   font-family: var(--font-mono);
   font-size: 13px;
   font-weight: 600;
-  color: #146b60; /* darker teal: ≥ 4.5:1 on white cards */
+  color: var(--accent-text);
   padding-top: 4px;
 }
 .pg-num::after {
@@ -104,22 +82,27 @@
   width: 18px;
   height: 2px;
   margin-top: 6px;
-  background: var(--orange);
+  background: var(--accent);
   border-radius: 2px;
 }
 
-.pg-progress {
-  position: relative;
-  width: 120px;
-  height: 2px;
-  background: var(--clay);
-  border-radius: 2px;
-  overflow: hidden;
+/* Prev / next */
+.pg-nav {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 1.5px solid var(--accent);
+  border-radius: 999px;
+  color: var(--accent-text);
+  transition:
+    background-color 0.2s,
+    opacity 0.2s;
 }
-.pg-progress-bar {
-  position: absolute;
-  inset: 0;
-  background: var(--sky);
-  transform: scaleX(0);
-  transform-origin: left;
+.pg-nav:hover:not(:disabled) {
+  background: var(--accent-tint);
+}
+.pg-nav:disabled {
+  opacity: 0.35;
+  cursor: default;
 }

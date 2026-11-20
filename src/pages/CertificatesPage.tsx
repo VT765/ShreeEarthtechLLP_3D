@@ -1,23 +1,15 @@
-import { useRef, useState } from 'react'
-import { Maximize2, X } from 'lucide-react'
+import { Maximize2 } from 'lucide-react'
 import { certifications } from '../data/company'
 import { sectionCopy } from '../data/sections'
 import { asset } from '../lib/asset'
 import PageHero from '../components/PageHero'
-import '../styles/certifications.css'
+import { useCertLightbox } from '../components/useCertLightbox'
 
-type Cert = (typeof certifications)[number]
 const copy = sectionCopy.certificates
 
 /** Every certificate as an image with a View button; View opens it full size. */
 export default function CertificatesPage() {
-  const dialog = useRef<HTMLDialogElement>(null)
-  const [viewing, setViewing] = useState<Cert | null>(null)
-  const open = (c: Cert) => {
-    setViewing(c)
-    dialog.current?.showModal()
-  }
-
+  const { open, lightbox } = useCertLightbox()
   return (
     <>
       <PageHero eyebrow={copy.eyebrow} title={copy.title} body={copy.body} crumbs={[{ label: 'Certificates' }]} />
@@ -39,19 +31,7 @@ export default function CertificatesPage() {
         </ul>
       </div>
 
-      <dialog ref={dialog} className="cert-lightbox" aria-label={viewing ? `${viewing.title} certificate` : undefined} onClose={() => setViewing(null)} onClick={(e) => e.target === e.currentTarget && dialog.current?.close()}>
-        {viewing && (
-          <figure className="relative">
-            <img src={asset(viewing.image)} alt={`${viewing.title} certificate`} className="max-h-[86vh] w-auto rounded-lg bg-white object-contain" />
-            <figcaption className="mt-3 text-center text-sm text-white/80">
-              {viewing.title} · {viewing.caption}
-            </figcaption>
-            <button type="button" className="cert-lightbox-close" onClick={() => dialog.current?.close()} aria-label="Close certificate" autoFocus>
-              <X className="h-5 w-5" aria-hidden />
-            </button>
-          </figure>
-        )}
-      </dialog>
+      {lightbox}
     </>
   )
 }

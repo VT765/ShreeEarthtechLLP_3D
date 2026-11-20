@@ -8,7 +8,6 @@ export const sectionCopy = {
     // PLACEHOLDER — align the region list with data/exportCountries.ts.
     body: 'Made in India and shipped to refiners across the Middle East, Africa and Asia: batch-tested, export-packed in 25 kg and 50 kg bags or jumbo FIBCs, and backed by full documentation.',
     dispatch: 'Dispatched from Gujarat, India',
-    marketsCta: 'See all export markets',
   },
   /** Home-page product summary. */
   productsSummary: {
@@ -46,7 +45,7 @@ export const sectionCopy = {
   certifications: {
     eyebrow: 'Certifications',
     title: 'Quality you can audit',
-    body: 'Independently certified systems for quality, food safety, the environment and workplace safety. Hover over or tap a seal to preview its certificate.',
+    body: 'Independently certified systems for quality, food safety, the environment and workplace safety. Select a certificate to view it in full.',
   },
   /** Certificates page hero (/certificates). */
   certificates: {
@@ -64,6 +63,7 @@ export const sectionCopy = {
     title: 'Let’s talk about your oil',
     body: 'Tell us what you refine and roughly how much you need. We’ll recommend a grade, share the data sheet and send a sample for a lab trial.',
     cta: 'Request a quote',
+    brochure: 'Download brochure',
   },
   /** Full contact page (/contact). */
   contact: {

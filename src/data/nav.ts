@@ -41,3 +41,13 @@ export const nav: NavItem[] = [
   { label: 'Certificates', to: routes.certificates },
   { label: 'Contact', to: routes.contact },
 ]
+
+/** Home scrollspy: the sections that light up each top-level nav item while they cross the middle of the screen. */
+export const navSpy: Record<string, string[]> = {
+  Home: [sections.home],
+  About: [sections.about, sections.reach, sections.plant],
+  Products: [sections.products],
+  Applications: [sections.gradeFinder],
+  Certificates: [sections.certificates],
+  Contact: [sections.contact],
+}

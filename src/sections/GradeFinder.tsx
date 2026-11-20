@@ -7,7 +7,6 @@ import { productById } from '../data/products'
 import { Link } from 'react-router-dom'
 import { enquiryFor, routes } from '../data/routes'
 import { asset } from '../lib/asset'
-import { useReveal } from '../hooks/useReveal'
 import SectionHeader from '../components/SectionHeader'
 import { SWatermark } from '../components/SCurve'
 import '../styles/products.css'
@@ -36,7 +35,7 @@ function RadioOption({ name, value, checked, onChange, children, variant }: {
         : 'text-body hover:bg-white hover:text-ink'
       : checked
         ? 'border-orange bg-orange-light/25 text-charcoal'
-        : 'border-clay bg-white text-body hover:border-sky hover:text-ink'
+        : 'border-clay bg-white text-body hover:border-accent hover:text-ink'
   return (
     <label className="seg-option relative cursor-pointer">
       <input type="radio" name={name} value={value} checked={checked} onChange={() => onChange(value)} className="absolute inset-0 h-full w-full cursor-pointer opacity-0" />
@@ -46,7 +45,6 @@ function RadioOption({ name, value, checked, onChange, children, variant }: {
 }
 
 export default function GradeFinder() {
-  const ref = useReveal<HTMLElement>()
   const uid = useId()
   const [catId, setCatId] = useState<OilCategory['id']>(oilCategories[0].id)
   const category = oilCategories.find((c) => c.id === catId)!
@@ -61,13 +59,13 @@ export default function GradeFinder() {
   }
 
   return (
-    <section id={sections.gradeFinder} ref={ref} className="section grain overflow-hidden bg-beige" aria-labelledby="grade-finder-title">
+    <section id={sections.gradeFinder} className="section grain overflow-hidden bg-beige" aria-labelledby="grade-finder-title">
       <SWatermark className="absolute -right-16 top-10 hidden h-[420px] w-auto text-clay/70 lg:block" />
       <div className="container-x relative">
         <SectionHeader eyebrow={copy.eyebrow} title={<span id="grade-finder-title">{copy.title}</span>} body={copy.body} />
 
         <div className="mt-12 grid gap-8 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-7" data-reveal="0.1">
+          <div className="lg:col-span-7">
             <fieldset>
               <legend className="mb-3 text-sm font-semibold uppercase tracking-[0.12em] text-stone">1. Oil category</legend>
               <div className="grid grid-cols-1 gap-1.5 rounded-2xl border border-clay bg-cream p-1.5 sm:grid-cols-3">

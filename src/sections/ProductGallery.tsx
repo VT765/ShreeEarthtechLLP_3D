@@ -1,7 +1,6 @@
 import { sectionCopy } from '../data/sections'
 import { sections } from '../data/nav'
 import { products } from '../data/products'
-import { useReveal } from '../hooks/useReveal'
 import SectionHeader from '../components/SectionHeader'
 import ProductCard from './products/ProductCard'
 import SpecTable from './products/SpecTable'
@@ -11,11 +10,10 @@ import '../styles/products.css'
 const copy = sectionCopy.products
 
 export default function ProductGallery() {
-  const ref = useReveal<HTMLElement>()
-  const { areaRef, slots, pointers, live, enabled, portal } = useBagViews(products)
+  const { areaRef, slots, live, portal } = useBagViews(products)
 
   return (
-    <section id={sections.products} ref={ref} className="section bg-cream" aria-labelledby="products-title">
+    <section id={sections.products} className="section bg-cream" aria-labelledby="products-title">
       <div className="container-x">
         <SectionHeader
           eyebrow={copy.eyebrow}
@@ -24,8 +22,8 @@ export default function ProductGallery() {
         />
 
         <div ref={areaRef} className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-          {products.map((p, i) => (
-            <ProductCard key={p.id} p={p} index={i} slotRef={slots?.[p.id]} pointer={pointers?.[p.id]} live={live} reveal={!enabled} />
+          {products.map((p) => (
+            <ProductCard key={p.id} p={p} slotRef={slots?.[p.id]} live={live} />
           ))}
         </div>
 

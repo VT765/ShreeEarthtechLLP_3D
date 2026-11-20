@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom'
 import type { Product } from '../../data/products'
 import { useInView } from '../../hooks/useInView'
 import { isLowEnd, useIsMobile, useReducedMotion } from '../../hooks/useMedia'
-import type { BagPointer } from '../../scenes/ProductPouch'
+import { useSceneActive } from '../../hooks/useSceneActive'
 
 // three / R3F / drei load only in this lazy chunk, and only on capable desktop devices.
 const BagViews = lazy(() => import('./BagViews'))
@@ -19,9 +19,10 @@ function hasWebGL() {
 }
 
 /**
- * 3D pouches for a set of product slots. Returns per-product slot refs and hover pointers to hand to the
+ * 3D pouches for a set of product slots. Returns per-product slot refs to hand to the
  * cards, `live` once the pouches are drawing (cards fade their poster image out), and the portal to render.
- * Phones, reduced motion, low-end devices and no-WebGL browsers keep the poster images.
+ * Phones, reduced motion, low-end devices and no-WebGL browsers keep the poster images. While another scene
+ * is the visible one (see useSceneActive) the canvas stays mounted but hidden and paused, and the posters show.
  */
 export function useBagViews<T extends HTMLElement = HTMLDivElement>(items: Product[]) {
   const reduced = useReducedMotion()
@@ -29,18 +30,18 @@ export function useBagViews<T extends HTMLElement = HTMLDivElement>(items: Produ
   const [capable] = useState(() => typeof window !== 'undefined' && !isLowEnd() && hasWebGL())
   const enabled = capable && !reduced && !mobile
   const [areaRef, inView] = useInView<T>('150px')
+  const active = useSceneActive(areaRef)
   const [ready, setReady] = useState(false)
   const onReady = useCallback((r: boolean) => setReady(r), [])
 
   const slots = useMemo(() => Object.fromEntries(items.map((p) => [p.id, createRef<HTMLDivElement>()])) as Record<string, RefObject<HTMLDivElement | null>>, [items])
-  const pointers = useMemo(() => Object.fromEntries(items.map((p) => [p.id, { x: 0, y: 0, active: false }])) as Record<string, BagPointer>, [items])
-  const viewItems = useMemo(() => items.map((p) => ({ product: p, track: slots[p.id], pointer: pointers[p.id] })), [items, slots, pointers])
+  const viewItems = useMemo(() => items.map((p) => ({ product: p, track: slots[p.id] })), [items, slots])
 
   const show = enabled && inView
   const portal = show
     ? createPortal(
         <Suspense fallback={null}>
-          <BagViews items={viewItems} onReady={onReady} />
+          <BagViews items={viewItems} active={active} onReady={onReady} />
         </Suspense>,
         document.body,
       )
@@ -49,10 +50,9 @@ export function useBagViews<T extends HTMLElement = HTMLDivElement>(items: Produ
   return {
     enabled,
     areaRef,
-    /** Per-product 3D slot refs and hover pointers; undefined when the pouches are off (posters only). */
+    /** Per-product 3D slot refs; undefined when the pouches are off (posters only). */
     slots: enabled ? slots : undefined,
-    pointers: enabled ? pointers : undefined,
-    live: show && ready,
+    live: show && ready && active,
     portal,
   }
 }

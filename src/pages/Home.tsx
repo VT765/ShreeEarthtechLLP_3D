@@ -4,7 +4,7 @@ import ProductsSummary from '../sections/ProductsSummary'
 import ApplicationsSummary from '../sections/ApplicationsSummary'
 import CertificationBlock from '../sections/CertificationBlock'
 import PlantGallery from '../sections/PlantGallery'
-import { HERO_END_ID } from '../components/Navbar'
+import ContactSection from '../sections/ContactSection'
 
 // Home keeps short summaries; each links to the inner page that holds the detail.
 // Sections render eagerly so every anchor exists; heavy 3D/globe parts lazy-load on approach.
@@ -12,12 +12,12 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <div id={HERO_END_ID} aria-hidden />
       <GlobalReach variant="summary" />
       <ProductsSummary />
       <ApplicationsSummary />
       <CertificationBlock />
       <PlantGallery />
+      <ContactSection />
     </>
   )
 }

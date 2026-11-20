@@ -2,11 +2,11 @@ import { company } from './company'
 
 export const hero = {
   slide1: {
-    eyebrow: 'Activated Bleaching Earth Manufacturer',
+    eyebrow: 'Activated bleaching earth manufacturer',
     title: company.tagline,
     body: company.intro,
-    primaryCta: 'Request a Quote',
-    secondaryCta: 'Download Brochure',
+    primaryCta: 'Request a quote',
+    secondaryCta: 'Download brochure',
   },
   slide2: {
     ...company.about,

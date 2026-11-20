@@ -7,7 +7,12 @@ type Props = { progress: RefObject<number>; lite: boolean }
 
 /** Tiny crystals fill the hero and revolve, then stream together into the plant. One buffer, one draw call. */
 export default function CrystalPlant({ progress, lite }: Props) {
-  const geometry = useMemo(() => buildPlantGeometry(lite ? PLANT_DETAIL.mobile : PLANT_DETAIL.desktop), [lite])
+  const geometry = useMemo(() => {
+    // TRIAL: `?plant=classic` shows the original, less detailed plant for comparison.
+    const classic = new URLSearchParams(window.location.search).get('plant') === 'classic'
+    const d = classic ? (lite ? PLANT_DETAIL.mobile : PLANT_DETAIL.desktop) : lite ? PLANT_DETAIL.mobileDetail : PLANT_DETAIL.desktopDetail
+    return buildPlantGeometry(d)
+  }, [lite])
   // Sparser dots on phones are drawn a bit larger so the outlines still read.
   const uniforms = useMemo(() => createPlantUniforms(lite ? 3.2 : 2.4), [lite])
   const material = useMemo(() => createPlantMaterial(uniforms), [uniforms])

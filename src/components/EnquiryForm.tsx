@@ -1,14 +1,11 @@
 import { useEffect, useId, useRef, useState, type ChangeEvent, type FormEvent, type ReactNode } from 'react'
 import { AlertCircle, CheckCircle2, Loader2, Send } from 'lucide-react'
-import { company } from '../data/company'
 import { allOils } from '../data/gradeFinder'
+import { EMAIL_RE, enquiryMailto, hasEndpoint, PHONE_RE, SALES_EMAIL, sendEnquiry } from '../lib/enquiry'
 import { useSearchParams } from 'react-router-dom'
 import { isGradeId, productById, products, type GradeId } from '../data/products'
 import { useToast } from './Toast'
 
-const ENDPOINT = import.meta.env.VITE_FORM_ENDPOINT?.trim() || ''
-const ACCESS_KEY = import.meta.env.VITE_FORM_ACCESS_KEY?.trim() || ''
-const SALES_EMAIL = company.emails[1] ?? company.emails[0]
 const OTHER = 'Other'
 const NOT_SURE = 'not-sure'
 
@@ -27,9 +24,6 @@ type Key = keyof Values
 type Status = { kind: 'idle' } | { kind: 'sending' } | { kind: 'success' } | { kind: 'mailto' } | { kind: 'error'; detail: string }
 
 const empty: Values = { name: '', company: '', email: '', phone: '', oil: '', oilOther: '', grade: '', quantity: '', message: '' }
-
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
-const PHONE_RE = /^\+?[\d\s().-]{7,20}$/
 
 function validate(v: Values) {
   const e: Partial<Record<Key, string>> = {}
@@ -65,40 +59,27 @@ function summary(v: Values) {
 
 const subjectFor = (v: Values) => `Enquiry: ${gradeLabel(v.grade)} — ${v.company.trim() || v.name.trim()}`
 
-function mailtoHref(v: Values) {
-  const body = Object.entries(summary(v))
-    .map(([k, val]) => `${k}: ${val}`)
-    .join('\n')
-  return `mailto:${SALES_EMAIL}?subject=${encodeURIComponent(subjectFor(v))}&body=${encodeURIComponent(body)}`
-}
+const mailtoHref = (v: Values) => enquiryMailto(summary(v), subjectFor(v))
 
-async function post(v: Values) {
+function post(v: Values) {
   const s = summary(v)
-  const payload: Record<string, string> = {
-    name: s.Name,
-    company: s.Company,
-    email: s.Email,
-    phone: s.Phone,
-    oil_type: s['Oil type'],
-    product: s.Product,
-    quantity_mt_per_month: s['Quantity (MT/month)'],
-    message: s.Message,
-    subject: subjectFor(v), // Web3Forms email subject
-    _subject: subjectFor(v), // Formspree email subject
-    from_name: company.name + ' website',
-  }
-  if (ACCESS_KEY) payload.access_key = ACCESS_KEY
-  const res = await fetch(ENDPOINT, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify(payload),
-  })
-  const data = (await res.json().catch(() => null)) as { success?: boolean; message?: string; error?: string } | null
-  // Formspree: non-2xx on failure. Web3Forms: { success: false, message } (sometimes with 200).
-  if (!res.ok || data?.success === false) throw new Error(data?.message || data?.error || `Request failed (${res.status})`)
+  return sendEnquiry(
+    {
+      name: s.Name,
+      company: s.Company,
+      email: s.Email,
+      phone: s.Phone,
+      oil_type: s['Oil type'],
+      product: s.Product,
+      quantity_mt_per_month: s['Quantity (MT/month)'],
+      message: s.Message,
+    },
+    subjectFor(v),
+  )
 }
 
-function Field({ id, label, error, hint, required, className = '', children }: {
+/** Label + control + hint / error, wired for aria-describedby by the caller. */
+export function Field({ id, label, error, hint, required, className = '', children }: {
   id: string
   label: string
   error?: string
@@ -198,7 +179,7 @@ export default function EnquiryForm() {
       return
     }
 
-    if (!ENDPOINT) {
+    if (!hasEndpoint) {
       // No backend configured: hand the enquiry to the visitor's email app.
       window.location.href = mailtoHref(values)
       setStatus({ kind: 'mailto' })
@@ -303,23 +284,23 @@ export default function EnquiryForm() {
       {/* Status region: announced politely; errors assertively. */}
       <div aria-live="polite" role="status">
         {preselected && status.kind === 'idle' && (
-          <p className="mt-5 rounded-lg bg-sky-tint px-4 py-3 text-sm text-ink">
+          <p className="mt-5 rounded-lg bg-accent-tint px-4 py-3 text-sm text-ink">
             Enquiring about <strong>{productById(preselected).name}</strong> — product pre-selected below.
           </p>
         )}
         {sending && <p className="mt-5 text-sm text-stone">Sending your enquiry…</p>}
         {status.kind === 'success' && (
-          <p className="mt-5 flex items-start gap-2 rounded-lg border-l-4 border-sky bg-sky/10 px-4 py-3 text-sm text-ink">
-            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-sky" aria-hidden />
+          <p className="mt-5 flex items-start gap-2 rounded-lg border-l-4 border-accent bg-accent-tint px-4 py-3 text-sm text-ink">
+            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent-text" aria-hidden />
             Thank you — your enquiry has been sent. Our team will get back to you shortly.
           </p>
         )}
         {status.kind === 'mailto' && (
-          <p className="mt-5 flex items-start gap-2 rounded-lg border-l-4 border-sky bg-sky-tint px-4 py-3 text-sm text-ink">
-            <Send className="mt-0.5 h-4 w-4 shrink-0 text-sky" aria-hidden />
+          <p className="mt-5 flex items-start gap-2 rounded-lg border-l-4 border-accent bg-accent-tint px-4 py-3 text-sm text-ink">
+            <Send className="mt-0.5 h-4 w-4 shrink-0 text-accent-text" aria-hidden />
             <span>
               We’ve opened your email app with the enquiry filled in — just press send. Nothing opened? Email us at{' '}
-              <a className="font-semibold text-sky underline" href={mailtoHref(values)}>
+              <a className="font-semibold text-accent-text underline" href={mailtoHref(values)}>
                 {SALES_EMAIL}
               </a>
               .
@@ -332,7 +313,7 @@ export default function EnquiryForm() {
           <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-error" aria-hidden />
           <span>
             Sorry, we couldn’t send your enquiry ({status.detail}). Please try again, or{' '}
-            <a className="font-semibold text-sky underline" href={mailtoHref(values)}>
+            <a className="font-semibold text-accent-text underline" href={mailtoHref(values)}>
               email it to {SALES_EMAIL}
             </a>{' '}
             instead — your details will be filled in.

@@ -41,50 +41,36 @@ function usePrints(p: Product) {
   return [front, back] as const
 }
 
-/** Live pointer state for a pouch (normalised -0.5…0.5), written by the DOM card that hosts it. */
-export type BagPointer = { x: number; y: number; active: boolean }
-
-function Pouch({ product, pointer, spin }: { product: Product; pointer?: BagPointer; spin: boolean }) {
-  const tilt = useRef<THREE.Group>(null)
+function Pouch({ product, spin }: { product: Product; spin: boolean }) {
   const g = useRef<THREE.Group>(null)
   const [front, back] = usePrints(product)
   const geo = useMemo(() => ({ front: buildFace(1), back: buildFace(-1), base: buildBase() }), [])
   useEffect(() => () => Object.values(geo).forEach((x) => x.dispose()), [geo])
 
+  // A slow, steady turn; hovering the card doesn't change it.
   useFrame((_, dt) => {
-    const hover = pointer?.active ?? false
-    if (g.current && spin) g.current.rotation.y += dt * (hover ? 0.9 : 0.45)
-    if (tilt.current) {
-      // Ease toward the pointer while hovered, back to upright otherwise.
-      const k = 1 - Math.exp(-dt * 6)
-      tilt.current.rotation.x = THREE.MathUtils.lerp(tilt.current.rotation.x, hover ? pointer!.y * 0.5 : 0, k)
-      tilt.current.rotation.z = THREE.MathUtils.lerp(tilt.current.rotation.z, hover ? -pointer!.x * 0.35 : 0, k)
-    }
+    if (g.current && spin) g.current.rotation.y += dt * 0.45
   })
 
   // Glossy printed film.
   const film = { roughness: 0.38, clearcoat: 0.7, clearcoatRoughness: 0.25, side: THREE.DoubleSide }
   return (
-    <group ref={tilt}>
-      <group ref={g} rotation={[0, spin ? 0 : -0.32, 0]}>
-        <mesh geometry={geo.front}>
-          <meshPhysicalMaterial map={front} {...film} />
-        </mesh>
-        <mesh geometry={geo.back}>
-          <meshPhysicalMaterial map={back} {...film} />
-        </mesh>
-        <mesh geometry={geo.base}>
-          <meshPhysicalMaterial color={product.pack.main} {...film} />
-        </mesh>
-      </group>
+    <group ref={g} rotation={[0, spin ? 0 : -0.32, 0]}>
+      <mesh geometry={geo.front}>
+        <meshPhysicalMaterial map={front} {...film} />
+      </mesh>
+      <mesh geometry={geo.back}>
+        <meshPhysicalMaterial map={back} {...film} />
+      </mesh>
+      <mesh geometry={geo.base}>
+        <meshPhysicalMaterial color={product.pack.main} {...film} />
+      </mesh>
     </group>
   )
 }
 
 type Props = {
   product: Product
-  /** Optional hover state from the hosting card; the pouch tilts toward it and spins faster. */
-  pointer?: BagPointer
   /** Contact-shadow map size; lower it when several pouches render in one canvas. */
   shadowRes?: number
   /** Still, three-quarter pose with no float (used to render the poster images). */
@@ -92,8 +78,8 @@ type Props = {
 }
 
 /** Earthtech stand-up pouch, printed like the real packaging, on a soft contact shadow. */
-export default function ProductPouch({ product, pointer, shadowRes = 512, still = false }: Props) {
-  const pouch = <Pouch product={product} pointer={pointer} spin={!still} />
+export default function ProductPouch({ product, shadowRes = 512, still = false }: Props) {
+  const pouch = <Pouch product={product} spin={!still} />
   return (
     <>
       <Lights />

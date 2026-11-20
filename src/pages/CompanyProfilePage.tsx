@@ -43,10 +43,10 @@ export default function CompanyProfilePage() {
                   <li key={p.id}>
                     <Link to={routes.product(p.slug)} className="group flex items-center justify-between gap-4 py-4">
                       <span>
-                        <span className="block font-semibold text-ink group-hover:text-sky">{p.name}</span>
+                        <span className="block font-semibold text-ink group-hover:text-accent-text">{p.name}</span>
                         <span className="block text-sm text-stone">{p.grade}</span>
                       </span>
-                      <ArrowRight className="h-4 w-4 shrink-0 text-sky transition-transform group-hover:translate-x-1" aria-hidden />
+                      <ArrowRight className="h-4 w-4 shrink-0 text-accent-text transition-transform group-hover:translate-x-1" aria-hidden />
                     </Link>
                   </li>
                 ))}
